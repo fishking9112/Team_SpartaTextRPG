@@ -18,11 +18,18 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("6. [  저  장  ]");
             Console.WriteLine("7. [  종  료  ]");
 
-            SceneManager.instance.Menu(Game_Main);
+            SceneManager.instance.Menu(Game_Main, null, () => Select_Menu(1), () => Select_Menu(2), () => Select_Menu(3));
         }
-        public void Test()
+        public void Select_Menu(int _index)
         {
-            Console.WriteLine("test");
+            if (_index == 1)
+            {
+                SceneManager.instance.GoMenu(StatusScene.instance.Game_Stats);
+            }
+            else
+            {
+                // 궁수 선택
+            }
         }
     }
 }
