@@ -18,7 +18,7 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("6. [  저  장  ]");
             Console.WriteLine("7. [  종  료  ]");
 
-            SceneManager.instance.Menu(Game_Main);
+            SceneManager.instance.Menu(Game_Main, null, null, null, ShopScene.instance.ShowShop);
         }
         public void Test()
         {
