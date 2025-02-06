@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Team_SpartaTextRPG
 {
-    internal class Inventory : Scene
+    internal class GameManager : Helper.Singleton<GameManager>
     {
+        public Player player { get; set; } = new Player();  // 임시로 기본 생성자
     }
 }

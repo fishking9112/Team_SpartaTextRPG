@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Team_SpartaTextRPG
 {
-    internal class QuestBoard : Scene
+    internal class ShopScene : Helper.Singleton<ShopScene>
     {
     }
 }

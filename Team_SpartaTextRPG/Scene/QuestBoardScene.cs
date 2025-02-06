@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Team_SpartaTextRPG
-    internal class Status : Scene
 {
+    internal class QuestBoardScene : Helper.Singleton<QuestBoardScene>
+    {
     }
 }

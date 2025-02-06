@@ -1,5 +1,3 @@
-
-
 namespace Team_SpartaTextRPG
 {
     class SceneManager : Helper.Singleton<SceneManager>

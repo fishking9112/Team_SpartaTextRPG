@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Team_SpartaTextRPG
 {
-    internal class Dungeon : Scene
+    internal class DungeonScene : Helper.Singleton<DungeonScene>
     {
     }
 }

@@ -4,7 +4,12 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Maingame.instance.StartGame();
+
+            while(true)
+            {
+                Maingame.instance.Update();
+            }
         }
     }
 }
