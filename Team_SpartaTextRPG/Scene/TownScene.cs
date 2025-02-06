@@ -8,7 +8,7 @@ namespace Team_SpartaTextRPG
 {
     internal class TownScene : Helper.Singleton<TownScene>
     {
-        public void Draw_Menu()
+        public void Game_Main()
         {
             Console.WriteLine("1. [ 상태보기 ]");
             Console.WriteLine("2. [ 인벤토리 ]");
@@ -18,7 +18,7 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("6. [  저  장  ]");
             Console.WriteLine("7. [  종  료  ]");
 
-            SceneManager.instance.Menu(Draw_Menu);
+            SceneManager.instance.Menu(Game_Main);
         }
         public void Test()
         {

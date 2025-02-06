@@ -8,6 +8,7 @@ namespace Team_SpartaTextRPG
 {
     internal class GameManager : Helper.Singleton<GameManager>
     {
+        public bool isPlaying = true;
         public Player player { get; set; } = new Player();  // 임시로 기본 생성자
     }
 }

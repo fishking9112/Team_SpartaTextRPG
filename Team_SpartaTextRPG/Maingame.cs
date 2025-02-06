@@ -11,7 +11,7 @@ namespace Team_SpartaTextRPG
         public void StartGame()
         {
             // Init
-            SceneManager.instance.nextScene = TownScene.instance.Draw_Menu;
+            SceneManager.instance.nextScene = StartScene.instance.Game_Title;
             // 매니저 Init
             // Player Load
             // Bgm Play

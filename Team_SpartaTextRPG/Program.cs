@@ -6,7 +6,7 @@
         {
             Maingame.instance.StartGame();
 
-            while(true)
+            while(GameManager.instance.isPlaying)
             {
                 Maingame.instance.Update();
             }
