@@ -18,6 +18,7 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("6. [  저  장  ]");
             Console.WriteLine("7. [  종  료  ]");
 
+
             SceneManager.instance.Menu(Game_Main, null, () => Select_Menu(1), () => Select_Menu(2), () => Select_Menu(3));
         }
         public void Select_Menu(int _index)
@@ -26,10 +27,21 @@ namespace Team_SpartaTextRPG
             {
                 SceneManager.instance.GoMenu(StatusScene.instance.Game_Stats);
             }
+            if (_index == 5)
+            {
+                // 던전입장 선택지
+                SceneManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
+
+            }
             else
             {
                 // 궁수 선택
+
+
+                SceneManager.instance.Menu(Game_Main, null, null, null, ShopScene.instance.ShowShop, () => Select_Numbers(5));
             }
         }
+
+       
     }
 }
