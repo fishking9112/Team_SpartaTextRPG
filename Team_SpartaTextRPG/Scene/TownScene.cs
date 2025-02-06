@@ -18,11 +18,21 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("6. [  저  장  ]");
             Console.WriteLine("7. [  종  료  ]");
 
-            SceneManager.instance.Menu(Game_Main);
+            SceneManager.instance.Menu(Game_Main, null, () => Select_Numbers(1), () => Select_Numbers(2), () => Select_Numbers(3), () => Select_Numbers(4), () => Select_Numbers(5), () => Select_Numbers(6),() => Select_Numbers(7));
         }
-        public void Test()
+
+        public void Select_Numbers(int _index)
         {
-            Console.WriteLine("test");
+            if (_index == 5)
+            {
+                // 던전입장 선택지
+                SceneManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
+
+            }
+            else
+            {
+                // 나머지 선택지
+            }
         }
     }
 }
