@@ -18,7 +18,8 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("6. [  저  장  ]");
             Console.WriteLine("7. [  종  료  ]");
 
-            SceneManager.instance.Menu(Game_Main, null, () => Select_Numbers(1), () => Select_Numbers(2), () => Select_Numbers(3), () => Select_Numbers(4), () => Select_Numbers(5), () => Select_Numbers(6),() => Select_Numbers(7));
+
+            SceneManager.instance.Menu(Game_Main, null, null, null, ShopScene.instance.ShowShop, () => Select_Numbers(5));
         }
 
         public void Select_Numbers(int _index)
