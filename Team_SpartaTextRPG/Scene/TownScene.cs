@@ -42,7 +42,7 @@ namespace Team_SpartaTextRPG
                     SceneManager.instance.GoMenu(InventoryScene.instance.ShowInventory);
                     break;
                 case 3: // 상점
-                    SceneManager.instance.GoMenu(ShopScene.instance.ShowShop);
+                    SceneManager.instance.GoMenu(ShopScene.instance.ShowMenu);
                     break;
                 case 4: // 여관
                     SceneManager.instance.GoMenu(RestScene.instance.Show_Rest);

@@ -18,24 +18,27 @@ namespace Team_SpartaTextRPG
         public ShopScene()
         {
             equip_ItemsList = new List<Equip_Item>
-            { 
+            {
                 new Equip_Item("숏 소드", "일반 짧은 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 10.0f, 5f),
                 new Equip_Item("롱 소드", "일반 긴 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 15.0f, 0f),
                 new Equip_Item("자이언트 소드", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 20.0f, 10f),
                 new Equip_Item("세이버 소드", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 25.0f, 0f),
-                new Equip_Item("가죽 갑옷", "....", 100, Item_Slot_Type.ARMOR, Item_Job_Type.NONE, 0f, 10f),
-                new Equip_Item("철 갑옷", "....", 200, Item_Slot_Type.ARMOR, Item_Job_Type.NONE, 0f, 20f)
+                new Equip_Item("일반 활", "......", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 10.0f, 5f),
+                new Equip_Item("철 활", "......", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 15.0f, 0f),
+                new Equip_Item("자이언트 활", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 20.0f, 10f),
+                new Equip_Item("세이버 활", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 25.0f, 0f),
             };
+
         }
-        public void ShowShop ()
+        public void ShowMenu()
         {
             Console.WriteLine("1. 아이템 구매");
             Console.WriteLine("2. 아이템 판매");
             Console.WriteLine("0. 돌아가기");
-            SceneManager.instance.Menu(ShowShop, TownScene.instance.Game_Main, ShowShopItem);
+            SceneManager.instance.Menu(ShowMenu, TownScene.instance.Game_Main, ShowShop);
         }
 
-        public void ShowShopItem ()
+        public void ShowShop()
         {
             Console.WriteLine("상점");
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
@@ -44,28 +47,20 @@ namespace Team_SpartaTextRPG
             Console.WriteLine($"{GameManager.instance.player.Gold} G");
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
+            List<Equip_Item> filteredItems = equip_ItemsList.Where(item => item.item_Job_Type == Item_Job_Type.NONE ||
+            (player.Job == PLAYER_JOB.WARRIOR && item.item_Job_Type == Item_Job_Type.WARRIOR) ||
+            (player.Job == PLAYER_JOB.ARCHER && item.item_Job_Type == Item_Job_Type.ARCHER) ||
+            (player.Job == PLAYER_JOB.WIZARD && item.item_Job_Type == Item_Job_Type.WIZARD)).ToList();
 
-            List<Action> tempActions = new List<Action>();
-            tempActions.Add(TownScene.instance.Game_Main);
-            for (int i = 0; i < equip_ItemsList.Count; i++)
-            {
-                int temp = i;
-                tempActions.Add(() => BuyItem(temp + 1));
-                Console.WriteLine($"{i + 1}.   {equip_ItemsList[i].Name}   |   설명: {equip_ItemsList[i].Description}   |   {equip_ItemsList[i].AtkorDef()}   |   가격: {equip_ItemsList[i].Price}");
-            }
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
-
-            SceneManager.instance.Menu(ShowShopItem, tempActions.ToArray());
+            ShowShopItems(filteredItems);
         }
-        public void BuyItem (int input)
+        public void BuyItem(int input)
         {
-            
-             Item select = equip_ItemsList[input - 1];
-             Buy(select);
+            Item select = equip_ItemsList[input - 1];
+            Buy(select);
         }
 
-        public void Buy (Item item)
+        public void Buy(Item item)
         {
             //만약 플레이어 골드가 아이템 가격보다 많은 경우
             if (player.Gold >= item.Price)
@@ -80,13 +75,29 @@ namespace Team_SpartaTextRPG
                 {
                     player.Inven_Usable_Item.Add(usable_Item);
                 }
-                SceneManager.instance.GoMenu(ShowShopItem);
+                SceneManager.instance.GoMenu(ShowShop);
             }
             else
             {
                 Console.WriteLine("Gold 가 부족합니다.");
-                SceneManager.instance.GoMenu(ShowShopItem);
+                SceneManager.instance.GoMenu(ShowShop);
             }
+        }
+
+        public void ShowShopItems(List<Equip_Item> filteredItems)
+        {
+            List<Action> tempActions = new List<Action>();
+            tempActions.Add(TownScene.instance.Game_Main);
+            for (int i = 0; i < filteredItems.Count; i++)
+            {
+                int temp = i;
+                tempActions.Add(() => BuyItem(temp + 1));
+                Console.WriteLine($"{i + 1}.   {filteredItems[i].Name}   |   설명: {filteredItems[i].Description}   |   {filteredItems[i].AtkorDef()}   |   가격: {filteredItems[i].Price}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+
+            SceneManager.instance.Menu(ShowShop, tempActions.ToArray());
         }
     }
 }
