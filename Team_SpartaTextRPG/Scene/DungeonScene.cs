@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -11,11 +12,12 @@ namespace Team_SpartaTextRPG
 {
     internal class DungeonScene : Helper.Singleton<DungeonScene>
     {
-        Monster[] monster = new Monster[3];
+        Player player = GameManager.instance.player;
+        Monster[] monsters = new Monster[3];
 
         public void Dungeon_Title()
         {
-            Console.WriteLine("1. [ Stage 1 ]");
+            Console.WriteLine("1. [ Stage 입장 ]");
             //Console.WriteLine("2. [ Stage 2 ]");
             //Console.WriteLine("3. [ Stage 3 ]");
             Console.WriteLine("0. [ 돌아가기 ]");
@@ -33,24 +35,52 @@ namespace Team_SpartaTextRPG
             }
 
         }
-        
+
 
 
         // 층에 나오기 전에 나오는 몬스터 설정
         public void initStage()
         {
             // 몬스터 정보
-            monster[0] = new Monster("슬라임", 1, 5, 5);
-            monster[1] = new Monster("고블린", 3, 10, 10);
-            monster[2] = new Monster("오크", 5, 20, 20);
+            monsters[0] = new Monster("슬라임", 1, 15, 15);
+            // monsters[1] = new Monster("고블린", 3, 22, 22);
+            // monsters[2] = new Monster("오크", 5, 26, 26);
         }
 
         // 현재 몬스터를 Select_Stage로 출력
         public void DrawMonster_Info()
         {
-            monster[0].Monster_Info();
-            monster[1].Monster_Info();
-            monster[2].Monster_Info();
+            monsters[0].Monster_Info();
+            // monsters[1].Monster_Info();
+            // monsters[2].Monster_Info();
+            Console.WriteLine("==================\n");
+
+            SceneManager.instance.Menu(DrawMonster_Info, DungeonScene.instance.Dungeon_Title, () => Monster_Att(1) /*() => Monster_Att(2), () => Monster_Att(3)*/);
+        }
+
+        // 플레이어가 몬스터를 공격
+        public void Monster_Att(int input)
+        {
+            switch (input)
+            {
+                case 1:
+                    monsters[0].HP = (int)(monsters[0].MaxHP - player.AttDamage);
+                    Console.WriteLine($"{player}가 {monsters[0].Name}에게 {player.AttDamage}만큼 데미지를 주었습니다.");
+                    break;
+
+                // 몬스터 1 공격시 발생하는 문제 해결 시 추가 예정
+                //case 2:
+                //    monsters[0].HP = (int)(monsters[1].MaxHP - player.AttDamage);
+                //    Console.WriteLine($"{player}가 {monsters[1].Name}에게 {player.AttDamage}만큼 데미지를 주었습니다.");
+                //    break;
+                //case 3:
+                //    monsters[0].HP = (int)(monsters[2].MaxHP - player.AttDamage);
+                //    Console.WriteLine($"{player}가 {monsters[2].Name}에게 {player.AttDamage}만큼 데미지를 주었습니다.");
+                //    break;
+            }
+
+            SceneManager.instance.GoMenu(DungeonScene.instance.DrawMonster_Info);
+
         }
     }
 }
