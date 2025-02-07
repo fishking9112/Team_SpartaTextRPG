@@ -90,27 +90,25 @@ namespace Team_SpartaTextRPG
             Equip_Item item = Inven_Equip_Item[input - 1];
             Equip(item);
         }
-        public void Equip (Equip_Item item)
+        public void Equip(Equip_Item item)
         {
             int slotIndex = (int)item.item_Slot_Type;
 
             if (player.EquipSlot[slotIndex] != null)
             {
                 Equip_Item currentItem = player.EquipSlot[slotIndex];
-                Console.WriteLine($"기존 {currentItem.Name}이(가) 장착되어 있습니다.");
-                Console.WriteLine($"새로운 아이템 {item.Name}을(를) 장착합니다.");
-
+                currentItem.IsEquip = false;
                 player.EquipSlot[slotIndex] = item;
-                SceneManager.instance.GoMenu(ShowInventoryItem);
+                item.IsEquip = true;
             }
             else
             {
-                Console.WriteLine($"{item.Name}을(를) 장착합니다.");
                 player.EquipSlot[slotIndex] = item;
-                SceneManager.instance.GoMenu(ShowInventoryItem);
+                item.IsEquip = true;
             }
+            
 
-            item.IsEquip = true;
+            SceneManager.instance.GoMenu(ShowInventoryItem);
         }
     }
 }

@@ -52,16 +52,7 @@ namespace Team_SpartaTextRPG
 
         public string ShowEquip()
         {
-            string str = "";
-            if (IsEquip)
-            {
-                str = "장착";
-            }
-            else
-            {
-                str = "장착 가능";
-            }
-            return str;
+            return IsEquip ? "장착" : "장착 가능";
         }
         
     }
