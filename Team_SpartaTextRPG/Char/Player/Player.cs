@@ -126,7 +126,10 @@ namespace Team_SpartaTextRPG
             //아이템에 의한 데미지 증가
             foreach (var EquipItem in EquipSlot)
             {
-                finalDamage += EquipItem.Bonus_Att;
+                if(EquipItem != null)
+                {
+                    finalDamage += EquipItem.Bonus_Att;
+                }
             }
 
             return finalDamage;
@@ -141,7 +144,10 @@ namespace Team_SpartaTextRPG
 
             foreach (var EquipItem in EquipSlot)
             {
-                finalDefense += (int)EquipItem.Bonus_Def;
+                if (EquipItem != null)
+                {
+                    finalDefense += (int)EquipItem.Bonus_Def;
+                }
             }
 
             return finalDefense;
