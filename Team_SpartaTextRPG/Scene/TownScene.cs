@@ -39,7 +39,7 @@ namespace Team_SpartaTextRPG
                     SceneManager.instance.GoMenu(StatusScene.instance.Game_Stats);
                     break;
                 case 2: // 인벤토리
-                    GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
+                    SceneManager.instance.GoMenu(InventoryScene.instance.ShowInventory);
                     break;
                 case 3: // 상점
                     SceneManager.instance.GoMenu(ShopScene.instance.ShowShop);
