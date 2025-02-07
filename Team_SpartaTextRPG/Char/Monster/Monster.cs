@@ -18,8 +18,8 @@ namespace Team_SpartaTextRPG
         {
             Name = _name;
             Level = _level;
-            HP = _hp;
             MaxHP = maxhp;
+            HP = _hp;
 
             // 몬스터가 소환 시 AttDamge와 Defense는 안보여줌
             //AttDamage = _attDamage;
@@ -34,16 +34,17 @@ namespace Team_SpartaTextRPG
         //인터페이스 _ 프로퍼티
         public string Name { get; set; }
         public int Level { get; set; }
+        private int hp;
         public int HP
         {
-            get { return HP; }
+            get { return hp; }
             set
             {
-                HP = value;
+                hp = value;
 
                 // HP 값이 MaxHP를 넘지 않도록 제한
-                if (HP > MaxHP) HP = MaxHP;
-                else if (HP < 0) HP = 0;
+                if (hp > MaxHP) hp = MaxHP;
+                else if (hp < 0) hp = 0;
             }
         }
         public int MaxHP { get; set; }
