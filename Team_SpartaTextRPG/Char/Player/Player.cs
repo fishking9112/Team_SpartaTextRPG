@@ -115,5 +115,36 @@ namespace Team_SpartaTextRPG
         public float AttDamage { get; set; }
         public int Defense { get; set; }
         public bool IsDead => HP <= 0;
+
+        // 최종 데미지
+        public float FinalDamage()
+        {
+            float finalDamage = 0f;
+
+            finalDamage += AttDamage;
+
+            //아이템에 의한 데미지 증가
+            foreach (var EquipItem in EquipSlot)
+            {
+                finalDamage += EquipItem.Bonus_Att;
+            }
+
+            return finalDamage;
+        }
+
+        // 최종 방어력
+        public int FinalDefense()
+        {
+            int finalDefense = 0;
+
+            finalDefense += Defense;
+
+            foreach (var EquipItem in EquipSlot)
+            {
+                finalDefense += (int)EquipItem.Bonus_Def;
+            }
+
+            return finalDefense;
+        }
     }
 }
