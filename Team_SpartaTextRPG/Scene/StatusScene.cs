@@ -19,15 +19,13 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine($"Lv. {player.Level}");
             Console.WriteLine($"{player.Name} ( {player.Job} )");
-            Console.WriteLine($"공격력 : {player.AttDamage} ({player.AttDamage}-)");
-            Console.WriteLine($"방어력 : {player.Defense} ({player.Defense}-");
+            Console.WriteLine($"공격력 : {player.FinalDamage()} ({player.AttDamage}+{player.Equip_Damage()})"); //최종공격력 (기본공격력+아이템공격력)
+            Console.WriteLine($"방어력 : {player.FinalDefense()} ({player.Defense}+{player.Equip_Defense()})"); //최종방어력 (기본방어력+아이템방어력)
             Console.WriteLine($"체력 : {player.HP}");
             Console.WriteLine($"마나 : {player.MaxMP}");
             Console.WriteLine($"{player.Gold} G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
-
-            //아이템에서 공방가져오는중
 
             SceneManager.instance.Menu(Game_Stats, TownScene.instance.Game_Main);
         }
