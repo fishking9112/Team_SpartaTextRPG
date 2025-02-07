@@ -16,16 +16,14 @@ namespace Team_SpartaTextRPG
             ShowHighlightText("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
-            Console.WriteLine("Lv. player.Level");
-            Console.WriteLine("player.Name ( player.Job )");
-            Console.WriteLine("공격력 : player.AttDamage");
-            Console.WriteLine("방어력 : player.Defense");
-            Console.WriteLine("체력 : player.HP");
-            Console.WriteLine("Gold : player.Gold G");
+            Console.WriteLine($"Lv. {player.Level}");
+            Console.WriteLine($"{player.Name} ( {player.Job} )");
+            Console.WriteLine($"공격력 : {player.AttDamage}");
+            Console.WriteLine($"방어력 : {player.Defense}");
+            Console.WriteLine($"체력 : {player.HP}");
+            Console.WriteLine($"{player.Gold} G");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
-            Console.WriteLine();
-            Console.Write("원하시는 행동을 입력해주세요.\n>> ");
 
             SceneManager.instance.Menu(Game_Stats, TownScene.instance.Game_Main);
         }
