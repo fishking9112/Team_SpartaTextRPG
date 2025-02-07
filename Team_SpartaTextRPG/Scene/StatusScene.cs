@@ -13,7 +13,7 @@ namespace Team_SpartaTextRPG
         public void Game_Stats()
         {
             Console.Clear();
-            ShowHighlightText("상태 보기");
+            Utill.ColorWriteLine("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
             Console.WriteLine($"Lv. {player.Level}");
@@ -26,13 +26,6 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("0. 나가기");
 
             SceneManager.instance.Menu(Game_Stats, TownScene.instance.Game_Main);
-        }
-
-        private static void ShowHighlightText(string text) //텍스트 지정
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow; //노란색으로 변경
-            Console.WriteLine(text);
-            Console.ResetColor();
         }
 
         public void selectMenu(int _input)
