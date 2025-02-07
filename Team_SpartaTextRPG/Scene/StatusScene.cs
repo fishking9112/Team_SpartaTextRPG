@@ -41,6 +41,7 @@ namespace Team_SpartaTextRPG
             }
 
             SceneManager.instance.Menu(Game_Stats, TownScene.instance.Game_Main);
+        }
 
         public void selectMenu(int _input)
         {

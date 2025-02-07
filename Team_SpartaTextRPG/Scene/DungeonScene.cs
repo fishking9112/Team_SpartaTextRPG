@@ -15,11 +15,10 @@ namespace Team_SpartaTextRPG
         Player player = GameManager.instance.player;
         Monster[] monsters = new Monster[4];
 
+        // 던전 화면
         public void Dungeon_Title()
         {
             Console.WriteLine("1. [ Stage 입장 ]");
-            //Console.WriteLine("2. [ Stage 2 ]");
-            //Console.WriteLine("3. [ Stage 3 ]");
             Console.WriteLine("0. [ 돌아가기 ]");
             initStage();
 
@@ -51,12 +50,9 @@ namespace Team_SpartaTextRPG
         // 현재 몬스터를 Select_Stage로 출력
         public void DrawMonster_Info()
         {
-            //monsters[0].Monster_Info();
-            // monsters[1].Monster_Info();
-            // monsters[2].Monster_Info();
-
             List<Action> tempActions = new List<Action>();
             tempActions.Add(TownScene.instance.Game_Main);
+
             for (int i = 0; i < monsters.Length; i++)
             {
                 if (monsters[i] != null)
@@ -66,13 +62,14 @@ namespace Team_SpartaTextRPG
                     Console.WriteLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
                 }
             }
+
             Console.WriteLine("==================\n");
+            Console.WriteLine($"{player.HP}");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
 
             SceneManager.instance.Menu(DrawMonster_Info, tempActions.ToArray());
 
-            //SceneManager.instance.Menu(DrawMonster_Info, DungeonScene.instance.Dungeon_Title, () => Monster_Att(1) /*() => Monster_Att(2), () => Monster_Att(3)*/);
         }
 
         // 플레이어가 몬스터를 공격
@@ -80,11 +77,12 @@ namespace Team_SpartaTextRPG
         {
             monsters[input - 1].HP = (int)(monsters[input - 1].HP - player.AttDamage);
 
-            Utill.ColorWriteLine($"{monsters[input - 1].Name} 은 어쩌고 저쩌고");
+            Utill.ColorWriteLine($"{player.AttDamage} 공격", ConsoleColor.Blue);
+            Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {player.AttDamage}의 데미지를 받았다.");
             Thread.Sleep(1000);
 
             //몬스터 체력 검사
-
+            
             //피 없으면 죽이고 
             //죽은 몬스터 배열에서 빼주기
 
@@ -106,13 +104,15 @@ namespace Team_SpartaTextRPG
         {
             for (int i = 0; i < monsters.Length; i++)
             {
-                if(monsters[i] != null)
+                // 플레이어 체력 깎아주기
+                player.HP = (int)(player.HP - monsters[i].AttDamage);
+
+                if (monsters[i] != null)
                 {
-                    Utill.ColorWriteLine($"monsters[i] 공격", ConsoleColor.Red);
-                    Utill.ColorWriteLine($"player 는 monsters[i].att 의 데미지를 받았다.");
+                    Utill.ColorWriteLine($"{monsters[i]} 공격", ConsoleColor.Red);
+                    Utill.ColorWriteLine($"{player.Name}는(은) {monsters[i].AttDamage}의 데미지를 받았다.");
 
-                    // 플레이어 체력 깎아주기
-
+                    // 플레이어 체력 깎아주기 (대기)
 
                     Thread.Sleep(1000);
                 }
