@@ -9,9 +9,12 @@ namespace Team_SpartaTextRPG
     internal class ShopScene : Helper.Singleton<ShopScene>
     {
         public List<Item> itemList = new List<Item>();
+        public List<Equip_Item> Inven_Equip_Item;
 
         public ShopScene ()
         {
+            this.Inven_Equip_Item = Inven_Equip_Item;
+
             itemList = new List<Item>
             {
                 new Item("검", "일반 검", 1500)
@@ -36,25 +39,35 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("[아이템 목록]");
             for (int i = 0; i < itemList.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {itemList[i].Name}   |  {itemList[i].Description}    |    {itemList[i].Price}");
+                Console.WriteLine($"{i + 1}.   {itemList[i].Name}   |   {itemList[i].Description}   |   {itemList[i].Price}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
 
+            
+
             SceneManager.instance.Menu(ShowShopItem, ShowShop, TownScene.instance.Game_Main);
         }
-        public void selectMenu (int _input)
+        public void BuyItem (int input)
         {
-            if (_input == 1)
+            switch (input)
             {
-                
-            }
-            else if (_input == 2)
-            {
+                case 0:
+                    ShowShop();
+                    break;
+                default:
+                    Item select = itemList[input - 1];
 
+                    break;
             }
-            else if ( _input == 3)
+        }
+
+        public void Buy (Item item)
+        {
+            if (GameManager.instance.player.Gold > item.Price)
             {
+                GameManager.instance.player.Gold -= item.Price;
+                
 
             }
         }
