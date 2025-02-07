@@ -22,8 +22,9 @@ namespace Team_SpartaTextRPG
                 new Equip_Item("숏 소드", "일반 짧은 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 10.0f, 5f),
                 new Equip_Item("롱 소드", "일반 긴 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 15.0f, 0f),
                 new Equip_Item("자이언트 소드", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 20.0f, 10f),
-                new Equip_Item("세이버 소드", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 25.0f, 0f)
-
+                new Equip_Item("세이버 소드", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 25.0f, 0f),
+                new Equip_Item("가죽 갑옷", "....", 100, Item_Slot_Type.ARMOR, Item_Job_Type.NONE, 0f, 10f),
+                new Equip_Item("철 갑옷", "....", 200, Item_Slot_Type.ARMOR, Item_Job_Type.NONE, 0f, 20f)
             };
         }
         public void ShowShop ()
