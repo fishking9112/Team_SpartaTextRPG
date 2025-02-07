@@ -45,7 +45,7 @@ namespace Team_SpartaTextRPG
                     SceneManager.instance.GoMenu(ShopScene.instance.ShowShop);
                     break;
                 case 4: // 여관
-                    GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
+                    SceneManager.instance.GoMenu(RestScene.instance.Show_Rest);
                     break;
                 case 5: // 던전 입장
                     SceneManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
