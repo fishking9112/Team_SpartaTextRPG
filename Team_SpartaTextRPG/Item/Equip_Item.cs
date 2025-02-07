@@ -50,6 +50,19 @@ namespace Team_SpartaTextRPG
             return str;
         }
 
+        public string ShowEquip()
+        {
+            string str = "";
+            if (IsEquip)
+            {
+                str = "장착";
+            }
+            else
+            {
+                str = "장착 가능";
+            }
+            return str;
+        }
         
     }
 }

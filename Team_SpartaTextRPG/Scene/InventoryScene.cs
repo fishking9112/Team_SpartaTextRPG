@@ -25,7 +25,7 @@ namespace Team_SpartaTextRPG
             }
             for (int i = 0; i < Inven_Equip_Item.Count; i++)
             {
-                Console.WriteLine($"{i+1}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}");
+                Console.WriteLine($"{i + 1}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
             }
 
             Console.WriteLine();
@@ -54,13 +54,17 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("[장비 아이템 목록]");
             Console.WriteLine();
+            List<Action> tempActions = new List<Action>();
+            tempActions.Add(TownScene.instance.Game_Main);
             if (Inven_Equip_Item.Count <= 0)
             {
                 Console.WriteLine("보유 중인 장비 아이템이 없습니다.");
             }
             for (int i = 0; i < Inven_Equip_Item.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}");
+                int temp = i;
+                tempActions.Add(() => BuyItem(temp + 1));
+                Console.WriteLine($"{i + 1}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
             }
 
             Console.WriteLine();
@@ -77,15 +81,36 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
 
-            SceneManager.instance.Menu(ShowInventoryItem, ShowInventory);
+            SceneManager.instance.Menu(ShowInventoryItem, tempActions.ToArray());
         }
 
-        public void Equip ()
+        public void BuyItem(int input)
         {
-            foreach (var EquipItem in player.EquipSlot)
-            {
 
+            Equip_Item item = Inven_Equip_Item[input - 1];
+            Equip(item);
+        }
+        public void Equip (Equip_Item item)
+        {
+            int slotIndex = (int)item.item_Slot_Type;
+
+            if (player.EquipSlot[slotIndex] != null)
+            {
+                Equip_Item currentItem = player.EquipSlot[slotIndex];
+                Console.WriteLine($"기존 {currentItem.Name}이(가) 장착되어 있습니다.");
+                Console.WriteLine($"새로운 아이템 {item.Name}을(를) 장착합니다.");
+
+                player.EquipSlot[slotIndex] = item;
+                SceneManager.instance.GoMenu(ShowInventoryItem);
             }
+            else
+            {
+                Console.WriteLine($"{item.Name}을(를) 장착합니다.");
+                player.EquipSlot[slotIndex] = item;
+                SceneManager.instance.GoMenu(ShowInventoryItem);
+            }
+
+            item.IsEquip = true;
         }
     }
 }
