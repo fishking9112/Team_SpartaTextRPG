@@ -77,6 +77,9 @@ namespace Team_SpartaTextRPG
         public List<Equip_Item> Inven_Equip_Item = new List<Equip_Item>();
         //소비 아이템
         public List<Usable_Item> Inven_Usable_Item = new List<Usable_Item>();
+
+        public Equip_Item[] EquipSlot = new Equip_Item[(int)Item_Slot_Type.SLOT_MAX];
+
         // TODO : 미구현
 
         //인터페이스 _ 프로퍼티
