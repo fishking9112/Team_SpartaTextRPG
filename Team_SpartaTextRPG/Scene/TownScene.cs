@@ -19,29 +19,41 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("7. [  종  료  ]");
 
 
-            SceneManager.instance.Menu(Game_Main, null, StatusScene.instance.Game_Stats, null, ShopScene.instance.ShowShop, null, DungeonScene.instance.Dungeon_Title);
+            SceneManager.instance.Menu(Game_Main, null,
+                ()=>Select_Menu(1),
+                () => Select_Menu(2),
+                () => Select_Menu(3),
+                () => Select_Menu(4),
+                () => Select_Menu(5),
+                () => Select_Menu(6),
+                () => Select_Menu(7) );
         }
         public void Select_Menu(int _index)
         {
-            if (_index == 1)
+            switch(_index)
             {
-                SceneManager.instance.GoMenu(StatusScene.instance.Game_Stats);
-            }
-            if (_index == 5)
-            {
-                // 던전입장 선택지
-                SceneManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
-
-            }
-            else
-            {
-                // 궁수 선택
-
-
-                SceneManager.instance.Menu(Game_Main, null, null, null, ShopScene.instance.ShowShop, null);
+                case 1: // 상태보기
+                    SceneManager.instance.GoMenu(StatusScene.instance.Game_Stats);
+                    break;
+                case 2: // 인벤토리
+                    GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
+                    break;
+                case 3: // 상점
+                    SceneManager.instance.GoMenu(ShopScene.instance.ShowShop);
+                    break;
+                case 4: // 여관
+                    GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
+                    break;
+                case 5: // 던전 입장
+                    SceneManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
+                    break;
+                case 6: // 저장
+                    GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
+                    break;
+                case 7: // 종료
+                    GameManager.instance.isPlaying = false;
+                    break;
             }
         }
-
-       
     }
 }
