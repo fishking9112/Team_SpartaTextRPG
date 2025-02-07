@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,23 +9,41 @@ namespace Team_SpartaTextRPG
 {
     internal class StatusScene : Helper.Singleton<StatusScene>
     {
+        Player player = GameManager.instance.player;
         public void Game_Stats()
         {
             Console.Clear();
             ShowHighlightText("상태 보기");
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+            Console.WriteLine();
+            Console.WriteLine("Lv. player.Level");
+            Console.WriteLine("player.Name ( player.Job )");
+            Console.WriteLine("공격력 : player.AttDamage");
+            Console.WriteLine("방어력 : player.Defense");
+            Console.WriteLine("체력 : player.HP");
+            Console.WriteLine("Gold : player.Gold G");
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+            Console.Write("원하시는 행동을 입력해주세요.\n>> ");
 
+            SceneManager.instance.Menu(Game_Stats, TownScene.instance.Game_Main);
         }
 
-        private static void ShowHighlightText(string text)
+        private static void ShowHighlightText(string text) //텍스트 지정
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Yellow; //노란색으로 변경
             Console.WriteLine(text);
             Console.ResetColor();
         }
-        public void Game_Quit()
+
+        public void selectMenu(int _input)
         {
-            GameManager.instance.isPlaying = false;
+            if (_input == 0)
+            {
+                //Game_Main으로 돌아가기
+                SceneManager.instance.GoMenu(TownScene.instance.Game_Main);
+            }
         }
     }
 
