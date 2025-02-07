@@ -28,7 +28,6 @@ namespace Team_SpartaTextRPG
                 new Equip_Item("자이언트 활", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 20.0f, 10f),
                 new Equip_Item("세이버 활", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 25.0f, 0f),
             };
-
         }
         public void ShowMenu()
         {
