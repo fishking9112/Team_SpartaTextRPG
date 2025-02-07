@@ -19,8 +19,8 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine($"Lv. {player.Level}");
             Console.WriteLine($"{player.Name} ( {player.Job} )");
-            Console.WriteLine($"공격력 : {player.AttDamage} ()");
-            Console.WriteLine($"방어력 : {player.Defense} ()");
+            Console.WriteLine($"공격력 : {player.AttDamage} ({player.AttDamage}-)");
+            Console.WriteLine($"방어력 : {player.Defense} ({player.Defense}-");
             Console.WriteLine($"체력 : {player.HP}");
             Console.WriteLine($"마나 : {player.MaxMP}");
             Console.WriteLine($"{player.Gold} G");
@@ -28,17 +28,6 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("0. 나가기");
 
             //아이템에서 공방가져오는중
-            float totalAttack = EquipItem.Bonus_Att;
-            int totalDefense = EquipItem.Bonus_Def;
-
-            foreach (var EquipItem in EquipSlot)
-            {
-                if (item.IsEquipped)
-                {
-                    totalAttack += EquipItem.Bonus_Att;
-                    totalDefense += (int)EquipItem.Bonus_Def;
-                }
-            }
 
             SceneManager.instance.Menu(Game_Stats, TownScene.instance.Game_Main);
         }
