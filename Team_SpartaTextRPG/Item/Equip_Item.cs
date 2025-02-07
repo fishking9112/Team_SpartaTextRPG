@@ -31,5 +31,23 @@ namespace Team_SpartaTextRPG
             Bonus_Def = _Bonus_Def;
             IsEquip = false;
         }
+
+        public string AtkorDef()
+        {
+            string str = "";
+            if (Bonus_Att > 0 && Bonus_Def > 0)
+            {
+                str = $"공격력 +{Bonus_Att}   |   방어력 +{Bonus_Def}";
+            }
+            else if (Bonus_Def > 0 && Bonus_Att <= 0)
+            {
+                str = $"방어력 +{Bonus_Def}";
+            }
+            else if (Bonus_Att > 0 && Bonus_Def <= 0)
+            {
+               str = $"공격력 +{Bonus_Att}";
+            }
+            return str;
+        }
     }
 }
