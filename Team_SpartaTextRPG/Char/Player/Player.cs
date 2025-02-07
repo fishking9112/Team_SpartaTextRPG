@@ -89,7 +89,7 @@ namespace Team_SpartaTextRPG
             get { return hp; }
             set
             {
-                hp += value;
+                hp = value;
 
                 // HP 값이 MaxHP를 넘지 않도록 제한
                 if (hp > MaxHP) hp = MaxHP;
@@ -104,7 +104,7 @@ namespace Team_SpartaTextRPG
             get { return mp; }
             set
             {
-                mp += value;
+                mp = value;
                 if (mp > MaxMP) mp = MaxMP;
                 else if (mp < 0) mp = 0;
             }

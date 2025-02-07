@@ -31,18 +31,18 @@ namespace Team_SpartaTextRPG
 
         public void RestMenu()
         {
-                if ( player.MaxHP== player.HP)            //플레이어 체력이 최대치일때
+                if ( player.MaxHP== player.HP)             //플레이어 체력이 최대치일때
                 {
                     Console.WriteLine("체력이 이미 최대치입니다.\n\n");
                 }
-                else if ( player.Gold < 500)      //플레이어 골드가 500미만일때
+                else if ( player.Gold < 500)               //플레이어 골드가 500미만일때
                 {
                     Console.WriteLine("Gold가 부족합니다.\n\n");
                 }
                 else
                 {
-                    player.Gold -= 500;           //플레이어 골드가 -500
-                    player.HP = 100;              //플레이어 체력이 100
+                    player.Gold -= 500;                    //플레이어 골드가 -500
+                    player.HP = player.MaxHP;              //플레이어 체력이 최대치가됨
                     Console.WriteLine("휴식을 완료했습니다.\n\n");
                 }
             Console.WriteLine("0.확인");
