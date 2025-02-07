@@ -20,7 +20,7 @@ namespace Team_SpartaTextRPG
             Console.WriteLine($"Lv. {player.Level}");
             Console.WriteLine($"{player.Name} ( {player.Job} )");
             Console.WriteLine($"공격력 : {player.AttDamage} ({player.AttDamage}-)");
-            Console.WriteLine($"방어력 : {player.Defense} ({player.Defense}-");
+            Console.WriteLine($"방어력 : {player.Defense} ({player.Defense}-)");
             Console.WriteLine($"체력 : {player.HP}");
             Console.WriteLine($"마나 : {player.MaxMP}");
             Console.WriteLine($"{player.Gold} G");

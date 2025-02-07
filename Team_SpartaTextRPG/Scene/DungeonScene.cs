@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -41,17 +42,17 @@ namespace Team_SpartaTextRPG
         public void initStage()
         {
             // 몬스터 정보
-            monsters[0] = new Monster("슬라임", 1, 15, 15);
-            monsters[1] = new Monster("고블린", 3, 22, 22);
-            monsters[2] = new Monster("오크", 5, 26, 26);
-            monsters[3] = new Monster("맼닠젘", 10, 50, 50);
+            monsters[0] = new Monster("슬라임", 1, 1, 15, 1, 1);
+            monsters[1] = new Monster("고블린", 3, 1, 22, 3, 5);
+            monsters[2] = new Monster("오크", 5, 1, 26, 8, 4);
+            monsters[3] = new Monster("맼닠젘", 10, 1, 50, 10, 25);
         }
 
         // 현재 몬스터를 Select_Stage로 출력
         public void DrawMonster_Info()
         {
             List<Action> tempActions = new List<Action>();
-            tempActions.Add(TownScene.instance.Game_Main);
+            tempActions.Add(DungeonScene.instance.Dungeon_Title);
 
             for (int i = 0; i < monsters.Length; i++)
             {
@@ -63,8 +64,8 @@ namespace Team_SpartaTextRPG
                 }
             }
 
-            Console.WriteLine("==================\n");
-            Console.WriteLine($"{player.HP}");
+            Console.WriteLine("===========================================================\n");
+            Console.WriteLine($"이름 : {player.Name}  |  Lv. {player.Level}  |  플레이어의 체력 : {player.HP}  |  플레이어의 마나 : {player.MP}");
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
 
@@ -77,13 +78,19 @@ namespace Team_SpartaTextRPG
         {
             monsters[input - 1].HP = (int)(monsters[input - 1].HP - player.AttDamage);
 
-            Utill.ColorWriteLine($"{player.AttDamage} 공격", ConsoleColor.Blue);
+            Utill.ColorWriteLine($"{player.Name} 공격", ConsoleColor.Blue);
             Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {player.AttDamage}의 데미지를 받았다.");
             Thread.Sleep(1000);
 
             //몬스터 체력 검사
-            
+
             //피 없으면 죽이고 
+            if (monsters[input - 1].IsDead != false)
+            {
+                monsters[input - 1] = null;
+
+            }
+
             //죽은 몬스터 배열에서 빼주기
 
             // monsters[0] = null
@@ -92,33 +99,28 @@ namespace Team_SpartaTextRPG
 
             //모든 몬스터가 죽으면 == monsters[i] == null
 
+            //SceneManager.instance.GoMenu(DungeonScene.instance.다른 곳으로);
 
-                 //SceneManager.instance.GoMenu(DungeonScene.instance.다른 곳으로);
-
-
-
-            SceneManager.instance.GoMenu(DungeonScene.instance.Monster_Att);
         }
 
         public void Monster_Att()
         {
             for (int i = 0; i < monsters.Length; i++)
             {
-                // 플레이어 체력 깎아주기
-                player.HP = (int)(player.HP - monsters[i].AttDamage);
 
                 if (monsters[i] != null)
                 {
-                    Utill.ColorWriteLine($"{monsters[i]} 공격", ConsoleColor.Red);
-                    Utill.ColorWriteLine($"{player.Name}는(은) {monsters[i].AttDamage}의 데미지를 받았다.");
+                    // 플레이어 체력 깎아주기
+                    player.HP = (int)(player.HP - monsters[i].AttDamage);
 
-                    // 플레이어 체력 깎아주기 (대기)
+                    Utill.ColorWriteLine($"{monsters[i].Name} 공격", ConsoleColor.Red);
+                    Utill.ColorWriteLine($"{player.Name}는(은) {monsters[i].AttDamage}의 데미지를 받았다.");
 
                     Thread.Sleep(1000);
                 }
             }
 
-            SceneManager.instance.Menu(Monster_Att, null , DungeonScene.instance.DrawMonster_Info);
+            SceneManager.instance.GoMenu(DrawMonster_Info);
 
         }
         public void Monster_Dead()
@@ -126,6 +128,7 @@ namespace Team_SpartaTextRPG
             if (monsters[0].HP > 0)
             {
                 Console.WriteLine($"{monsters[0].Name}이(가) 죽었습니다.");
+
             }
             else
             {
@@ -133,6 +136,12 @@ namespace Team_SpartaTextRPG
             }
 
             SceneManager.instance.Menu(DrawMonster_Info);
+
+        }
+
+        public void Stage_Clear()
+        {
+            Console.WriteLine("TEST");
 
         }
     }
