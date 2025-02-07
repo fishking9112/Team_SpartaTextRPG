@@ -19,7 +19,7 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("7. [  종  료  ]");
 
 
-            SceneManager.instance.Menu(Game_Main, null, () => Select_Menu(1), () => Select_Menu(2), () => Select_Menu(3));
+            SceneManager.instance.Menu(Game_Main, null, StatusScene.instance.Game_Stats, null, ShopScene.instance.ShowShop, null, DungeonScene.instance.Dungeon_Title);
         }
         public void Select_Menu(int _index)
         {
@@ -38,7 +38,7 @@ namespace Team_SpartaTextRPG
                 // 궁수 선택
 
 
-                SceneManager.instance.Menu(Game_Main, null, null, null, ShopScene.instance.ShowShop, () => Select_Numbers(5));
+                SceneManager.instance.Menu(Game_Main, null, null, null, ShopScene.instance.ShowShop, null);
             }
         }
 
