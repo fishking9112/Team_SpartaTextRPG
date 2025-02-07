@@ -65,9 +65,20 @@ namespace Team_SpartaTextRPG
             {
                 case 1:
                     monsters[0].HP = (int)(monsters[0].MaxHP - player.AttDamage);
-                    Console.WriteLine($"{player}가 {monsters[0].Name}에게 {player.AttDamage}만큼 데미지를 주었습니다.");
                     break;
 
+                    // 몬스터 1 공격시 발생하는 문제 해결 시 추가 예정
+                    //case 2:
+                    //    monsters[0].HP = (int)(monsters[1].MaxHP - player.AttDamage);
+                    //    Console.WriteLine($"{player}가 {monsters[1].Name}에게 {player.AttDamage}만큼 데미지를 주었습니다.");
+                    //    break;
+                    //case 3:
+                    //    monsters[0].HP = (int)(monsters[2].MaxHP - player.AttDamage);
+                    //    Console.WriteLine($"{player}가 {monsters[2].Name}에게 {player.AttDamage}만큼 데미지를 주었습니다.");
+                    //    break;
+            }
+            SceneManager.instance.GoMenu(DungeonScene.instance.DrawMonster_Info);
+        }
         public void Monster_Dead()
         {
             if (monsters[0].HP > 0)
