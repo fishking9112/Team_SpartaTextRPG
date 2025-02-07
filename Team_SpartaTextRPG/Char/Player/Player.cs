@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Team_SpartaTextRPG
 {
-    enum PLAYER_JOB { JOB_WARRIOR , JOB_END}
+    enum PLAYER_JOB { WARRIOR , END }
 
     internal class Player : ICharacter
     {
@@ -24,6 +24,7 @@ namespace Team_SpartaTextRPG
         //장착 아이템
         public List<Equip_Item> Inven_Equip_Item = new List<Equip_Item>();
         //소비 아이템
+        public List<Usable_Item> Inven_Usable_Item = new List<Usable_Item>();
         // 미구현
 
         //인터페이스 _ 프로퍼티
