@@ -12,7 +12,7 @@ namespace Team_SpartaTextRPG
         public void Show_Rest()
         {
             Console.Clear();
-            ShowHighlightText("휴식하기");
+            Utill.ColorWriteLine("휴식하기");
             Console.WriteLine($"500 G를 내면 체력을 회복할 수 있습니다. (보유골드 : {player.Gold} G)");
             Console.WriteLine();
             Console.WriteLine("1. 휴식하기");
@@ -20,15 +20,10 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
+            //RestMenu로 가기
             SceneManager.instance.Menu(Show_Rest, TownScene.instance.Game_Main, RestMenu);
         }
-        private static void ShowHighlightText(string text) //텍스트 지정
-        {
-            Console.ForegroundColor = ConsoleColor.Yellow; //노란색으로 변경
-            Console.WriteLine(text);
-            Console.ResetColor();
-        }
-
+        
         public void RestMenu()
         {
                 if ( player.MaxHP== player.HP)             //플레이어 체력이 최대치일때
@@ -47,6 +42,7 @@ namespace Team_SpartaTextRPG
                 }
             Console.WriteLine("0.확인");
             Console.WriteLine();
+            //RestMenu 에서 Show_Rest로 돌아가기
             SceneManager.instance.Menu(RestMenu, Show_Rest);
 
         }
