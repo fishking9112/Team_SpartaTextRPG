@@ -14,16 +14,17 @@ namespace Team_SpartaTextRPG
         public Monster() { }
 
         // 사용자 지정 생성자
-        public Monster(string _name, int _level, int _hp, int maxhp /* _attDamage, int _def*/)
+        public Monster(string _name, int _level, int _hp, int maxhp, int _attDamage, int _def)
         {
             Name = _name;
             Level = _level;
             MaxHP = maxhp;
             HP = _hp;
 
-            // 몬스터가 소환 시 AttDamge와 Defense는 안보여줌
-            //AttDamage = _attDamage;
-            //Defense = _def;
+            AttDamage = _attDamage;
+            Defense = _def;
+
+            bool IsDead = false;
         }
 
         //Monster만 가지는 필드
