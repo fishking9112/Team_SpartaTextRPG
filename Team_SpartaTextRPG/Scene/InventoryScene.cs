@@ -8,13 +8,7 @@ namespace Team_SpartaTextRPG
 {
     internal class InventoryScene : Helper.Singleton<InventoryScene>
     {
-        public List<Equip_Item> Inven_Equip_Item;
-
-        public InventoryScene ()
-        {
-            this.Inven_Equip_Item = new List<Equip_Item>();
-        }
-        
+        List<Equip_Item> Inven_Equip_Item = GameManager.instance.player.Inven_Equip_Item;
 
 
         public void ShowInventory ()
