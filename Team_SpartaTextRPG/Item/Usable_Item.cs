@@ -21,5 +21,23 @@ namespace Team_SpartaTextRPG
             Bonus_HP = _Bonus_HP;
             Bonus_MP = _Bonus_MP;
         }
+
+        public string HporMp()
+        {
+            string str = "";
+            if (Bonus_HP > 0 && Bonus_MP > 0)
+            {
+                str = $"HP +{Bonus_HP}   |   MP +{Bonus_MP}";
+            }
+            else if (Bonus_MP > 0 && Bonus_HP <= 0)
+            {
+                str = $"MP +{Bonus_MP}";
+            }
+            else if (Bonus_HP > 0 && Bonus_MP <= 0)
+            {
+                str = $"HP +{Bonus_HP}";
+            }
+            return str;
+        }
     }
 }
