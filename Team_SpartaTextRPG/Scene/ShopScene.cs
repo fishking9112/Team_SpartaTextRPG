@@ -19,9 +19,9 @@ namespace Team_SpartaTextRPG
         {
             equip_ItemsList = new List<Equip_Item>
             { 
-                new Equip_Item("숏 소드", "일반 짧은 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 10.0f, 0f),
+                new Equip_Item("숏 소드", "일반 짧은 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 10.0f, 5f),
                 new Equip_Item("롱 소드", "일반 긴 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 15.0f, 0f),
-                new Equip_Item("자이언트 소드", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 20.0f, 0f),
+                new Equip_Item("자이언트 소드", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 20.0f, 10f),
                 new Equip_Item("세이버 소드", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 25.0f, 0f)
 
             };
@@ -50,7 +50,7 @@ namespace Team_SpartaTextRPG
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(temp + 1));
-                Console.WriteLine($"{i + 1}.   {equip_ItemsList[i].Name}   |   {equip_ItemsList[i].Description}   |   {equip_ItemsList[i].Price}");
+                Console.WriteLine($"{i + 1}.   {equip_ItemsList[i].Name}   |   설명: {equip_ItemsList[i].Description}   |   {equip_ItemsList[i].AtkorDef()}   |   가격: {equip_ItemsList[i].Price}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
