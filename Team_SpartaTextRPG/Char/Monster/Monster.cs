@@ -34,7 +34,18 @@ namespace Team_SpartaTextRPG
         //인터페이스 _ 프로퍼티
         public string Name { get; set; }
         public int Level { get; set; }
-        public int HP { get; set; }
+        public int HP
+        {
+            get { return HP; }
+            set
+            {
+                HP = value;
+
+                // HP 값이 MaxHP를 넘지 않도록 제한
+                if (HP > MaxHP) HP = MaxHP;
+                else if (HP < 0) HP = 0;
+            }
+        }
         public int MaxHP { get; set; }
         public float AttDamage { get; set; }
         public int Defense { get; set; }
