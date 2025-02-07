@@ -51,7 +51,7 @@ namespace Team_SpartaTextRPG
 
             for (int i = 0; i < Inven_Usable_Item.Count; i++)
             {
-                Console.WriteLine($"{i + 1}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Bonus_HP}   |   {Inven_Usable_Item[i].Description}");
+                Console.WriteLine($"{i + 1}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Description}   |   {Inven_Usable_Item[i].HporMp()}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
