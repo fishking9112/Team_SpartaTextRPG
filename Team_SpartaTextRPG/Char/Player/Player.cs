@@ -134,6 +134,22 @@ namespace Team_SpartaTextRPG
 
             return finalDamage;
         }
+        
+        public float Equip_Damage()
+        {
+            float EquipDamage = 0f;
+            //아이템에 의한 데미지 증가
+
+            foreach (var EquipItem in EquipSlot)
+            {
+                if (EquipItem != null)
+                {
+                    EquipDamage += EquipItem.Bonus_Att;
+                }
+            }
+
+            return EquipDamage;
+        }
 
         // 최종 방어력
         public int FinalDefense()
@@ -152,5 +168,21 @@ namespace Team_SpartaTextRPG
 
             return finalDefense;
         }
+        public float Equip_Defense()
+        {
+            float EquipDefense = 0f;
+            //아이템에 의한 데미지 증가
+
+            foreach (var EquipItem in EquipSlot)
+            {
+                if (EquipItem != null)
+                {
+                    EquipDefense += EquipItem.Bonus_Def;
+                }
+            }
+
+            return EquipDefense;
+        }
+
     }
 }
