@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Team_SpartaTextRPG
 {
-    enum PLAYER_JOB { WARRIOR, ARCHER, WIZARD }
+    enum PLAYER_JOB { WARRIOR, THIEF, ARCHER, WIZARD }
 
     internal class Player : ICharacter
     {
@@ -35,7 +35,7 @@ namespace Team_SpartaTextRPG
             // 소지금 설정
             Gold = 1500;
         }
-        public Player(string _name, PLAYER_JOB _job, List<Skill_Key> _skillList, int _level, int _exp, int _maxExp, int _hp, int _maxHp, int _mp, int _maxMp, float _attDamage, int _def, int _gold)
+        public Player(string _name, PLAYER_JOB _job, List<Skill_Key> _skillList, int _level, int _maxExp, int _exp, int _maxHp, int _hp, int _maxMp, int _mp, float _attDamage, int _def, int _gold)
         {
             // 이름, 직업 설정
             Name = _name;

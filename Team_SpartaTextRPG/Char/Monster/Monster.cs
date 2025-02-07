@@ -14,13 +14,16 @@ namespace Team_SpartaTextRPG
         public Monster() { }
 
         // 사용자 지정 생성자
-        public Monster(string _name, int _level, int _hp, float _attDamage, int _def)
+        public Monster(string _name, int _level, int _hp, int maxhp /* _attDamage, int _def*/)
         {
             Name = _name;
             Level = _level;
             HP = _hp;
-            AttDamage = _attDamage;
-            Defense = _def;
+            MaxHP = maxhp;
+
+            // 몬스터가 소환 시 AttDamge와 Defense는 안보여줌
+            //AttDamage = _attDamage;
+            //Defense = _def;
         }
 
         //Monster만 가지는 필드
@@ -40,9 +43,8 @@ namespace Team_SpartaTextRPG
 
 
         // 몬스터의 기본 정보
-        public void Status_Monster(Monster monster)
+        public void Monster_Info()
         {
-            // AttDamge와 Defense 제외한 다른 것을 보여줘야함
             Console.WriteLine($"{Name} Lv. {Level} {HP}/{MaxHP}");
         }
     }
