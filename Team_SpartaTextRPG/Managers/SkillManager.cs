@@ -9,6 +9,7 @@ namespace Team_SpartaTextRPG
     enum Skill_Key
     {
         WarriorSkill01, WarriorSkill02, WarriorSkill03,
+        ThiefSkill01, ThiefSkill02, ThiefSkill03,
         ArcherSkill01, ArcherSkill02, ArcherSkill03,
         WizardSkill01, WizardSkill02, WizardSkill03
     }
@@ -27,7 +28,7 @@ namespace Team_SpartaTextRPG
                 player.HP -= 10;
             })},
             { Skill_Key.WarriorSkill02, ("크게 휘두르기 - 마나를 10 사용하여 자신의 데미지의 2배의 피해를 준다" , player => { // 스킬 데미지
-                if (player.MP <= 10){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
+                if (player.MP < 10){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
                 return player.AttDamage * 2f;
             }, player => { // 스킬 코스트 비용 지불
                 player.MP -= 10;
@@ -37,6 +38,24 @@ namespace Team_SpartaTextRPG
             }, player => { // 스킬 코스트 비용 지불
                 player.HP += 10;
                 player.MP += 50;
+            })},
+
+            { Skill_Key.ThiefSkill01, ("발목 긋기 - 마나를 10 사용하여 자신의 데미지의 1.5배의 피해를 준다" , player => { // 스킬 데미지
+                if (player.MP < 10){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
+                return 0f;
+            }, player => { // 스킬 코스트 비용 지불
+                player.MP -= 10;
+            })},
+            { Skill_Key.ThiefSkill02, ("소매치기 - 데미지를 1 주고 골드를 1000G 얻는다" , player => { // 스킬 데미지
+                return 1f;
+            }, player => { // 스킬 코스트 비용 지불
+                player.Gold += 1000;
+            })},
+            { Skill_Key.ThiefSkill03, ("돈 뿌리기 - 돈을 100G 소비 후 자신의 데미지의 3배의 피해를 준다" , player => { // 스킬 데미지
+                if (player.Gold < 100){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
+                return player.AttDamage * 3f;
+            }, player => { // 스킬 코스트 비용 지불
+                player.Gold -= 100;
             })},
 
 
