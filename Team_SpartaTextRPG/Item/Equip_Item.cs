@@ -9,7 +9,7 @@ namespace Team_SpartaTextRPG
     // 장비 착용 부위
     enum Item_Slot_Type { WEAPON, ARMOR_H, ARMOR_C, ARMOR_G, ARMOR_S, SLOT_MAX }
     // 장비 착용 시 필요한 직업
-    enum Item_Job_Type { NONE, WARRIOR, ARCHER, WIZARD }
+    enum Item_Job_Type { NONE, WARRIOR, ARCHER, WIZARD, ROGUE }
 
     internal class Equip_Item : Item
     {
