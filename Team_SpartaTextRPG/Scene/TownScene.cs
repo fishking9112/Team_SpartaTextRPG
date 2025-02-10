@@ -30,19 +30,19 @@ namespace Team_SpartaTextRPG
             {
 
                 case 1: // 상태보기
-                    SceneManager.instance.GoMenu(StatusScene.instance.Game_Stats);
+                    InputKeyManager.instance.GoMenu(StatusScene.instance.Game_Stats);
                     break;
                 case 2: // 인벤토리
-                    SceneManager.instance.GoMenu(InventoryScene.instance.ShowInventory);
+                    InputKeyManager.instance.GoMenu(InventoryScene.instance.ShowInventory);
                     break;
                 case 3: // 상점
-                    SceneManager.instance.GoMenu(ShopScene.instance.ShowMenu);
+                    InputKeyManager.instance.GoMenu(ShopScene.instance.ShowMenu);
                     break;
                 case 4: // 여관
-                    SceneManager.instance.GoMenu(RestScene.instance.Show_Rest);
+                    InputKeyManager.instance.GoMenu(RestScene.instance.Show_Rest);
                     break;
                 case 5: // 던전 입장
-                    SceneManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
+                    InputKeyManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
                     break;
                 case 6: // 저장
                     GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
