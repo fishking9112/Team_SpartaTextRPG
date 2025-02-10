@@ -78,7 +78,7 @@ namespace Team_SpartaTextRPG
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(usable_ItemsList[temp]));
-                Console.WriteLine($"{i + 1}. {usable_ItemsList[i].Name}   |   {usable_ItemsList[i].Description}   |   {usable_ItemsList[i].Price}");
+                Console.WriteLine($"{i + 1}. {usable_ItemsList[i].Name}   |   {usable_ItemsList[i].Description}   |   {usable_ItemsList[i].HporMp()}   |   가격: {usable_ItemsList[i].Price}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
