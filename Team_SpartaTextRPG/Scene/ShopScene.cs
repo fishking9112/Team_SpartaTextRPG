@@ -35,7 +35,15 @@ namespace Team_SpartaTextRPG
                 new Equip_Item("일반 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 10.0f, 0f),
                 new Equip_Item("룬 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 15.0f, 0f),
                 new Equip_Item("프리스트 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 20.0f, 0f),
-                new Equip_Item("세이버 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 25.0f, 0f)
+                new Equip_Item("세이버 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 25.0f, 0f),
+                new Equip_Item("가죽 머리", "....", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("가죽 옷", "....", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("가죽 장갑", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("가죽 신발", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("블랙 머리", "....", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("블랙 옷", "....", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("블랙 장갑", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("블랙 신발", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f)
             };
             usable_ItemsList = new List<Usable_Item>
             {

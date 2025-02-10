@@ -52,13 +52,5 @@ namespace Team_SpartaTextRPG
         public float AttDamage { get; set; }
         public int Defense { get; set; }
         public bool IsDead => HP <= 0;
-
-
-
-        // 몬스터의 기본 정보
-        public void Monster_Info()
-        {
-            Console.WriteLine($"{Name} Lv. {Level} {HP}/{MaxHP}");
-        }
     }
 }
