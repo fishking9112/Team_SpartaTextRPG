@@ -10,25 +10,19 @@ namespace Team_SpartaTextRPG
     {
         public void Game_Main()
         {
-            Console.WriteLine("1. [ 상태보기 ]");
-            Console.WriteLine("2. [ 인벤토리 ]");
-            Console.WriteLine("3. [  상  점  ]");
-            Console.WriteLine("4. [  여  관  ]");
-            Console.WriteLine("5. [ 던전입장 ]");
-            Console.WriteLine("6. [  저  장  ]");
-            Console.WriteLine("7. [  종  료  ]");
+            TitleManager.instance.WriteTitle("강렬한 인상 is 게임");
 
+            // ScreenManager.instance.AsyncVideo("resources/village.gif", _isContinue: true, _isReversal: false);
+            ScreenManager.instance.AsyncImage("resources/village.png");
 
-
-            SceneManager.instance.Menu(Game_Main, null,
-                ()=>Select_Menu(1),
-                () => Select_Menu(2),
-                () => Select_Menu(3),
-                () => Select_Menu(4),
-                () => Select_Menu(5),
-                () => Select_Menu(6),
-                () => Select_Menu(7) );
-
+            InputKeyManager.instance.ArtMenu(
+                ($"상태보기", "플레이어의 상태를 확인합니다.", () => Select_Menu(1)), 
+                ($"인벤토리", "아이템을 장착하거나 뺄 수 있습니다.", () => Select_Menu(2)),
+                ($"상점", "무기와 방어구를 사거나 팔 수 있습니다.", () => Select_Menu(3)),
+                ($"여관", "쉴 수 있습니다.", () => Select_Menu(4)), 
+                ($"던전입장", "던전에 입장합니다.", () => Select_Menu(5)),
+                ($"저장", "현재 데이터를 저장합니다.", () => Select_Menu(6)),
+                ($"타이틀로", "게임을 종료합니다.", () => Select_Menu(7)));
         }
         public void Select_Menu(int _index)
         {
