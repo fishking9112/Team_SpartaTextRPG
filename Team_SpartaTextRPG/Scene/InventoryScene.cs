@@ -19,28 +19,29 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("[장비 아이템 목록]");
             Console.WriteLine();
+            int index = 1;
             if (Inven_Equip_Item.Count <= 0)
             {
                 Console.WriteLine("보유 중인 장비 아이템이 없습니다.");
             }
-            for (int i = 0; i < Inven_Equip_Item.Count; i++)
+            for (int i = 0; i < Inven_Equip_Item.Count; i++, index++)
             {
-                Console.WriteLine($"{i + 1}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
+                Console.WriteLine($"{index}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
             }
 
             Console.WriteLine();
             Console.WriteLine("[소비 아이템 목록]");
             Console.WriteLine();
-            if (player.Inven_Usable_Item.Count <= 0)
+            if (Inven_Usable_Item.Count <= 0)
             {
                 Console.WriteLine("보유 중인 소비 아이템이 없습니다.");
             }
-            for (int i = 0; i < Inven_Usable_Item.Count; i++)
+            for (int i = 0; i < Inven_Usable_Item.Count; i++, index++)
             {
-                Console.WriteLine($"{i + 1}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Description}   |   {Inven_Usable_Item[i].HporMp()}");
+                Console.WriteLine($"{index}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Description}   |   {Inven_Usable_Item[i].HporMp()}");
             }
             Console.WriteLine();
-            Console.WriteLine("1. 장착 관리");
+            Console.WriteLine("1. 아이템 관리");
             Console.WriteLine("0. 나가기");
 
             SceneManager.instance.Menu(ShowInventory, TownScene.instance.Game_Main, ShowInventoryItem);
@@ -56,15 +57,16 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             List<Action> tempActions = new List<Action>();
             tempActions.Add(TownScene.instance.Game_Main);
+            int index = 1;
             if (Inven_Equip_Item.Count <= 0)
             {
                 Console.WriteLine("보유 중인 장비 아이템이 없습니다.");
             }
-            for (int i = 0; i < Inven_Equip_Item.Count; i++)
+            for (int i = 0; i < Inven_Equip_Item.Count; i++, index++)
             {
                 int temp = i;
-                tempActions.Add(() => BuyItem(temp + 1));
-                Console.WriteLine($"{i + 1}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
+                tempActions.Add(() => EquipItem(player.Inven_Equip_Item[temp]));
+                Console.WriteLine($"{index}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
             }
 
             Console.WriteLine();
@@ -74,22 +76,57 @@ namespace Team_SpartaTextRPG
             {
                 Console.WriteLine("보유 중인 소비 아이템이 없습니다.");
             }
-            for (int i = 0; i < Inven_Usable_Item.Count; i++)
+            for (int i = 0; i < Inven_Usable_Item.Count; i++, index++)
             {
-                Console.WriteLine($"{i + 1}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Description}   |   {Inven_Usable_Item[i].HporMp()}");
+                int temp = i;
+                tempActions.Add(() => EquipItem(player.Inven_Usable_Item[temp]));
+                Console.WriteLine($"{index}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Description}   |   {Inven_Usable_Item[i].HporMp()}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
-
             SceneManager.instance.Menu(ShowInventoryItem, tempActions.ToArray());
         }
 
-        public void BuyItem(int input)
-        {
 
-            Equip_Item item = Inven_Equip_Item[input - 1];
-            Equip(item);
+        public void EquipItem(Item item)
+        {
+            if (item is Equip_Item equip_Item)
+            {
+                Equip(equip_Item);
+            }
+            else if (item is Usable_Item usable_Item)
+            {
+                Use(usable_Item);
+            }
         }
+        
+        public void Use(Usable_Item item)
+        {
+            if (item.Bonus_HP > 0 && item.Bonus_MP <= 0)
+            {
+                player.HP += (int)item.Bonus_HP;
+            }
+            else if (item.Bonus_MP > 0 && player.HP <= 0)
+            {
+                player.MP += (int)item.Bonus_MP;
+            }
+            else if (item.Bonus_HP > 0 && item.Bonus_MP > 0)
+            {
+                player.HP += (int)item.Bonus_HP;
+                player.MP += (int)item.Bonus_MP;
+            }
+            else if (item.Bonus_Att > 0)
+            {
+                player.AttDamage += (int)item.Bonus_Att;
+            }
+            else
+            {
+                player.Defense += (int)item.Bonus_Def;
+            }
+            player.Inven_Usable_Item.Remove(item);
+            SceneManager.instance.GoMenu(ShowInventoryItem);
+        }
+
         public void Equip(Equip_Item item)
         {
             int slotIndex = (int)item.item_Slot_Type;
@@ -106,8 +143,6 @@ namespace Team_SpartaTextRPG
                 player.EquipSlot[slotIndex] = item;
                 item.IsEquip = true;
             }
-            
-
             SceneManager.instance.GoMenu(ShowInventoryItem);
         }
     }
