@@ -36,7 +36,7 @@ namespace Team_SpartaTextRPG
             {
 
                 case 1: // 상태보기
-                    SceneManager.instance.GoMenu(StatusScene.instance.Game_Stats);
+                    SceneManager.instance.GoMenu(StatusScene.instance.Player_Stats);
                     break;
                 case 2: // 인벤토리
                     SceneManager.instance.GoMenu(InventoryScene.instance.ShowInventory);
