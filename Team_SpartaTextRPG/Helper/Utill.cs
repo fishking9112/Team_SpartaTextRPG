@@ -73,6 +73,7 @@ namespace Team_SpartaTextRPG
         // IDLE, DIE, END Monster
         public static readonly (string idle,string die, string end) SKELETON_PATH = ("./resources/skeleton.gif", "./resources/skeleton_die.gif", "./resources/skeleton_die_end.gif");
         public static readonly (string idle,string die, string end) SLIME_PATH = ("./resources/slime.gif", "./resources/slime_die.gif", "./resources/slime_die_end.gif");
+        public static readonly (string idle,string die, string end) ORK_PATH = ("./resources/ork.gif", "./resources/ork_die.gif", "./resources/ork_die_end.gif");
         // ScreenManager.instance.AsyncUnitVideo("./resources/warrior.mp4", startX: 0, startY: 1, videoSizeX: 12, videoSizeY: 15, _isContinue: true, _isReversal:true);
         // ScreenManager.instance.AsyncText("Lv.1 플레이어(전사)", _startX: 1, _startY: 17);
         // ScreenManager.instance.AsyncText("HP 100/100", _startX: 1, _startY: 18,_color:ConsoleColor.Red);

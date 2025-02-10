@@ -23,7 +23,7 @@ namespace Team_SpartaTextRPG
             // 몬스터 정보
             monsters[0] = new Monster("슬라임", 1, 1, 15, 1, 1, Utill.SLIME_PATH);
             monsters[1] = new Monster("해골", 3, 1, 22, 3, 5, Utill.SKELETON_PATH);
-            monsters[2] = new Monster("오크", 5, 1, 26, 8, 4, Utill.SLIME_PATH);
+            monsters[2] = new Monster("오크", 5, 1, 26, 8, 4, Utill.ORK_PATH);
             monsters[3] = new Monster("맼닠젘", 10, 1, 50, 10, 25, Utill.SLIME_PATH);
         }
 
