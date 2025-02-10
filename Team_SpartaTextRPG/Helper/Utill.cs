@@ -62,5 +62,25 @@ namespace Team_SpartaTextRPG
             Console.Write(_text);
             Console.ResetColor();
         }
+
+        // IDLE, DIE, END
+        public static readonly (string idle,string die, string end) SKELETON_PATH = ("./resources/skeleton.gif", "./resources/skeleton_die.gif", "./resources/skeleton_die_end.gif");
+        public static readonly (string idle,string die, string end) SLIME_PATH = ("./resources/slime.gif", "./resources/slime_die.gif", "./resources/slime_die_end.gif");
+        // ScreenManager.instance.AsyncUnitVideo("./resources/warrior.mp4", startX: 0, startY: 1, videoSizeX: 12, videoSizeY: 15, _isContinue: true, _isReversal:true);
+        // ScreenManager.instance.AsyncText("Lv.1 플레이어(전사)", _startX: 1, _startY: 17);
+        // ScreenManager.instance.AsyncText("HP 100/100", _startX: 1, _startY: 18,_color:ConsoleColor.Red);
+        // ScreenManager.instance.AsyncText("MP 100/100", _startX: 1, _startY: 19,_color:ConsoleColor.Blue);
+
+        // ScreenManager.instance.AsyncUnitVideo("./resources/skeleton_die.gif",_color:ConsoleColor.DarkGray, startX: 24, startY: 1, videoSizeX: 12, videoSizeY: 15, _isContinue: false, _isReversal:true);
+        // ScreenManager.instance.AsyncText("Lv.1 해골 (100/100)",_color:ConsoleColor.DarkGray, _startX: 24, _startY: 17);
+        
+        // ScreenManager.instance.AsyncUnitVideo("./resources/skeleton.gif", startX: 48, startY: 1, videoSizeX: 12, videoSizeY: 15, _isContinue: true, _isReversal:true, _frame:100);
+        // ScreenManager.instance.AsyncText("Lv.1 해골 (100/100)", _startX: 48, _startY: 17);
+        
+        // ScreenManager.instance.AsyncUnitVideo("./resources/slime_die_end.gif",_color:ConsoleColor.DarkGray, startX: 72, startY: 1, videoSizeX: 12, videoSizeY: 15, _isContinue: false, _isReversal:true);
+        // ScreenManager.instance.AsyncText("Lv.1 슬라임 (100/100)",_color:ConsoleColor.DarkGray, _startX: 72, _startY: 17);
+
+        // ScreenManager.instance.AsyncUnitVideo("./resources/slime.gif", startX: 96, startY: 1, videoSizeX: 12, videoSizeY: 15, _isContinue: true, _isReversal:true);
+        // ScreenManager.instance.AsyncText("Lv.1 슬라임 (100/100)", _startX: 96, _startY: 17);
     }
 }

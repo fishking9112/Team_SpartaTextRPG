@@ -14,7 +14,7 @@ namespace Team_SpartaTextRPG
         public Monster() { }
 
         // 사용자 지정 생성자
-        public Monster(string _name, int _level, int _hp, int maxhp, int _attDamage, int _def)
+        public Monster(string _name, int _level, int _hp, int maxhp, int _attDamage, int _def, (string, string, string) _filePath)
         {
             Name = _name;
             Level = _level;
@@ -25,6 +25,9 @@ namespace Team_SpartaTextRPG
             Defense = _def;
 
             bool IsDead = false;
+
+            FilePath = _filePath;
+            
         }
 
         //Monster만 가지는 필드
@@ -53,6 +56,7 @@ namespace Team_SpartaTextRPG
         public int Defense { get; set; }
         public bool IsDead => HP <= 0;
 
+        public (string idle,string die, string end) FilePath { get; set; }
 
 
         // 몬스터의 기본 정보

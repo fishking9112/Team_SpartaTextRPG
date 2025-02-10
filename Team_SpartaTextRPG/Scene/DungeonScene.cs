@@ -16,14 +16,27 @@ namespace Team_SpartaTextRPG
         Player player = GameManager.instance.player;
         Monster[] monsters = new Monster[4];
 
+
+        // 층에 나오기 전에 나오는 몬스터 설정
+        public DungeonScene()
+        {
+            // 몬스터 정보
+            monsters[0] = new Monster("슬라임", 1, 1, 15, 1, 1, Utill.SLIME_PATH);
+            monsters[1] = new Monster("해골", 3, 1, 22, 3, 5, Utill.SKELETON_PATH);
+            monsters[2] = new Monster("오크", 5, 1, 26, 8, 4, Utill.SLIME_PATH);
+            monsters[3] = new Monster("맼닠젘", 10, 1, 50, 10, 25, Utill.SLIME_PATH);
+        }
+
         // 던전 화면
         public void Dungeon_Title()
         {
-            Console.WriteLine("1. [ Stage 입장 ]");
-            Console.WriteLine("0. [ 돌아가기 ]");
-            initStage();
+            TitleManager.instance.WriteTitle("던전");
 
-            SceneManager.instance.Menu(Dungeon_Title, TownScene.instance.Game_Main, () => Select_Stage(1));
+            ScreenManager.instance.AsyncVideo("./resources/dungeon.gif",_frame:100);
+
+            InputKeyManager.instance.ArtMenu(
+                ($"Stage 입장", $"던전으로 입장합니다.", () => Select_Stage(1)), 
+                ($"돌아가기", "마을로 나갑니다.", () => {TownScene.instance.Game_Main(); }));
         }
 
         public void Select_Stage(int _index)
@@ -37,40 +50,34 @@ namespace Team_SpartaTextRPG
         }
 
 
-
-        // 층에 나오기 전에 나오는 몬스터 설정
-        public void initStage()
-        {
-            // 몬스터 정보
-            monsters[0] = new Monster("슬라임", 1, 1, 15, 1, 1);
-            monsters[1] = new Monster("고블린", 3, 1, 22, 3, 5);
-            monsters[2] = new Monster("오크", 5, 1, 26, 8, 4);
-            monsters[3] = new Monster("맼닠젘", 10, 1, 50, 10, 25);
-        }
-
         // 현재 몬스터를 Select_Stage로 출력
         public void DrawMonster_Info()
         {
-            List<Action> tempActions = new List<Action>();
-            tempActions.Add(DungeonScene.instance.Dungeon_Title);
+            TitleManager.instance.WriteTitle("던전 - 전투");
 
+            StringBuilder sb = new();
+
+            List<(string _menuName, string? _explanation, Action? _action)> tempActions = new List<(string _menuName, string? _explanation, Action? _action)>();
+
+            int startMonsterX = 24;
+            int startMonsterY = 1;
+            int monsterSizeX = 12;
+            int monsterSizeY = 15;
             for (int i = 0; i < monsters.Length; i++)
             {
                 if (monsters[i] != null)
                 {
                     int temp = i;
-                    tempActions.Add(() => Player_Att(temp + 1));
-                    Console.WriteLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
+                    tempActions.Add(($"{monsters[temp].Name}", $"{monsters[temp].Name}를 공격합니다.", () => Player_Att(temp + 1)));
+                    sb.AppendLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
+                    ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.idle, startX: startMonsterX+i*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:100);
+                    ScreenManager.instance.AsyncText($"Lv.{monsters[i].Level} {monsters[i].Name} ({monsters[i].HP} / {monsters[i].MaxHP})", _startX: startMonsterX+i*24, _startY: monsterSizeY+2);
                 }
             }
 
-            Console.WriteLine("===========================================================\n");
-            Console.WriteLine($"이름 : {player.Name}  |  Lv. {player.Level}  |  플레이어의 체력 : {player.HP}  |  플레이어의 마나 : {player.MP}");
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
+            tempActions.Add(($"돌아가기", "마을로 나갑니다.", () => {DungeonScene.instance.Dungeon_Title(); }));
 
-            SceneManager.instance.Menu(DrawMonster_Info, tempActions.ToArray());
-
+            InputKeyManager.instance.ArtMenu(tempActions.ToArray());
         }
 
         // 플레이어가 몬스터를 공격
