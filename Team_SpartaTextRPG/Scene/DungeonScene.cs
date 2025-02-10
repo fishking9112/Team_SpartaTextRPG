@@ -36,16 +36,14 @@ namespace Team_SpartaTextRPG
 
         }
 
-
-
         // 층에 나오기 전에 나오는 몬스터 설정
         public void initStage()
         {
             // 몬스터 정보
-            monsters[0] = new Monster("슬라임", 1, 1, 15, 1, 1);
-            monsters[1] = new Monster("고블린", 3, 1, 22, 3, 5);
-            monsters[2] = new Monster("오크", 5, 1, 26, 8, 4);
-            monsters[3] = new Monster("맼닠젘", 10, 1, 50, 10, 25);
+            monsters[0] = new Monster("슬라임", 1, 15, 15, 1, 1);
+            monsters[1] = new Monster("고블린", 3, 22, 22, 3, 5);
+            monsters[2] = new Monster("오크", 5, 26, 26, 8, 4);
+            monsters[3] = new Monster("맼닠젘", 10, 50, 50, 10, 25);
         }
 
         // 현재 몬스터를 Select_Stage로 출력
@@ -56,11 +54,17 @@ namespace Team_SpartaTextRPG
 
             for (int i = 0; i < monsters.Length; i++)
             {
-                if (monsters[i] != null)
+                if (monsters[i].IsDead == false)
                 {
                     int temp = i;
                     tempActions.Add(() => Player_Att(temp + 1));
                     Console.WriteLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
+                }
+                else
+                {
+                    tempActions.Add(null);
+                    Utill.ColorWrite($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP} |", ConsoleColor.DarkGray);
+                    Utill.ColorWriteLine("\tDead", ConsoleColor.Red);
                 }
             }
 
@@ -73,81 +77,101 @@ namespace Team_SpartaTextRPG
 
         }
 
+        // 랜덤 사용해서 몬스터 랜덤 소환 및 공격시 치명타 및 회피 설정
+
         // 플레이어가 몬스터를 공격
         public void Player_Att(int input)
         {
             monsters[input - 1].HP = (int)(monsters[input - 1].HP - player.AttDamage);
 
             Utill.ColorWriteLine($"{player.Name} 공격", ConsoleColor.Blue);
-            Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {player.AttDamage}의 데미지를 받았다.");
+            Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {player.AttDamage}의 데미지를 받았다.\n");
+
             Thread.Sleep(1000);
 
-            //몬스터 체력 검사
-            if (monsters[input - 1].IsDead != false)
-            {
-                //죽은 몬스터 배열에서 빼주기
-                monsters[input - 1] = null;
-                Monster_Att();
-
-                SceneManager.instance.GoMenu(DrawMonster_Info);
-            }
-
-            //피 없으면 죽이고 
-            else if (monsters[input] == null)
+            if(DeadCount())
             {
                 SceneManager.instance.GoMenu(Stage_Clear);
             }
-
-            // monsters[0] = null
-
-            //배열에 몬스터가 없으면 null
-
-            //모든 몬스터가 죽으면 == monsters[i] == null
-
-            //SceneManager.instance.GoMenu(DungeonScene.instance.다른 곳으로);
-
+            else
+            {
+                Monster_Att();
+            }
         }
 
+        // 몬스터 공격
         public void Monster_Att()
         {
             for (int i = 0; i < monsters.Length; i++)
             {
 
-                if (monsters[i] != null)
+                if (monsters[i].IsDead == false)
                 {
                     // 플레이어 체력 깎아주기
                     player.HP = (int)(player.HP - monsters[i].AttDamage);
 
                     Utill.ColorWriteLine($"{monsters[i].Name} 공격", ConsoleColor.Red);
-                    Utill.ColorWriteLine($"{player.Name}는(은) {monsters[i].AttDamage}의 데미지를 받았다.");
+                    Utill.ColorWriteLine($"{player.Name}는(은) {monsters[i].AttDamage}의 데미지를 받았다.\n");
 
                     Thread.Sleep(1000);
+
+                    if (player.IsDead == true)
+                    {
+                        break;                        
+                    }
+
                 }
             }
 
-            SceneManager.instance.GoMenu(DrawMonster_Info);
-
-        }
-        public void Monster_Dead()
-        {
-            if (monsters[0].HP > 0)
+            if (player.IsDead == true)
             {
-                Console.WriteLine($"{monsters[0].Name}이(가) 죽었습니다.");
-
+                SceneManager.instance.GoMenu(Stage_failed);
             }
             else
             {
-                Console.WriteLine($"{monsters[0].Name}이(가) {player.AttDamage}를 받았습니다.");
+                SceneManager.instance.GoMenu(DrawMonster_Info);
             }
-
-            SceneManager.instance.Menu(DrawMonster_Info);
-
         }
 
+        // 몬스터가 전부 죽었는지 확인
+        public bool DeadCount()
+        {
+            int deadCount = 0;
+
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                if (monsters[i].IsDead == true)
+                {
+                    deadCount++;
+                }
+            }
+
+            if (monsters.Length == deadCount)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        //패배 씬
+        public void Stage_failed()
+        {
+            Console.WriteLine("Stage Failed...");
+
+            Thread.Sleep(1000);
+
+            SceneManager.instance.GoMenu(TownScene.instance.Game_Main);
+        }
+
+        // 스테이지 클리어 시 띄움 ( 보상 추가 )
         public void Stage_Clear()
         {
-            Console.WriteLine("TEST");
+            Console.WriteLine("Stage Clear");
 
+            Console.WriteLine("0. [ 나가기 ]");
+
+            SceneManager.instance.Menu(Stage_Clear, Dungeon_Title);
         }
     }
 }
