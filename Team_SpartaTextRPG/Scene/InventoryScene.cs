@@ -98,6 +98,7 @@ namespace Team_SpartaTextRPG
             {
                 usable_Item.Use(usable_Item);
             }
+            SceneManager.instance.GoMenu(InventoryScene.instance.ShowInventoryItem);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Security;
+using System.Reflection;
 using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Team_SpartaTextRPG
     {
         Player player = GameManager.instance.player;
         Monster[] monsters = new Monster[4];
-
+        
         // 던전 화면
         public void Dungeon_Title()
         {
@@ -104,11 +105,25 @@ namespace Team_SpartaTextRPG
         //아이템 사용
         private void DungeonMenu_Use_Item()
         {
-            // 리안님이 채워줄 내용
-
-            // 아이템 리스트 출력
-
-            // 인벤에서 소비하는거랑 똑같
+            Usable_Item usable_Item;
+            List<Action> tempActions = new List<Action>();
+            tempActions.Add(DungeonScene.instance.DungeonMenu);
+            Console.WriteLine();
+            Console.WriteLine("[소비 아이템 목록]");
+            Console.WriteLine();
+            if (player.Inven_Usable_Item.Count <= 0)
+            {
+                Console.WriteLine("보유 중인 소비 아이템이 없습니다.");
+            }
+            for (int i = 0; i < player.Inven_Usable_Item.Count; i++)
+            {
+                Usable_Item currentItem = player.Inven_Usable_Item[i];
+                tempActions.Add(() => currentItem.Use(currentItem));
+                Console.WriteLine($"{i+1}.   {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            SceneManager.instance.Menu(DungeonMenu_Use_Item, tempActions.ToArray());
         }
 
         // 랜덤 사용해서 몬스터 랜덤 소환 및 공격시 치명타 및 회피 설정

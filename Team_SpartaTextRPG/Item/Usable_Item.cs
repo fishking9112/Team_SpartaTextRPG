@@ -48,7 +48,7 @@ namespace Team_SpartaTextRPG
                 player.Defense += (int)item.Bonus_Def;
             }
             player.Inven_Usable_Item.Remove(item);
-            SceneManager.instance.GoMenu(InventoryScene.instance.ShowInventoryItem);
+            return;
         }
 
         public string HporMp()
