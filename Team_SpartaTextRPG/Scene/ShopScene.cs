@@ -96,15 +96,20 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("[보유 장비 아이템 목록]");
             List<Action> tempActions = new List<Action>();
             tempActions.Add(ShopScene.instance.ShowMenu);
-            for (int i = 0; i < player.Inven_Equip_Item.Count; i++)
+            int index = 1;
+            for (int i = 0; i < player.Inven_Equip_Item.Count; i++, index++)
             {
                 int temp = i;
-                tempActions.Add(() => SellItem(temp + 1));
-                Console.WriteLine($"{i + 1}. {player.Inven_Equip_Item[i].Name}   |   {player.Inven_Equip_Item[i].Description}   |   {player.Inven_Equip_Item[i].AtkorDef()}   |   판매가격: {player.Inven_Equip_Item[i].Price * 0.8}");
+                tempActions.Add(() => SellItem(player.Inven_Equip_Item[temp]));
+                Console.WriteLine($"{index}. {player.Inven_Equip_Item[i].Name}   |   {player.Inven_Equip_Item[i].Description}   |   {player.Inven_Equip_Item[i].AtkorDef()}   |   판매가격: {player.Inven_Equip_Item[i].Price * 0.8}");
             }
-            for (int i = 0; i < player.Inven_Usable_Item.Count; i++)
+            Console.WriteLine();
+            Console.WriteLine("[보유 소비 아이템 목록]");
+            for (int i = 0; i < player.Inven_Usable_Item.Count; i++, index++)
             {
-                Console.WriteLine($"{i + 1}. {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}   |   판매가격: {player.Inven_Usable_Item[i].Price * 0.8}");
+                int temp = i;
+                tempActions.Add(() => SellItem(player.Inven_Usable_Item[temp]));
+                Console.WriteLine($"{index}. {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}   |   판매가격: {player.Inven_Usable_Item[i].Price * 0.8}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -132,7 +137,6 @@ namespace Team_SpartaTextRPG
         {
             if (item is Equip_Item equip_Item)
             {
-                
                 Buy(equip_Item);
             }
             else if (item is Usable_Item usable_Item)
@@ -142,10 +146,16 @@ namespace Team_SpartaTextRPG
             
         }
 
-        public void SellItem(int input)
+        public void SellItem(Item item)
         {
-            Item select = player.Inven_Equip_Item[input - 1];
-            Sell(select);
+            if (item is Equip_Item equip_Item)
+            {
+                Sell(equip_Item);
+            }
+            else if (item is Usable_Item usable_Item)
+            {
+                Sell(usable_Item);
+            }
         }
 
         public void Sell(Item item)
