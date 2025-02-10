@@ -14,77 +14,83 @@ namespace Team_SpartaTextRPG
 
         public void ShowInventory ()
         {
-            Console.WriteLine("인벤토리");
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다");
-            Console.WriteLine();
-            Console.WriteLine("[장비 아이템 목록]");
-            Console.WriteLine();
+            TitleManager.instance.WriteTitle("인벤토리");
+
+            StringBuilder sb = new();
+            sb.AppendLine("[장비 아이템 목록]");
+            sb.AppendLine();
             int index = 1;
             if (Inven_Equip_Item.Count <= 0)
             {
-                Console.WriteLine("보유 중인 장비 아이템이 없습니다.");
+                sb.AppendLine("보유 중인 장비 아이템이 없습니다.");
             }
             for (int i = 0; i < Inven_Equip_Item.Count; i++, index++)
             {
-                Console.WriteLine($"{index}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
+                sb.AppendLine($"{index}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
             }
 
-            Console.WriteLine();
-            Console.WriteLine("[소비 아이템 목록]");
-            Console.WriteLine();
+            sb.AppendLine();
+            sb.AppendLine("[소비 아이템 목록]");
+            sb.AppendLine();
             if (Inven_Usable_Item.Count <= 0)
             {
-                Console.WriteLine("보유 중인 소비 아이템이 없습니다.");
+                sb.AppendLine("보유 중인 소비 아이템이 없습니다.");
             }
             for (int i = 0; i < Inven_Usable_Item.Count; i++, index++)
             {
-                Console.WriteLine($"{index}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Description}   |   {Inven_Usable_Item[i].HporMp()}");
+                sb.AppendLine($"{index}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Description}   |   {Inven_Usable_Item[i].HporMp()}");
             }
-            Console.WriteLine();
-            Console.WriteLine("1. 아이템 관리");
-            Console.WriteLine("0. 나가기");
 
-            SceneManager.instance.Menu(ShowInventory, TownScene.instance.Game_Main, ShowInventoryItem);
+            ScreenManager.instance.AsyncText(sb);
+
+            InputKeyManager.instance.ArtMenu(
+                ($"아이템 관리", "아이템을 관리합니다.", () => ShowInventoryItem()), 
+                ($"돌아가기", "마을로 돌아갑니다.", () => TownScene.instance.Game_Main()));
         }
 
 
         public void ShowInventoryItem ()
         {
-            Console.WriteLine("인벤토리 - 장착 관리");
-            Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다");
-            Console.WriteLine();
-            Console.WriteLine("[장비 아이템 목록]");
-            Console.WriteLine();
+            TitleManager.instance.WriteTitle("인벤토리 - 장착관리");
+
+            StringBuilder sb = new();
+
+            sb.AppendLine("[장비 아이템 목록]");
+            sb.AppendLine();
             List<Action> tempActions = new List<Action>();
-            tempActions.Add(TownScene.instance.Game_Main);
+            tempActions.Add(ShowInventory);
             int index = 1;
             if (Inven_Equip_Item.Count <= 0)
             {
-                Console.WriteLine("보유 중인 장비 아이템이 없습니다.");
+                sb.AppendLine("보유 중인 장비 아이템이 없습니다.");
             }
             for (int i = 0; i < Inven_Equip_Item.Count; i++, index++)
             {
                 int temp = i;
                 tempActions.Add(() => EquipItem(player.Inven_Equip_Item[temp]));
-                Console.WriteLine($"{index}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
+                sb.AppendLine($"{index}. {Inven_Equip_Item[i].Name}   |   {Inven_Equip_Item[i].Description}   |   {Inven_Equip_Item[i].AtkorDef()}   |   {Inven_Equip_Item[i].ShowEquip()}");
             }
 
-            Console.WriteLine();
-            Console.WriteLine("[소비 아이템 목록]");
-            Console.WriteLine();
+            sb.AppendLine();
+            sb.AppendLine("[소비 아이템 목록]");
+            sb.AppendLine();
             if (player.Inven_Usable_Item.Count <= 0)
             {
-                Console.WriteLine("보유 중인 소비 아이템이 없습니다.");
+                sb.AppendLine("보유 중인 소비 아이템이 없습니다.");
             }
             for (int i = 0; i < Inven_Usable_Item.Count; i++, index++)
             {
                 int temp = i;
                 tempActions.Add(() => EquipItem(player.Inven_Usable_Item[temp]));
-                Console.WriteLine($"{index}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Description}   |   {Inven_Usable_Item[i].HporMp()}");
+                sb.AppendLine($"{index}.   {Inven_Usable_Item[i].Name}   |   {Inven_Usable_Item[i].Description}   |   {Inven_Usable_Item[i].HporMp()}");
             }
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
-            SceneManager.instance.Menu(ShowInventoryItem, tempActions.ToArray());
+
+            sb.AppendLine();
+            sb.AppendLine("0. 나가기");
+
+            ScreenManager.instance.AsyncText(sb);
+
+            InputKeyManager.instance.InputMenu(ShowInventoryItem, "장착할 아이템을 선택해주세요 >> ", tempActions.ToArray());
         }
 
 
@@ -124,7 +130,8 @@ namespace Team_SpartaTextRPG
                 player.Defense += (int)item.Bonus_Def;
             }
             player.Inven_Usable_Item.Remove(item);
-            SceneManager.instance.GoMenu(ShowInventoryItem);
+            
+            InputKeyManager.instance.GoMenu(ShowInventoryItem);
         }
 
         public void Equip(Equip_Item item)
@@ -143,7 +150,7 @@ namespace Team_SpartaTextRPG
                 player.EquipSlot[slotIndex] = item;
                 item.IsEquip = true;
             }
-            SceneManager.instance.GoMenu(ShowInventoryItem);
+            InputKeyManager.instance.GoMenu(ShowInventoryItem);
         }
     }
 }
