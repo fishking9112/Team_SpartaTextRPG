@@ -1,50 +1,71 @@
 
 
+using System.Text;
+
 namespace Team_SpartaTextRPG
 {
     internal class StartScene : Helper.Singleton<StartScene>
     {
         public void Game_Title()
         {
-            Console.WriteLine("강렬한 인상 is 게임");
+            TitleManager.instance.WriteTitle("강렬한 인상 is 게임");
+            ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
 
-            Console.WriteLine("[1. 게임 시작]");
-            Console.WriteLine("[2. 게임 종료]");
-
-            SceneManager.instance.Menu(Game_Title, null, Game_Start, Game_Quit);
+            InputKeyManager.instance.ArtMenu(
+            ("계속 하기", "저장된 게임을 불러옵니다.", () => { Select_Job("test",PLAYER_JOB.WARRIOR); }),
+            ("게임 시작", "게임을 시작합니다.", () => { Game_Start(); }),
+            ("게임 종료", "게임을 종료합니다.", () => { Game_Quit(); }));
         }
 
         public void Game_Start()
         {
+            TitleManager.instance.WriteTitle("이름 정하기");
 
-            Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
-            Console.WriteLine("원하시는 이름을 설정해주세요.\n");
+            StringBuilder sb = new();
 
-            string name = Console.ReadLine() ?? "Chad";
+            sb.Append("스파르타 던전에 오신 여러분 환영합니다.\n");
+            sb.Append("원하시는 이름을 설정해주세요.");
 
+            ScreenManager.instance.ClearScreen();
+            ScreenManager.instance.AsyncText(sb);
 
-            Console.WriteLine($"\n입력하신 이름은 {name} 입니다.\n");
+            string name = InputKeyManager.instance.InputString("이름을 입력하세요(3 ~ 5 글자) >> ");
+            
+            if(3 <= name.Length && name.Length <= 5){
+                InputKeyManager.instance.GoMenu(() => { Write_Name_Complete(name); });
+            } else {
+                TitleManager.instance.WriteTitle("이름 정하기");
+                sb.Clear();
+                sb.Append($"이름이 양식에 맞지 않습니다.");
+                ScreenManager.instance.AsyncText(sb);
+                Thread.Sleep(1000);
+                InputKeyManager.instance.GoMenu(() => { Game_Start(); });
+            }
+        }
 
-            Console.WriteLine("1. 저장\n2. 취소\n");
-            SceneManager.instance.Menu(Game_Start, null, () => { Choose_Job(name); }, Game_Start);
+        public void Write_Name_Complete(string name)
+        {
+            TitleManager.instance.WriteTitle("이름 결정");
 
+            ScreenManager.instance.AsyncVideo("resources/game_start.mp4", _isContinue: true);
+
+            InputKeyManager.instance.ArtMenu(($"제 이름은 {name}(이)가 맞습니다", "게임을 시작합니다.", () => { Choose_Job(name); }), ("다시 설정", "다시 이름을 정합니다.", () => { Game_Start(); }));
         }
 
         public void Choose_Job(string _name)
         {
-            Console.WriteLine("캐릭터 선택!");
+            TitleManager.instance.WriteTitle("직업 선택하기");
 
-            Console.WriteLine("[1. 전사]");
-            Console.WriteLine("[2. 도적]");
-            Console.WriteLine("[3. 궁수]");
-            Console.WriteLine("[4. 법사]");
-
-            SceneManager.instance.Menu(Game_Start, null,
-            () => Select_Job(_name, PLAYER_JOB.WARRIOR),
-            () => Select_Job(_name, PLAYER_JOB.THIEF),
-            () => Select_Job(_name, PLAYER_JOB.ARCHER),
-            () => Select_Job(_name, PLAYER_JOB.WIZARD)
-            );
+            ScreenManager.instance.AsyncUnitVideo("./resources/warrior.mp4", startX: 0, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
+            ScreenManager.instance.AsyncUnitVideo("./resources/thief.mp4", startX: 30, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
+            ScreenManager.instance.AsyncUnitVideo("./resources/archer.mp4", startX: 60, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
+            ScreenManager.instance.AsyncUnitVideo("./resources/wizard.mp4", startX: 90, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
+            
+            InputKeyManager.instance.ArtMenu(
+                ($"전사", "단단한 녀석입니다.", () => Select_Job(_name, PLAYER_JOB.WARRIOR)), 
+                ($"도적", "얍삽한 녀석입니다.", () => Select_Job(_name, PLAYER_JOB.THIEF)),
+                ($"궁수", "강력한 녀석입니다.", () => Select_Job(_name, PLAYER_JOB.ARCHER)),
+                ($"법사", "초강력 녀석입니다.", () => Select_Job(_name, PLAYER_JOB.WIZARD)));
         }
 
         public void Select_Job(string _name, PLAYER_JOB _job)
@@ -93,7 +114,7 @@ namespace Team_SpartaTextRPG
             }
 
 
-            SceneManager.instance.GoMenu(TownScene.instance.Game_Main);
+            InputKeyManager.instance.GoMenu(TownScene.instance.Game_Main);
         }
         public void Game_Quit()
         {
