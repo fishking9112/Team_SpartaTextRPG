@@ -50,6 +50,11 @@ namespace Team_SpartaTextRPG
                             break;
                     }
                 }
+                // 입력한 뒤 버퍼가 남아 있으면 모두 삭제
+                while (Console.KeyAvailable)
+                {
+                    Console.ReadKey(true); // 버퍼에 남아 있는 키 제거
+                }
                 await Task.Delay(50); // CPU 사용률 조절
             }
         }
