@@ -83,15 +83,20 @@ namespace Team_SpartaTextRPG
             Thread.Sleep(1000);
 
             //몬스터 체력 검사
-
-            //피 없으면 죽이고 
             if (monsters[input - 1].IsDead != false)
             {
+                //죽은 몬스터 배열에서 빼주기
                 monsters[input - 1] = null;
+                Monster_Att();
 
+                SceneManager.instance.GoMenu(DrawMonster_Info);
             }
 
-            //죽은 몬스터 배열에서 빼주기
+            //피 없으면 죽이고 
+            else if (monsters[input] == null)
+            {
+                SceneManager.instance.GoMenu(Stage_Clear);
+            }
 
             // monsters[0] = null
 
