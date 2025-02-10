@@ -129,7 +129,7 @@ namespace Team_SpartaTextRPG
         }
 
         //! ※ 주의사항) InputMenu 실행 중에는 커서가 옮겨지면 안되기 때문에 사용 시 영상 금지
-        public void InputMenu(Action _origin, string _explanation, params (Action? _action, string? _explanation)[] _actions)
+        public void InputMenu(Action _origin, string _explanation, params Action[] _actions)
         {
             // 그리기 전 InputKey Panel 초기화
             PanelManager.instance.DrawInputKeyPanel();
@@ -148,10 +148,10 @@ namespace Team_SpartaTextRPG
                 //! InputMenu는 멀티 스레드가 아니라 여기서 멈추기 때문에 영상 실행 불가능
                 int.TryParse(Console.ReadLine(), out int input);
 
-                Console.SetCursorPosition(50, y);
+                Console.SetCursorPosition(x, y+2);
 
                 // 입력 범위 값이 이 안에 없으면 오류와 함께 다시 origin 시작
-                if (input < 0 || _actions.Length <= input || _actions[input]._action == null)
+                if (input < 0 || _actions.Length <= input || _actions[input] == null)
                 {
                     Console.WriteLine($"잘못된 입력입니다. (입력된 값 : {input})");
                     Thread.Sleep(1000);
@@ -159,10 +159,10 @@ namespace Team_SpartaTextRPG
                 }
                 else
                 {
-                    string explanation = _actions[input]._explanation ?? input.ToString();
-                    Console.WriteLine($"{explanation}"); // 행동에 대한 설명
-                    Thread.Sleep(1000);
-                    nextActon = _actions[input]._action;
+                    // string explanation = _actions[input]._explanation ?? input.ToString();
+                    // Console.WriteLine($"{explanation}"); // 행동에 대한 설명
+                    // Thread.Sleep(1000);
+                    nextActon = _actions[input];
                 }
             });
         }

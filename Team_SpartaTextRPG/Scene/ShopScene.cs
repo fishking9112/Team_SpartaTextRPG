@@ -31,30 +31,39 @@ namespace Team_SpartaTextRPG
         }
         public void ShowMenu()
         {
-            Console.WriteLine("1. 아이템 구매");
-            Console.WriteLine("2. 아이템 판매");
-            Console.WriteLine("0. 돌아가기");
-            SceneManager.instance.Menu(ShowMenu, TownScene.instance.Game_Main, ShowShop);
+            TitleManager.instance.WriteTitle("상점");
+
+            ScreenManager.instance.AsyncImage("./resources/shop.png");
+
+            InputKeyManager.instance.ArtMenu(
+                ($"아이템 구매", "아이템을 구매합니다.", () => ShowShop()), 
+                ($"돌아가기", "마을로 돌아갑니다.", () => TownScene.instance.Game_Main()));
         }
 
         public void ShowShop()
         {
-            Console.WriteLine("상점");
-            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
-            Console.WriteLine();
-            Console.WriteLine("[보유 골드]");
-            Console.WriteLine($"{GameManager.instance.player.Gold} G");
-            Console.WriteLine();
-            Console.WriteLine("[아이템 목록]");
+            TitleManager.instance.WriteTitle("상점");
+
+            StringBuilder sb = new();
+            // sb.AppendLine("상점");
+            // sb.AppendLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            // sb.AppendLine();
+            sb.AppendLine("[보유 골드]");
+            sb.AppendLine($"{GameManager.instance.player.Gold} G");
+            sb.AppendLine();
+            sb.AppendLine("[아이템 목록]");
+            
             List<Equip_Item> filteredItems = equip_ItemsList.Where(item => item.item_Job_Type == Item_Job_Type.NONE ||
             (player.Job == PLAYER_JOB.WARRIOR && item.item_Job_Type == Item_Job_Type.WARRIOR) ||
             (player.Job == PLAYER_JOB.ARCHER && item.item_Job_Type == Item_Job_Type.ARCHER) ||
             (player.Job == PLAYER_JOB.WIZARD && item.item_Job_Type == Item_Job_Type.WIZARD)).ToList();
 
-            ShowShopItems(filteredItems);
+            ShowShopItems(filteredItems, sb);
         }
         public void BuyItem(int input)
         {
+            TitleManager.instance.WriteTitle("상점");
+
             Item select = equip_ItemsList[input - 1];
             Buy(select);
         }
@@ -74,16 +83,20 @@ namespace Team_SpartaTextRPG
                 {
                     player.Inven_Usable_Item.Add(usable_Item);
                 }
-                SceneManager.instance.GoMenu(ShowShop);
+                // 사지면
+                ScreenManager.instance.AsyncText($"{item.Name}을 구매 하였습니다.", _color: ConsoleColor.Green);
             }
             else
             {
-                Console.WriteLine("Gold 가 부족합니다.");
-                SceneManager.instance.GoMenu(ShowShop);
+                // 골드 부족하면 
+                ScreenManager.instance.AsyncText($"{item.Name}을 구입하기엔 Gold 가 부족합니다.", _color: ConsoleColor.Red);
             }
+            
+            InputKeyManager.instance.ArtMenu(
+                ($"뒤로", "상점으로 돌아갑니다.", () => ShowShop()));
         }
 
-        public void ShowShopItems(List<Equip_Item> filteredItems)
+        public void ShowShopItems(List<Equip_Item> filteredItems, StringBuilder sb)
         {
             List<Action> tempActions = new List<Action>();
             tempActions.Add(TownScene.instance.Game_Main);
@@ -91,12 +104,14 @@ namespace Team_SpartaTextRPG
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(temp + 1));
-                Console.WriteLine($"{i + 1}.   {filteredItems[i].Name}   |   설명: {filteredItems[i].Description}   |   {filteredItems[i].AtkorDef()}   |   가격: {filteredItems[i].Price}");
+                sb.AppendLine($"{i + 1}.   {filteredItems[i].Name}   |   설명: {filteredItems[i].Description}   |   {filteredItems[i].AtkorDef()}   |   가격: {filteredItems[i].Price}");
             }
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
+            sb.AppendLine();
+            sb.AppendLine("0. 나가기");
 
-            SceneManager.instance.Menu(ShowShop, tempActions.ToArray());
+            ScreenManager.instance.AsyncText(sb);
+
+            InputKeyManager.instance.InputMenu(ShowShop,"원하시는 행동을 입력해주세요 >> ", tempActions.ToArray());
         }
     }
 }
