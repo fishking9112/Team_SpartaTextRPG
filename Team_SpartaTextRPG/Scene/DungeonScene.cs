@@ -21,7 +21,6 @@ namespace Team_SpartaTextRPG
         {
             Console.WriteLine("1. [ Stage 입장 ]");
             Console.WriteLine("0. [ 돌아가기 ]");
-            initStage();
 
             SceneManager.instance.Menu(Dungeon_Title, TownScene.instance.Game_Main, () => Select_Stage(1));
         }
@@ -30,14 +29,14 @@ namespace Team_SpartaTextRPG
         {
             if (_index == 1)
             {
-                // 던전 진입시 몬스터 소환
-                DrawMonster_Info();
+                //몬스터 Init
+                InitStage();
+                DungeonMenu();
             }
-
         }
 
         // 층에 나오기 전에 나오는 몬스터 설정
-        public void initStage()
+        public void InitStage()
         {
             // 몬스터 정보
             monsters[0] = new Monster("슬라임", 1, 15, 15, 1, 1);
@@ -45,9 +44,35 @@ namespace Team_SpartaTextRPG
             monsters[2] = new Monster("오크", 5, 26, 26, 8, 4);
             monsters[3] = new Monster("맼닠젘", 10, 50, 50, 10, 25);
         }
+        private void DungeonMenu()
+        {
+            // 1. 싸우기
+            // 2. 아이템 사용
+            // 0. 후퇴
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                if (monsters[i].IsDead == false)
+                {
+                    Console.WriteLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
+                }
+                else
+                {
+                    Utill.ColorWrite($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP} |", ConsoleColor.DarkGray);
+                    Utill.ColorWriteLine("\tDead", ConsoleColor.Red);
+                }
+            }
 
+            Console.WriteLine("===========================================================\n");
+            Console.WriteLine($"이름 : {player.Name}  |  Lv. {player.Level}  |  플레이어의 체력 : {player.HP}  |  플레이어의 마나 : {player.MP}");
+            Console.WriteLine();
+            Console.WriteLine("1. [ 공격 ]");
+            Console.WriteLine("2. [ 아이템 사용 ]");
+            Console.WriteLine("0. [ 도망가기 ]");
+
+            SceneManager.instance.Menu(DungeonMenu, null , DungeonMenu_Fight, DungeonMenu_Use_Item);
+        }
         // 현재 몬스터를 Select_Stage로 출력
-        public void DrawMonster_Info()
+        public void DungeonMenu_Fight()
         {
             List<Action> tempActions = new List<Action>();
             tempActions.Add(DungeonScene.instance.Dungeon_Title);
@@ -73,8 +98,17 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
 
-            SceneManager.instance.Menu(DrawMonster_Info, tempActions.ToArray());
+            SceneManager.instance.Menu(DungeonMenu_Fight, tempActions.ToArray());
 
+        }
+        //아이템 사용
+        private void DungeonMenu_Use_Item()
+        {
+            // 리안님이 채워줄 내용
+
+            // 아이템 리스트 출력
+
+            // 인벤에서 소비하는거랑 똑같
         }
 
         // 랜덤 사용해서 몬스터 랜덤 소환 및 공격시 치명타 및 회피 설정
@@ -129,7 +163,7 @@ namespace Team_SpartaTextRPG
             }
             else
             {
-                SceneManager.instance.GoMenu(DrawMonster_Info);
+                SceneManager.instance.GoMenu(DungeonMenu_Fight);
             }
         }
 
