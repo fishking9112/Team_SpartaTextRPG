@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Allow the specific resources folder to be tracked
+!Team_SpartaTextRPG/bin/Debug/net8.0/resources/
+!Team_SpartaTextRPG/bin/Debug/net8.0/resources/**
+
 # User-specific files
 *.rsuser
 *.suo
@@ -27,7 +31,7 @@ x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
-# [Bb]in/
+[Bb]in/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
