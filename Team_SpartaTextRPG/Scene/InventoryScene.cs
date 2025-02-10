@@ -12,7 +12,7 @@ namespace Team_SpartaTextRPG
         List<Usable_Item> Inven_Usable_Item = GameManager.instance.player.Inven_Usable_Item;
         Player player = GameManager.instance.player;
 
-        public void ShowInventory ()
+        public void ShowInventory()
         {
             Console.WriteLine("인벤토리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다");
@@ -48,7 +48,7 @@ namespace Team_SpartaTextRPG
         }
 
 
-        public void ShowInventoryItem ()
+        public void ShowInventoryItem()
         {
             Console.WriteLine("인벤토리 - 장착 관리");
             Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다");
@@ -92,58 +92,12 @@ namespace Team_SpartaTextRPG
         {
             if (item is Equip_Item equip_Item)
             {
-                Equip(equip_Item);
+                equip_Item.Equip(equip_Item);
             }
             else if (item is Usable_Item usable_Item)
             {
-                Use(usable_Item);
+                usable_Item.Use(usable_Item);
             }
-        }
-        
-        public void Use(Usable_Item item)
-        {
-            if (item.Bonus_HP > 0 && item.Bonus_MP <= 0)
-            {
-                player.HP += (int)item.Bonus_HP;
-            }
-            else if (item.Bonus_MP > 0 && player.HP <= 0)
-            {
-                player.MP += (int)item.Bonus_MP;
-            }
-            else if (item.Bonus_HP > 0 && item.Bonus_MP > 0)
-            {
-                player.HP += (int)item.Bonus_HP;
-                player.MP += (int)item.Bonus_MP;
-            }
-            else if (item.Bonus_Att > 0)
-            {
-                player.AttDamage += (int)item.Bonus_Att;
-            }
-            else
-            {
-                player.Defense += (int)item.Bonus_Def;
-            }
-            player.Inven_Usable_Item.Remove(item);
-            SceneManager.instance.GoMenu(ShowInventoryItem);
-        }
-
-        public void Equip(Equip_Item item)
-        {
-            int slotIndex = (int)item.item_Slot_Type;
-
-            if (player.EquipSlot[slotIndex] != null)
-            {
-                Equip_Item currentItem = player.EquipSlot[slotIndex];
-                currentItem.IsEquip = false;
-                player.EquipSlot[slotIndex] = item;
-                item.IsEquip = true;
-            }
-            else
-            {
-                player.EquipSlot[slotIndex] = item;
-                item.IsEquip = true;
-            }
-            SceneManager.instance.GoMenu(ShowInventoryItem);
         }
     }
 }
