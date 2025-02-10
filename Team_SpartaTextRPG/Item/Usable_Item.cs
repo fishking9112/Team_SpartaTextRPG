@@ -37,6 +37,14 @@ namespace Team_SpartaTextRPG
             {
                 str = $"HP +{Bonus_HP}";
             }
+            else if (Bonus_Att > 0)
+            {
+                str = $"Att +{Bonus_Att}";
+            }
+            else if (Bonus_Def > 0)
+            {
+                str = $"DEF +{Bonus_Def}";
+            }
             return str;
         }
     }
