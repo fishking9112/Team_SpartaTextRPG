@@ -82,6 +82,7 @@ namespace Team_SpartaTextRPG
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
                     _level: 1, _maxExp: 100, _exp: 0, _maxHp: 200, _hp: 200, _maxMp: 50, _mp: 50, _attDamage: 15, _def: 10, _gold: 1500);
+                    GameManager.instance.player.FilePath = Utill.WARRIOR_PATH;
                     break;
 
                 case PLAYER_JOB.THIEF: // 도적 스킬 3개 습득
@@ -91,6 +92,7 @@ namespace Team_SpartaTextRPG
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
                     _level: 1, _maxExp: 100, _exp: 0, _maxHp: 100, _hp: 100, _maxMp: 70, _mp: 70, _attDamage: 13, _def: 7, _gold: 3000);
+                    GameManager.instance.player.FilePath = Utill.THIEF_PATH;
                     break;
 
                 case PLAYER_JOB.ARCHER: // 궁수 스킬 3개 습득
@@ -100,6 +102,7 @@ namespace Team_SpartaTextRPG
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
                     _level: 1, _maxExp: 100, _exp: 0, _maxHp: 150, _hp: 150, _maxMp: 80, _mp: 80, _attDamage: 20, _def: 5, _gold: 1500);
+                    GameManager.instance.player.FilePath = Utill.ARCHER_PATH;
                     break;
 
                 case PLAYER_JOB.WIZARD: // 법사 스킬 3개 습득
@@ -109,6 +112,7 @@ namespace Team_SpartaTextRPG
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
                     _level: 1, _maxExp: 100, _exp: 0, _maxHp: 150, _hp: 150, _maxMp: 150, _mp: 150, _attDamage: 18, _def: 5, _gold: 1500);
+                    GameManager.instance.player.FilePath = Utill.WIZARD_PATH;
                     break;
 
             }

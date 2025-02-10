@@ -63,7 +63,14 @@ namespace Team_SpartaTextRPG
             Console.ResetColor();
         }
 
-        // IDLE, DIE, END
+        // IDLE Player
+        public static readonly (string idle,string die, string end) WARRIOR_PATH = ("./resources/warrior.mp4", "./resources/warrior.mp4", "./resources/warrior.mp4");
+        public static readonly (string idle,string die, string end) THIEF_PATH = ("./resources/thief.mp4", "./resources/thief.mp4", "./resources/thief.mp4");
+        public static readonly (string idle,string die, string end) ARCHER_PATH = ("./resources/archer.mp4", "./resources/archer.mp4", "./resources/archer.mp4");
+        public static readonly (string idle,string die, string end) WIZARD_PATH = ("./resources/wizard.mp4", "./resources/wizard.mp4", "./resources/wizard.mp4");
+
+        
+        // IDLE, DIE, END Monster
         public static readonly (string idle,string die, string end) SKELETON_PATH = ("./resources/skeleton.gif", "./resources/skeleton_die.gif", "./resources/skeleton_die_end.gif");
         public static readonly (string idle,string die, string end) SLIME_PATH = ("./resources/slime.gif", "./resources/slime_die.gif", "./resources/slime_die_end.gif");
         // ScreenManager.instance.AsyncUnitVideo("./resources/warrior.mp4", startX: 0, startY: 1, videoSizeX: 12, videoSizeY: 15, _isContinue: true, _isReversal:true);

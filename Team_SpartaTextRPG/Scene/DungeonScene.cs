@@ -60,28 +60,37 @@ namespace Team_SpartaTextRPG
             List<(string _menuName, string? _explanation, Action? _action)> tempActions = new List<(string _menuName, string? _explanation, Action? _action)>();
 
             int startMonsterX = 24;
-            int startMonsterY = 1;
+            int startMonsterY = 4;
             int monsterSizeX = 12;
             int monsterSizeY = 15;
+            
+            ScreenManager.instance.AsyncUnitVideo(player.FilePath.idle, startX: 0, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:33);
             for (int i = 0; i < monsters.Length; i++)
             {
                 int temp = i;
                 if (monsters[i].IsDead == false)
                 {
                     tempActions.Add(($"{monsters[temp].Name}", $"{monsters[temp].Name}를 공격합니다.", () => Player_Att(temp + 1)));
-                    sb.AppendLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
-                    ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.idle, startX: startMonsterX+i*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:100);
-                    ScreenManager.instance.AsyncText($"Lv.{monsters[i].Level} {monsters[i].Name} ({monsters[i].HP} / {monsters[i].MaxHP})", _startX: startMonsterX+i*24, _startY: monsterSizeY+2);
+                    sb.AppendLine($"{temp + 1}.   이름 : {monsters[temp].Name}   |   레벨: {monsters[temp].Level}   |  HP : {monsters[temp].HP} / {monsters[temp].MaxHP}");
+                    ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.idle, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:100);
+                    ScreenManager.instance.AsyncText($"Lv.{monsters[temp].Level} {monsters[temp].Name} ({monsters[temp].HP} / {monsters[temp].MaxHP})", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+1);
                 }
                 else
                 {
                     tempActions.Add(($"{monsters[temp].Name}", $"{monsters[temp].Name}는 이미 사망 했습니다.", null));
-                    ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.die, startX: startMonsterX+i*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: false, _isReversal:true, _frame:100);
-                    ScreenManager.instance.AsyncText($"Lv.{monsters[i].Level} {monsters[i].Name} ({monsters[i].HP} / {monsters[i].MaxHP})", _startX: startMonsterX+i*24, _startY: monsterSizeY+2);
+                    ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.die, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: false, _isReversal:true, _frame:100);
+                    ScreenManager.instance.AsyncText($"Lv.{monsters[temp].Level} {monsters[temp].Name} ({monsters[temp].HP} / {monsters[temp].MaxHP})", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+1);
                 }
             }
 
             tempActions.Add(($"돌아가기", "마을로 나갑니다.", () => {DungeonScene.instance.Dungeon_Title(); }));
+
+
+            ScreenManager.instance.AsyncText($"Lv.{player.Name} ({player.Job})", _startX: 1, _startY: startMonsterY+monsterSizeY+1);
+            ScreenManager.instance.AsyncText($"HP   {player.HP}/{player.MaxHP}", _startX: 1, _startY: startMonsterY+monsterSizeY+2,_color:ConsoleColor.Red);
+            ScreenManager.instance.AsyncText($"MP   {player.MP}/{player.MaxMP}", _startX: 1, _startY: startMonsterY+monsterSizeY+3,_color:ConsoleColor.Blue);
+            ScreenManager.instance.AsyncText($"Gold {player.Gold}G", _startX: 1, _startY: startMonsterY+monsterSizeY+4,_color:ConsoleColor.Yellow);
+            
 
             InputKeyManager.instance.ArtMenu(tempActions.ToArray());
         }

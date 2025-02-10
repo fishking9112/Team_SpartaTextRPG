@@ -16,6 +16,8 @@ namespace Team_SpartaTextRPG
             Name = _name;
             Job = _job;
 
+            FilePath = Utill.WARRIOR_PATH;
+
             // 스킬 목록 추가
             SkillList = _skillList;
 
@@ -40,6 +42,8 @@ namespace Team_SpartaTextRPG
             // 이름, 직업 설정
             Name = _name;
             Job = _job;
+            
+            FilePath = Utill.WARRIOR_PATH;
 
             // 스킬 목록 추가
             SkillList = _skillList;
@@ -115,6 +119,8 @@ namespace Team_SpartaTextRPG
         public float AttDamage { get; set; }
         public int Defense { get; set; }
         public bool IsDead => HP <= 0;
+
+        public (string idle,string die, string end) FilePath { get; set; }
 
         // 최종 데미지
         public float FinalDamage()
