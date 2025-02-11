@@ -11,6 +11,7 @@ namespace Team_SpartaTextRPG
         public void End()
         {
             Console.WriteLine("-완-");
+            Console.WriteLine("0. [ 나가기 ]");
 
             SceneManager.instance.Menu(End , StartScene.instance.Game_Quit);
         }
