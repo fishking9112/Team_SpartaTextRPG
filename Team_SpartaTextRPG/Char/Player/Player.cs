@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -189,6 +191,22 @@ namespace Team_SpartaTextRPG
 
             return EquipDefense;
         }
+        //치명타기능
+        public float CriticalAttack(float finalDamage, ref bool isCritical)
+        {
+            int critical = new Random().Next(1, 100);
+            if (critical <= 100)
+            {
+                isCritical = true;
+                float newCharacterCri = finalDamage * 1.6f;
+                finalDamage = (int)Math.Round(newCharacterCri);
+            }
+            else
+            {
+                isCritical = false;
+            }
 
+            return finalDamage;
+        }
     }
 }
