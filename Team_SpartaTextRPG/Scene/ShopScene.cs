@@ -21,13 +21,29 @@ namespace Team_SpartaTextRPG
             equip_ItemsList = new List<Equip_Item>
             {
                 new Equip_Item("숏 소드", "일반 짧은 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 10.0f, 5f),
-                new Equip_Item("롱 소드", "일반 긴 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 15.0f, 0f),
+                new Equip_Item("롱 소드", "일반 긴 검", 200, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 15.0f, 0f),
                 new Equip_Item("자이언트 소드", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 20.0f, 10f),
                 new Equip_Item("세이버 소드", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 25.0f, 0f),
-                new Equip_Item("일반 활", "......", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 10.0f, 5f),
-                new Equip_Item("철 활", "......", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 15.0f, 0f),
-                new Equip_Item("자이언트 활", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 20.0f, 10f),
+                new Equip_Item("숏 활", "......", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 10.0f, 5f),
+                new Equip_Item("롱 활", "......", 200, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 15.0f, 0f),
+                new Equip_Item("엘프 활", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 20.0f, 10f),
                 new Equip_Item("세이버 활", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 25.0f, 0f),
+                new Equip_Item("단검", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ROGUE, 10.0f, 0f),
+                new Equip_Item("플레임 단검", "....", 200, Item_Slot_Type.WEAPON, Item_Job_Type.ROGUE, 15.0f, 0f),
+                new Equip_Item("독 단검", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.ROGUE, 20.0f, 0f),
+                new Equip_Item("세이버 단검", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.ROGUE, 25.0f, 0f),
+                new Equip_Item("일반 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 10.0f, 0f),
+                new Equip_Item("룬 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 15.0f, 0f),
+                new Equip_Item("프리스트 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 20.0f, 0f),
+                new Equip_Item("세이버 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 25.0f, 0f),
+                new Equip_Item("가죽 머리", "....", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("가죽 옷", "....", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("가죽 장갑", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("가죽 신발", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("블랙 머리", "....", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("블랙 옷", "....", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("블랙 장갑", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("블랙 신발", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f)
             };
             usable_ItemsList = new List<Usable_Item>
             {

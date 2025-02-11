@@ -10,8 +10,8 @@ namespace Team_SpartaTextRPG
     internal class StatusScene : Helper.Singleton<StatusScene>
     {
         Player player = GameManager.instance.player;
-        List<Equip_Item> Inven_Equip_Item = GameManager.instance.player.Inven_Equip_Item;
-        public void Game_Stats()
+        Equip_Item[] EquipSlot = GameManager.instance.player.EquipSlot;
+        public void Player_Stats()
         {
             TitleManager.instance.WriteTitle("상태 보기", ConsoleColor.Yellow);
 
@@ -25,7 +25,37 @@ namespace Team_SpartaTextRPG
             sb.AppendLine($"방어력 : {player.FinalDefense()} ({player.Defense}+{player.Equip_Defense()})"); //최종방어력 (기본방어력+아이템방어력)
             sb.AppendLine($"체력 : {player.HP}");
             sb.AppendLine($"마나 : {player.MaxMP}");
-            sb.AppendLine($"{player.Gold} G");
+            sb.AppendLine($"Gold : {player.Gold} G");
+
+           
+            for (int i = 0; i < EquipSlot.Length; i++)
+            {
+                if (EquipSlot[i] != null)
+                {
+                    switch (i)
+                    { 
+                      case 0:
+                      sb.AppendLine($"무기아이템 : {EquipSlot[i].Name}");
+                      break;
+                      case 1:
+                      sb.AppendLine($"머리아이템 : {EquipSlot[i].Name}");
+                      break;
+                      case 2:
+                      sb.AppendLine($"갑옷아이템 : {EquipSlot[i].Name}");
+                      break;
+                      case 3:
+                      sb.AppendLine($"장갑아이템 : {EquipSlot[i].Name}");
+                      break;
+                      case 4:
+                      sb.AppendLine($"신발아이템 : {EquipSlot[i].Name}");
+                      break;
+                    }
+                }
+                else
+                {
+                    sb.AppendLine("장착아이템: 장착중인 아이템이 없습니다.");
+                }
+            }
 
             ScreenManager.instance.AsyncText(sb);
             

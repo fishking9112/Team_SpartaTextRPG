@@ -12,7 +12,7 @@ namespace Team_SpartaTextRPG
         List<Usable_Item> Inven_Usable_Item = GameManager.instance.player.Inven_Usable_Item;
         Player player = GameManager.instance.player;
 
-        public void ShowInventory ()
+        public void ShowInventory()
         {
             TitleManager.instance.WriteTitle("인벤토리");
 
@@ -49,7 +49,7 @@ namespace Team_SpartaTextRPG
         }
 
 
-        public void ShowInventoryItem ()
+        public void ShowInventoryItem()
         {
             TitleManager.instance.WriteTitle("인벤토리 - 장착관리");
 
@@ -98,11 +98,11 @@ namespace Team_SpartaTextRPG
         {
             if (item is Equip_Item equip_Item)
             {
-                Equip(equip_Item);
+                equip_Item.Equip(equip_Item);
             }
             else if (item is Usable_Item usable_Item)
             {
-                Use(usable_Item);
+                usable_Item.Use(usable_Item);
             }
         }
         

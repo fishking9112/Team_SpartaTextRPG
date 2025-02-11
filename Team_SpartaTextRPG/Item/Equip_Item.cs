@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace Team_SpartaTextRPG
     // 장비 착용 부위
     enum Item_Slot_Type { WEAPON, ARMOR_H, ARMOR_C, ARMOR_G, ARMOR_S, SLOT_MAX }
     // 장비 착용 시 필요한 직업
-    enum Item_Job_Type { NONE, WARRIOR, ARCHER, WIZARD }
+    enum Item_Job_Type { NONE, WARRIOR, ARCHER, WIZARD, ROGUE }
 
     internal class Equip_Item : Item
     {
@@ -48,6 +49,27 @@ namespace Team_SpartaTextRPG
                str = $"공격력 +{Bonus_Att}";
             }
             return str;
+        }
+
+        public void Equip(Equip_Item item)
+        {
+            Player player = GameManager.instance.player;
+
+            int slotIndex = (int)item.item_Slot_Type;
+
+            if (player.EquipSlot[slotIndex] != null)
+            {
+                Equip_Item currentItem = player.EquipSlot[slotIndex];
+                currentItem.IsEquip = false;
+                player.EquipSlot[slotIndex] = item;
+                item.IsEquip = true;
+            }
+            else
+            {
+                player.EquipSlot[slotIndex] = item;
+                item.IsEquip = true;
+            }
+            SceneManager.instance.GoMenu(InventoryScene.instance.ShowInventoryItem);
         }
 
         public string ShowEquip()
