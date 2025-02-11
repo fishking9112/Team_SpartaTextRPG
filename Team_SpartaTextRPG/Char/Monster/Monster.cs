@@ -56,9 +56,6 @@ namespace Team_SpartaTextRPG
         // 몬스터 공격력 오차 범위
         public float Monster_AttDamage_Range()
         {
-            // 몬스터가 데미지 오차는 공통
-            // 몬스터가 공격시 원래 공격력에서 오차값 공격력을 곱하여 플레이어 공격
-
             // 랜덤을 통해 오차 10% 만들기
             Random random = new Random();
             float AttRange = random.Next(-10, 11);
@@ -66,7 +63,7 @@ namespace Team_SpartaTextRPG
             // 위 내용을 토대로 몬스터 공격력 범위로 수정한다.
             float ChangeMonsterDamage = AttDamage + (AttDamage / 100.0f * AttRange);
 
-            return (int)ChangeMonsterDamage;
+            return ChangeMonsterDamage;
         }
     }
 }
