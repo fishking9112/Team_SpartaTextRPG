@@ -49,8 +49,21 @@ namespace Team_SpartaTextRPG
             }
         }
         public int MaxHP { get; set; }
-        public float AttDamage { get; set; }
+        public float AttDamage {  get; set; }
         public int Defense { get; set; }
         public bool IsDead => HP <= 0;
+
+        // 몬스터 공격력 오차 범위
+        public float Monster_AttDamage_Range()
+        {
+            // 랜덤을 통해 오차 10% 만들기
+            Random random = new Random();
+            float AttRange = random.Next(-10, 11);
+
+            // 위 내용을 토대로 몬스터 공격력 범위로 수정한다.
+            float ChangeMonsterDamage = AttDamage + (AttDamage / 100.0f * AttRange);
+
+            return ChangeMonsterDamage;
+        }
     }
 }

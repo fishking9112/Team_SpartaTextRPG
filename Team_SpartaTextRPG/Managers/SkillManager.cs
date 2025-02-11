@@ -23,7 +23,7 @@ namespace Team_SpartaTextRPG
         {
             { Skill_Key.WarriorSkill01, ("몸통 박치기 - 체력을 10 사용하여 자신의 방어력의 5배의 피해를 준다" , player => { // 스킬 데미지
                 if (player.HP <= 10){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
-                return player.Defense * 2f;
+                return player.Defense * 5f;
             }, player => { // 스킬 코스트 비용 지불
                 player.HP -= 10;
             })},
@@ -85,7 +85,7 @@ namespace Team_SpartaTextRPG
             }, player => { // 스킬 코스트 비용 지불
                 player.MP -= 5;
             })},
-            { Skill_Key.WizardSkill03, ("매직 클로 - 마나를 20 사용하여 자신의 최대 마나의 피해를 준다" , player => { // 스킬 데미지
+            { Skill_Key.WizardSkill02, ("매직 클로 - 마나를 20 사용하여 자신의 최대 마나의 피해를 준다" , player => { // 스킬 데미지
                 if (player.MP < 20){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
                 return player.MaxMP;
             }, player => { // 스킬 코스트 비용 지불

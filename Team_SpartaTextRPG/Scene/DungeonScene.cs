@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Net.Security;
 using System.Reflection;
@@ -62,15 +63,14 @@ namespace Team_SpartaTextRPG
                     }
                 }
             }
-
             Console.WriteLine("===========================================================\n");
             Console.WriteLine($"이름 : {player.Name}  |  Lv. {player.Level}  |  플레이어의 체력 : {player.HP}  |  플레이어의 마나 : {player.MP}");
             Console.WriteLine();
             Console.WriteLine("1. [ 공격 ]");
             Console.WriteLine("2. [ 아이템 사용 ]");
+            Console.WriteLine("3. [ 스킬 사용 ]");
             Console.WriteLine("0. [ 도망가기 ]");
-
-            SceneManager.instance.Menu(DungeonMenu, Dungeon_Title, DungeonMenu_Fight, DungeonMenu_Use_Item);
+            SceneManager.instance.Menu(DungeonMenu, Dungeon_Title, DungeonMenu_Fight, DungeonMenu_Use_Item, DungeonMenu_Skill_Select);
         }
 
         // 현재 몬스터를 Select_Stage로 출력
@@ -150,26 +150,22 @@ namespace Team_SpartaTextRPG
 
                 if (Rand < 5)
                 {
-                    monsters[i] = new Monster("맼닠젘", 10, 50, 50, 10, 25);
+                    monsters[i] = new Monster("맼닠젘", 12, 50, 50, 30, 25);
                 }
                 else if (Rand < 20)
                 {
-                    monsters[i] = new Monster("오크", 5, 26, 26, 8, 4);
+                    monsters[i] = new Monster("오크", 7, 26, 26, 20, 4);
                 }
                 else if (Rand < 50)
                 {
-                    monsters[i] = new Monster("고블린", 3, 22, 22, 3, 5);
+                    monsters[i] = new Monster("고블린", 5, 22, 22, 10, 5);
                 }
                 else
                 {
-                    monsters[i] = new Monster("슬라임", 1, 15, 15, 1, 1);
+                    monsters[i] = new Monster("슬라임", 3, 15, 15, 8, 1);
                 }
             }
         }
-
-        //공격시 치명타 및 회피 설정
-
-
 
         // 플레이어가 몬스터를 공격
         public void Player_Att(int input)
@@ -218,11 +214,21 @@ namespace Team_SpartaTextRPG
                 {
                     if (monsters[i].IsDead == false)
                     {
+                        // 여기에 몬스터 오차 범위 넣기
+                        float AttRangeDamage = monsters[i].Monster_AttDamage_Range();
+
+                        float totalDamage = AttRangeDamage - player.FinalDefense();
+                        
+                        if (totalDamage < 0)
+                        {
+                            totalDamage = 0;
+                        }
+
                         // 플레이어 체력 깎아주기
-                        player.HP = (int)(player.HP - (monsters[i].AttDamage - player.FinalDefense()));
+                        player.HP = (int)(player.HP - (totalDamage));
 
                         Utill.ColorWriteLine($"{monsters[i].Name} 공격", ConsoleColor.Red);
-                        Utill.ColorWriteLine($"{player.Name}는(은) {monsters[i].AttDamage - player.FinalDefense()}의 데미지를 받았다.\n");
+                        Utill.ColorWriteLine($"{player.Name}는(은) {totalDamage}의 데미지를 받았다.\n");
 
                         Thread.Sleep(1000);
 
@@ -230,7 +236,6 @@ namespace Team_SpartaTextRPG
                         {
                             break;
                         }
-
                     }
                 }
             }
@@ -287,6 +292,81 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("0. [ 나가기 ]");
 
             SceneManager.instance.Menu(Stage_Clear, Dungeon_Title);
+        }
+
+        public void DungeonMenu_Skill_Select ()
+        {
+            List<Action> skillActions = new List<Action>();
+            skillActions.Add(DungeonScene.instance.DungeonMenu);
+            Console.WriteLine("[사용 가능한 스킬 목록]");
+
+            for (int i = 0; i < player.SkillList.Count; i++)
+            {
+                int index = i;
+                string skillDescription = SkillManager.instance.GetSkillDescription(player, player.SkillList[i]);
+
+                Console.WriteLine($"{i + 1}. {skillDescription}");
+
+                skillActions.Add(() =>
+                {
+                    
+                    DungeonMenu_Monster_Select(index);
+                });
+            }
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            SceneManager.instance.Menu(DungeonMenu, skillActions.ToArray());
+        }
+
+        public void DungeonMenu_Monster_Select(int skillIndex)
+        {
+            List<Action> tempActions = new List<Action>();
+            tempActions.Add(DungeonScene.instance.DungeonMenu); 
+
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                if (monsters[i] != null)
+                {
+                    if (!monsters[i].IsDead) 
+                    {
+                        int temp = i;
+                        tempActions.Add(() => DungeonMenu_Skill_Use(temp, skillIndex)); 
+                        Console.WriteLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
+                    }
+                    else
+                    {
+                        tempActions.Add(null);
+                        Utill.ColorWrite($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP} |", ConsoleColor.DarkGray);
+                        Utill.ColorWriteLine("\tDead", ConsoleColor.Red);
+                    }
+                }
+            }
+
+            Console.WriteLine("===========================================================\n");
+            Console.WriteLine($"이름 : {player.Name}  |  Lv. {player.Level}  |  플레이어의 체력 : {player.HP}  |  플레이어의 마나 : {player.MP}");
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+
+            SceneManager.instance.Menu(()=>DungeonMenu_Monster_Select(skillIndex), tempActions.ToArray());
+
+        }
+
+        public void DungeonMenu_Skill_Use(int targetIndex, int skillIndex)
+        {
+            float damage = SkillManager.instance.GetSkillDamage(player, player.SkillList[skillIndex]);
+
+            if (damage >= 0)
+            {
+                SkillManager.instance.ExecuteSkillCost(player, player.SkillList[skillIndex]);
+
+                
+                monsters[targetIndex].HP -= (int)damage;
+
+                Console.WriteLine($"{monsters[targetIndex].Name}에게 {damage} 데미지를 입혔습니다!");
+            }
+
+            
+            SceneManager.instance.GoMenu(DungeonMenu);
         }
     }
 }
