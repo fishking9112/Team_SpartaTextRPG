@@ -31,54 +31,62 @@ namespace Team_SpartaTextRPG
         {
             TitleManager.instance.WriteTitle("퀘스트 목록", ConsoleColor.Yellow);
 
-            StringBuilder sb = new();
             List<Action> tempActions = new List<Action>();
             tempActions.Add(TownScene.instance.Game_Main);
 
+            int nameX = 1;
+            int descriptionX = 25;
+            int rewardX = 52;
+            int levelX = 70;
+            int processX = 85;
+
             for (int i = 0; i < questList.Count; i++)
             {
+                StringBuilder sbLevel = new();
                 int temp = i;
                 tempActions.Add( () => Quest_Accept(questList[temp]));
 
                 switch(questList[i].QuestProgress)
                 {
                     case QUEST_PROGRESS.Before: // 받기 전
-                        sb.Append($"{i + 1}. {questList[i].Name} | {questList[i].Description} | 보상 : {questList[i].Reward} | ");
-                        sb.Append("난이도 : ");
                         for (int j = 1; j <= questList[i].Level; j++)
-                            sb.Append("★");
-                        sb.AppendLine();
+                            sbLevel.Append("★");
+                        ScreenManager.instance.AsyncText($"{i + 1}. {questList[i].Name}", nameX, i + 1);
+                        ScreenManager.instance.AsyncText($"{questList[i].Description}", descriptionX, i + 1);
+                        ScreenManager.instance.AsyncText($"보상 : {questList[i].Reward}", rewardX, i + 1);
+                        ScreenManager.instance.AsyncText(sbLevel, levelX, i + 1, ConsoleColor.Yellow);
                         break;
                     case QUEST_PROGRESS.Inprogress: // 진행 중
-                        sb.Append($"{i + 1}. {questList[i].Name} | {questList[i].Description} | 보상 : {questList[i].Reward} | ");
-                        sb.Append("난이도 : ");
                         for (int j = 1; j <= questList[i].Level; j++)
-                            sb.Append("★");
-                        sb.Append(" | ");
-                        sb.AppendLine("[진행 중]");
+                            sbLevel.Append("★");
+                        ScreenManager.instance.AsyncText($"{i + 1}. {questList[i].Name}", nameX, i + 1);
+                        ScreenManager.instance.AsyncText($"{questList[i].Description}", descriptionX, i + 1);
+                        ScreenManager.instance.AsyncText($"보상 : {questList[i].Reward}", rewardX, i + 1);
+                        ScreenManager.instance.AsyncText(sbLevel, levelX, i + 1, ConsoleColor.Yellow);
+                        ScreenManager.instance.AsyncText($"[ 진행 중 ( {questList[i].CurCount} / {questList[i].MaxCount} ) ]", processX, i + 1, ConsoleColor.Cyan);
                         break;
                     case QUEST_PROGRESS.Obtainable: // 보상 획득 가능
-                        sb.Append($"{i + 1}. {questList[i].Name} | {questList[i].Description} | 보상 : {questList[i].Reward} | ");
-                        sb.Append("난이도 : ");
                         for (int j = 1; j <= questList[i].Level; j++)
-                            sb.Append("★");
-                        sb.Append(" | ");
-                        sb.AppendLine("[보상 획득 가능]");
+                            sbLevel.Append("★");
+                        ScreenManager.instance.AsyncText($"{i + 1}. {questList[i].Name}", nameX, i + 1);
+                        ScreenManager.instance.AsyncText($"{questList[i].Description}", descriptionX, i + 1);
+                        ScreenManager.instance.AsyncText($"보상 : {questList[i].Reward}", rewardX, i + 1);
+                        ScreenManager.instance.AsyncText(sbLevel, levelX, i + 2, ConsoleColor.Yellow);
+                        ScreenManager.instance.AsyncText($"[ 보상 획득 가능 ]", processX, i + 1, ConsoleColor.Green);
                         break;
                     case QUEST_PROGRESS.Complete: // 이미 완료
-                        sb.Append($"{i + 1}. {questList[i].Name} | {questList[i].Description} | 보상 : {questList[i].Reward} | " );
-                        sb.Append("난이도 : ");
                         for (int j = 1; j <= questList[i].Level; j++)
-                            sb.Append("★");
-                        sb.AppendLine();
+                            sbLevel.Append("★");
+                        ScreenManager.instance.AsyncText($"{i + 1}. {questList[i].Name}", nameX, i + 1, ConsoleColor.DarkGray);
+                        ScreenManager.instance.AsyncText($"{questList[i].Description}", descriptionX, i + 1, ConsoleColor.DarkGray);
+                        ScreenManager.instance.AsyncText($"보상 : {questList[i].Reward}", rewardX, i + 1, ConsoleColor.DarkGray);
+                        ScreenManager.instance.AsyncText(sbLevel, levelX, i + 1, ConsoleColor.DarkGray);
+                        ScreenManager.instance.AsyncText($"[ 완료 ]", processX, i + 1, ConsoleColor.DarkGray);
                         break;
                 }
             }
 
-            sb.AppendLine();
-            sb.AppendLine("0. 나가기");
-
-            ScreenManager.instance.AsyncText(sb);
+            ScreenManager.instance.AsyncText("0. 나가기", 1, questList.Count + 2);
 
 
             InputKeyManager.instance.InputMenu(QuestBoardScene.instance.Show_Quest_Board, "행동할 퀘스트 번호를 입력해주세요 >> ", tempActions.ToArray());
