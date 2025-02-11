@@ -16,8 +16,7 @@
             PanelManager.instance.DrawAllPanel();
             InputKeyManager.instance.AsyncAction();
 
-            // InputKeyManager.instance.ArtMenu(("시작", null, () => StartScene.instance.Game_FakeLoding()));
-            InputKeyManager.instance.ArtMenu(("시작", null, () => StartScene.instance.Game_Title()));
+            InputKeyManager.instance.ArtMenu(("시작", null, () => StartScene.instance.Game_FakeLoding()));
 
             Progress();
 

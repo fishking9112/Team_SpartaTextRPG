@@ -68,23 +68,8 @@ namespace Team_SpartaTextRPG
 
         public void Game_Title()
         {
-            int startMonsterX = 24;
-            int startMonsterY = 3;
-            int monsterSizeX = 12;
-            int monsterSizeY = 15;
-
             TitleManager.instance.WriteTitle("강렬한 인상 is 게임");
-            // ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
-            
-            // Utill.NineToNine_PATH >> 좋다
-            // Utill.TIL_PATH >> 좋다
-
-
-            ScreenManager.instance.AsyncUnitVideo(Utill.CS_PATH.idle, startX: startMonsterX+24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:100);
-
-            ScreenManager.instance.AsyncUnitVideo(Utill.CS_PATH.die, startX: startMonsterX+48, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:100);
-
-            ScreenManager.instance.AsyncUnitVideo(Utill.CS_PATH.end, startX: startMonsterX+72, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:100);
+            ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
 
             InputKeyManager.instance.ArtMenu(
             ("계속 하기", "저장된 게임을 불러옵니다.", () => { Select_Job("test",PLAYER_JOB.Programmer); }),
