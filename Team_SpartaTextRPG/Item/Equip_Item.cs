@@ -71,7 +71,8 @@ namespace Team_SpartaTextRPG
                 player.EquipSlot[slotIndex] = item;
                 item.IsEquip = true;
             }
-            SceneManager.instance.GoMenu(InventoryScene.instance.ShowInventoryItem);
+            InputKeyManager.instance.GoMenu(InventoryScene.instance.ShowInventoryItem);
+            // SceneManager.instance.GoMenu(InventoryScene.instance.ShowInventoryItem);
         }
 
         public string ShowEquip()
