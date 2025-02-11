@@ -152,19 +152,43 @@ namespace Team_SpartaTextRPG
 
                 if (Rand < 5)
                 {
-                    monsters[i] = new Monster("맼닠젘", 12, 50, 50, 30, 25);
+                    monsters[i] = new Monster("면접준비", 12, 50, 50, 30, 25);
                 }
                 else if (Rand < 20)
                 {
-                    monsters[i] = new Monster("오크", 7, 26, 26, 20, 4);
+                    monsters[i] = new Monster("실전 프로젝트", 7, 26, 26, 20, 4);
                 }
                 else if (Rand < 50)
                 {
-                    monsters[i] = new Monster("고블린", 5, 22, 22, 10, 5);
+                    monsters[i] = new Monster("Unity 3D", 5, 22, 22, 10, 5);
+                }
+                else if (Rand < 50)
+                {
+                    monsters[i] = new Monster("Unity 2D", 3, 15, 15, 8, 1);
+                }
+                else if (Rand < 50)
+                {
+                    monsters[i] = new Monster("Unity 입문", 3, 15, 15, 8, 1);
+                }
+                else if (Rand < 50)
+                {
+                    monsters[i] = new Monster("C# Console", 3, 15, 15, 8, 1);
+                }
+                else if (Rand < 50)
+                {
+                    monsters[i] = new Monster("C# 기초, 심화", 3, 15, 15, 8, 1);
+                }
+                else if (Rand < 50)
+                {
+                    monsters[i] = new Monster("자료구조", 3, 15, 15, 8, 1);
+                }
+                else if (Rand < 50)
+                {
+                    monsters[i] = new Monster("TIL", 3, 15, 15, 8, 1);
                 }
                 else
                 {
-                    monsters[i] = new Monster("슬라임", 3, 15, 15, 8, 1);
+                    monsters[i] = new Monster("9to9", 3, 15, 15, 8, 1);
                 }
             }
         }
