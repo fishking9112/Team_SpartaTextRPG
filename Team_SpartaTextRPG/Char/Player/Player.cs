@@ -236,6 +236,8 @@ namespace Team_SpartaTextRPG
                     Level += 1;
                     MaxExp = Level * 100;
                     MaxHP += 100;
+                    AttDamage += 0.5f;
+                    Defense += 1;
 
                 } while (Exp > MaxExp);
 
