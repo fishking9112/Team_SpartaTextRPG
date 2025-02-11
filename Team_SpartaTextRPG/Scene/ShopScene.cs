@@ -255,10 +255,11 @@ namespace Team_SpartaTextRPG
                 // 사지면
                 ScreenManager.instance.AsyncText($"{item.Name}을 구매 했습니다.", _color: ConsoleColor.Green);
 
-                if (item is Equip_Item equip_Item)
+                if (item is Equip_Item equip)
                 {
                     // 만약 아이템이 Equip Item이면 인벤에 넣기
-                    player.Inven_Equip_Item.Add(equip_Item);
+                    player.Inven_Equip_Item.Add(equip);
+                    equip.IsPurchased = true;
                     InputKeyManager.instance.ArtMenu(
                         ($"뒤로", "상점으로 돌아갑니다.", () => ShowShop()));
                 }
