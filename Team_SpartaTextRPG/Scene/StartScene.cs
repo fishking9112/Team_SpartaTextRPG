@@ -71,8 +71,9 @@ namespace Team_SpartaTextRPG
             TitleManager.instance.WriteTitle("강렬한 인상 is 게임");
             ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
 
+            // 계속 하기는 저장된 데이터만 있을 때 실행할 수 있도록 비활성화
             InputKeyManager.instance.ArtMenu(
-            ("계속 하기", "저장된 게임을 불러옵니다.", () => { Select_Job("test",PLAYER_JOB.Programmer); }),
+            // ("계속 하기", "저장된 게임을 불러옵니다.", () => { Select_Job("test",PLAYER_JOB.Programmer); }),
             ("게임 시작", "게임을 시작합니다.", () => { Game_Start(); }),
             ("게임 종료", "게임을 종료합니다.", () => { Game_Quit(); }));
         }
@@ -88,6 +89,8 @@ namespace Team_SpartaTextRPG
 
             ScreenManager.instance.ClearScreen();
             ScreenManager.instance.AsyncText(sb);
+
+            ScreenManager.instance.AsyncImage("./resources/dungeon.png",_startX:80, _startY:2, imageSizeX:20, imageSizeY:20);
 
             string name = InputKeyManager.instance.InputString("이름을 입력하세요(3 ~ 5 글자) >> ");
             
@@ -107,7 +110,7 @@ namespace Team_SpartaTextRPG
         {
             TitleManager.instance.WriteTitle("이름 결정");
 
-            ScreenManager.instance.AsyncVideo("resources/game_start.mp4", _isContinue: true);
+            ScreenManager.instance.AsyncVideo("resources/giphy.gif", _isContinue: false);
 
             InputKeyManager.instance.ArtMenu(($"제 이름은 {name}(이)가 맞습니다", "게임을 시작합니다.", () => { Choose_Job(name); }), ("다시 설정", "다시 이름을 정합니다.", () => { Game_Start(); }));
         }
@@ -117,7 +120,7 @@ namespace Team_SpartaTextRPG
             TitleManager.instance.WriteTitle("직업 선택하기");
 
             ScreenManager.instance.AsyncUnitVideo("./resources/warrior.mp4", startX: 0, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
-            ScreenManager.instance.AsyncUnitVideo("./resources/thief.mp4", startX: 30, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
+            ScreenManager.instance.AsyncUnitVideo("./resources/wizard.mp4", startX: 30, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
             // ScreenManager.instance.AsyncUnitVideo("./resources/archer.mp4", startX: 60, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
             // ScreenManager.instance.AsyncUnitVideo("./resources/wizard.mp4", startX: 90, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
             
