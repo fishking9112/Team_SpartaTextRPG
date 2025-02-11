@@ -10,7 +10,7 @@ namespace Team_SpartaTextRPG
     internal class StatusScene : Helper.Singleton<StatusScene>
     {
         Player player = GameManager.instance.player;
-        List<Equip_Item> Inven_Equip_Item = GameManager.instance.player.Inven_Equip_Item;
+        Equip_Item[] EquipSlot = GameManager.instance.player.EquipSlot;
         public void Player_Stats()
         {
             Console.Clear();
@@ -24,19 +24,37 @@ namespace Team_SpartaTextRPG
             Console.WriteLine($"체력 : {player.HP}");
             Console.WriteLine($"마나 : {player.MaxMP}");
             Console.WriteLine($"Gold : {player.Gold} G");
-            if (Inven_Equip_Item.Count == 0)
+            
+           
+            for (int i = 0; i < EquipSlot.Length; i++)
             {
-                Console.WriteLine("장착아이템: 장착중인 아이템이 없습니다.");
-            }
-            else
-            {
-                Console.Write("장착아이템:");
-                for (int i = 0; i < Inven_Equip_Item.Count; i++)
+                if (EquipSlot[i] != null)
                 {
-                    Console.Write($"{Inven_Equip_Item[i].Name}");
-                    Console.Write(" ");
+                    switch (i)
+                    { 
+                      case 0:
+                      Console.WriteLine($"무기아이템 : {EquipSlot[i].Name}");
+                      break;
+                      case 1:
+                      Console.WriteLine($"머리아이템 : {EquipSlot[i].Name}");
+                      break;
+                      case 2:
+                      Console.WriteLine($"갑옷아이템 : {EquipSlot[i].Name}");
+                      break;
+                      case 3:
+                      Console.WriteLine($"장갑아이템 : {EquipSlot[i].Name}");
+                      break;
+                      case 4:
+                      Console.WriteLine($"신발아이템 : {EquipSlot[i].Name}");
+                      break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("장착아이템: 장착중인 아이템이 없습니다.");
                 }
             }
+            
 
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
