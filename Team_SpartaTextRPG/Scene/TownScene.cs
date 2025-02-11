@@ -15,6 +15,7 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("3. [  상  점  ]");
             Console.WriteLine("4. [  여  관  ]");
             Console.WriteLine("5. [ 던전입장 ]");
+            Console.WriteLine("6. [ 퀘 스 트 ]");
             Console.WriteLine("6. [  저  장  ]");
             Console.WriteLine("7. [  종  료  ]");
 
@@ -27,7 +28,8 @@ namespace Team_SpartaTextRPG
                 () => Select_Menu(4),
                 () => Select_Menu(5),
                 () => Select_Menu(6),
-                () => Select_Menu(7) );
+                () => Select_Menu(7),
+                () => Select_Menu(8) );
 
         }
         public void Select_Menu(int _index)
@@ -50,10 +52,13 @@ namespace Team_SpartaTextRPG
                 case 5: // 던전 입장
                     SceneManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
                     break;
-                case 6: // 저장
+                case 6: // 퀘스트
+                    SceneManager.instance.GoMenu(QuestBoardScene.instance.Show_Quest_Board);
+                    break;
+                case 7: // 저장
                     GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
                     break;
-                case 7: // 종료
+                case 8: // 종료
                     GameManager.instance.isPlaying = false;
                     break;
 
