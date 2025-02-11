@@ -362,7 +362,6 @@ namespace Team_SpartaTextRPG
                 
                 monsters[targetIndex].HP -= (int)damage;
 
-                Console.WriteLine($"{monsters[targetIndex].Name}에게 {damage} 데미지를 입혔습니다!");
             }
 
             
