@@ -185,11 +185,11 @@ namespace Team_SpartaTextRPG
 
             return EquipDefense;
         }
-        //치명타기능
+        //치명타 기능
         public float CriticalAttack(float finalDamage, ref bool isCritical)
         {
             int critical = new Random().Next(1, 100);
-            if (critical <= 100)
+            if (critical <= 15)
             {
                 isCritical = true;
                 float newCharacterCri = finalDamage * 1.6f;
@@ -198,6 +198,23 @@ namespace Team_SpartaTextRPG
             else
             {
                 isCritical = false;
+            }
+
+            return finalDamage;
+        }
+        //회피 기능
+        public float AvoidAttack(float finalDamage, ref bool isAvoid)
+        {
+            int avoid = new Random().Next(1, 100);
+            if (avoid <= 10)
+            {
+                isAvoid = true;
+                float newAvoidat = finalDamage * 0f;
+                finalDamage = (int)Math.Round(newAvoidat);
+            }
+            else
+            {
+                isAvoid = false;
             }
 
             return finalDamage;

@@ -174,15 +174,23 @@ namespace Team_SpartaTextRPG
         // 플레이어가 몬스터를 공격
         public void Player_Att(int input)
         {
-            //플레이어가 몬스터를 때릴때 치명타 함수호출
+            //플레이어가 몬스터를 공격시 치명타 함수호출
             bool isCritical = false;
             float Criticaldamage= player.CriticalAttack(player.FinalDamage(), ref isCritical);
             monsters[input - 1].HP = (int)(monsters[input - 1].HP - Criticaldamage);
+            //플레이어가 몬스터를 공격시 회피 함수호출
+            bool isAvoid = false;
+            float Avoiddamage = player.AvoidAttack(player.FinalDamage(), ref isAvoid);
+            monsters[input - 1].HP = (int)(monsters[input - 1].HP - Avoiddamage);
 
             Utill.ColorWriteLine($"{player.Name} 공격", ConsoleColor.Blue);
             if (isCritical)
             {
                 Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) 강력한{Criticaldamage}의 데미지를 받았다.\n",ConsoleColor.Magenta);
+            }
+            else if (isAvoid)
+            {
+                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {Avoiddamage}의 데미지를 받았다.\n", ConsoleColor.Cyan);
             }
             else
             {
