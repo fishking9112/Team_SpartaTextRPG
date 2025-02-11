@@ -23,15 +23,13 @@ namespace Team_SpartaTextRPG
             {
                 if(item.TargetName == _name)
                 {
-                    if(item.CurCount >= item.MaxCount)
+                    item.CurCount++;
+
+                    if (item.CurCount >= item.MaxCount)
                     {
                         //최대값
                         item.CurCount = item.MaxCount;
                         item.QuestProgress = QUEST_PROGRESS.Obtainable;
-                    }
-                    else
-                    {
-                        item.CurCount++;
                     }
                 }
             }

@@ -43,6 +43,7 @@ namespace Team_SpartaTextRPG
         // 층에 나오기 전에 나오는 몬스터 설정
         public void InitStage()
         {
+            for(int i = 0; i < monsters.Length; i++) { monsters[i] = null; }
             Random_Monster();
         }
 
@@ -185,27 +186,35 @@ namespace Team_SpartaTextRPG
         // 플레이어가 몬스터를 공격
         public void Player_Att(int input)
         {
+
             //플레이어가 몬스터를 공격시 치명타 함수호출
             bool isCritical = false;
             float Criticaldamage = player.CriticalAttack(player.FinalDamage(), ref isCritical);
-            monsters[input - 1].HP = (int)(monsters[input - 1].HP - Criticaldamage);
-            //플레이어가 몬스터를 공격시 회피 함수호출
-            bool isAvoid = false;
-            float Avoiddamage = player.AvoidAttack(player.FinalDamage(), ref isAvoid);
-            monsters[input - 1].HP = (int)(monsters[input - 1].HP - Avoiddamage);
 
-            Utill.ColorWriteLine($"{player.Name} 공격", ConsoleColor.Blue);
-            if (isCritical)
+            if (monsters[input - 1].IsAvoid(10.0f) == true) // 회피를 하면 ?
             {
-                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) 강력한{Criticaldamage}의 데미지를 받았다.\n", ConsoleColor.Magenta);
-            }
-            else if (isAvoid)
-            {
-                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {Avoiddamage}의 데미지를 받았다.\n", ConsoleColor.Cyan);
+                // 회피
+                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {player.Name}의 공격을 회피했다 !.\n", ConsoleColor.Cyan);
             }
             else
             {
-                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {Criticaldamage}의 데미지를 받았다.\n");
+                // 맞음
+                monsters[input - 1].HP = (int)(monsters[input - 1].HP - Criticaldamage);
+
+                if (monsters[input - 1].HP <= 0)
+                {
+                    QuestManager.instance.MonsterCount(monsters[input - 1].Name);
+                }
+
+                Utill.ColorWriteLine($"{player.Name} 공격", ConsoleColor.Blue);
+                if (isCritical)
+                {
+                    Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) 강력한{Criticaldamage}의 데미지를 받았다.\n", ConsoleColor.Magenta);
+                }
+                else
+                {
+                    Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {Criticaldamage}의 데미지를 받았다.\n");
+                }
             }
 
             Thread.Sleep(1000);
@@ -231,8 +240,7 @@ namespace Team_SpartaTextRPG
                     {
                         // 여기에 몬스터 오차 범위 넣기
                         float AttRangeDamage = monsters[i].Monster_AttDamage_Range();
-
-                        float totalDamage = AttRangeDamage - player.FinalDefense();
+                        int totalDamage = (int)Math.Round(AttRangeDamage) - player.FinalDefense();
 
                         if (totalDamage < 0)
                         {
@@ -373,34 +381,18 @@ namespace Team_SpartaTextRPG
             bool isCritical = false;
             float Criticaldamage = player.CriticalAttack(baseDamage, ref isCritical);
 
-            bool isAvoid = false;
-            float Avoiddamage = player.AvoidAttack(baseDamage, ref isAvoid);
-
             float finalDamage = 0;
 
             if (isCritical)
             {
                 finalDamage = Criticaldamage;
             }
-            else if (isAvoid)
-            {
-                finalDamage = Avoiddamage;
-            }
-            else
-            {
-                finalDamage = baseDamage;
-            }
-
             monsters[targetIndex].HP = (int)(monsters[targetIndex].HP - finalDamage);
             Utill.ColorWriteLine($"{player.Name} 스킬 사용", ConsoleColor.Blue);
 
             if (isCritical)
             {
                 Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) 강력한 {finalDamage}의 데미지를 받았다.\n", ConsoleColor.Magenta);
-            }
-            else if (isAvoid)
-            {
-                Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) {finalDamage}의 데미지를 받았다.\n", ConsoleColor.Cyan);
             }
             else
             {
