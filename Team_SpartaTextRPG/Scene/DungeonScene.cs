@@ -122,7 +122,11 @@ namespace Team_SpartaTextRPG
             for (int i = 0; i < player.Inven_Usable_Item.Count; i++)
             {
                 Usable_Item currentItem = player.Inven_Usable_Item[i];
-                tempActions.Add(() => currentItem.Use(currentItem));
+                tempActions.Add(() =>
+                {
+                    currentItem.Use(currentItem);
+                    SceneManager.instance.GoMenu(DungeonMenu);
+                });
                 Console.WriteLine($"{i+1}.   {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}");
             }
             Console.WriteLine();
