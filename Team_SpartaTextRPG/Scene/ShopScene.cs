@@ -48,15 +48,6 @@ namespace Team_SpartaTextRPG
             usable_ItemsList = new List<Usable_Item>
             {
                 //즉시발동 물약
-<<<<<<< HEAD
-                new Usable_Item("니코틴", "|   체력 -20   |   방어력 +10", 100, 0f, 10f, -20f, 0f, 3),
-                new Usable_Item("알콜", "|   체력 -20   |   공격력 +10", 100, 10f, 0f, -20f, 0f, 3),
-                new Usable_Item("카페인", "|   마나 -20   |   체력 +20", 100, 0f, 0f, 20f, -20f),
-                new Usable_Item("초콜릿 사탕", "|   체력 -20   |   마나 +20", 100, 0f, 0f, -20f, 20f),
-                new Usable_Item("점심", "체력 +20"  , 100, 0f, 0f, +20f, 0f),
-                new Usable_Item("저녁", "체력 +20"  , 100, 0f, 0f, +20f, 0f),
-                new Usable_Item("야식", "체력 +20"  , 100, 0f, 0f, +20f, 0f)
-=======
                 new Usable_Item("스누피커피우유", "카페인이 느껴집니다.", 100, 0f, 0f, 0f, 10f),
                 new Usable_Item("커피", "잠이 안 오기 시작합니다.", 100, 0f, 0f, 0f, 30f),
                 new Usable_Item("레드불", "뭐든 할 수 있을 것 같습니다.", 200, 0f, 0f, 0f, 50f),
@@ -70,7 +61,6 @@ namespace Team_SpartaTextRPG
                 new Usable_Item("담배", "안 아프기 시작합니다.", 100, 0f, 10f, 0f, 0f , 5),
                 new Usable_Item("맥주", "기분이 좋아집니다.", 100, 5f, 0f, 0f, 0f , 5),
                 new Usable_Item("소주", "날뛸 수 있습니다.", 100, 10f, 0f, 0f, 0f , 5),
->>>>>>> dev
             };
         }
         public void ShowMenu()
