@@ -48,12 +48,13 @@ namespace Team_SpartaTextRPG
             usable_ItemsList = new List<Usable_Item>
             {
                 //즉시발동 물약
-                new Usable_Item("체력 포션", "체력 50 증가", 100, 0f, 0f, 50f, 0f),
-                new Usable_Item("마나 포션", "마나 50 증가", 100, 0f, 0f, 0f, 50f),
-                new Usable_Item("반반 포션", "체력과 마나 50씩 증가", 200, 0f, 0f, 50f, 50f),
-
-                //지속효과 물약
-                new Usable_Item("공격력 포션", "공격력 10 증가", 100, 10f, 0f, 0f, 0f , 5),
+                new Usable_Item("니코틴", "|   체력 -20   |   방어력 +10", 100, 0f, 10f, -20f, 0f, 3),
+                new Usable_Item("알콜", "|   체력 -20   |   공격력 +10", 100, 10f, 0f, -20f, 0f, 3),
+                new Usable_Item("카페인", "|   마나 -20   |   체력 +20", 100, 0f, 0f, 20f, -20f),
+                new Usable_Item("초콜릿 사탕", "|   체력 -20   |   마나 +20", 100, 0f, 0f, -20f, 20f),
+                new Usable_Item("점심", "체력 +20"  , 100, 0f, 0f, +20f, 0f),
+                new Usable_Item("저녁", "체력 +20"  , 100, 0f, 0f, +20f, 0f),
+                new Usable_Item("야식", "체력 +20"  , 100, 0f, 0f, +20f, 0f)
             };
         }
         public void ShowMenu()
@@ -90,14 +91,14 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("[보유 골드]");
             Console.WriteLine($"{player.Gold} G");
             Console.WriteLine();
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[소비 아이템 목록]");
             List<Action> tempActions = new List<Action>();
             tempActions.Add(ShopScene.instance.ShowMenu);
             for (int i = 0; i < usable_ItemsList.Count; i++)
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(usable_ItemsList[temp]));
-                Console.WriteLine($"{i + 1}. {usable_ItemsList[i].Name}   |   {usable_ItemsList[i].Description}   |   {usable_ItemsList[i].HporMp()}   |   가격: {usable_ItemsList[i].Price}");
+                Console.WriteLine($"{i + 1}. {usable_ItemsList[i].Name}   |   {usable_ItemsList[i].Description}   |   가격: {usable_ItemsList[i].Price}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -129,7 +130,7 @@ namespace Team_SpartaTextRPG
             {
                 int temp = i;
                 tempActions.Add(() => SellItem(player.Inven_Usable_Item[temp]));
-                Console.WriteLine($"{index}. {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}   |   판매가격: {player.Inven_Usable_Item[i].Price * 0.8}");
+                Console.WriteLine($"{index}. {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   판매가격: {player.Inven_Usable_Item[i].Price * 0.8}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
