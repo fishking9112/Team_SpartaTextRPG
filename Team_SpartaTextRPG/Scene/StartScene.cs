@@ -34,7 +34,7 @@ namespace Team_SpartaTextRPG
         {
             Console.WriteLine("캐릭터 선택!");
 
-            Console.WriteLine("[1. 서버 프로그래머]");
+            Console.WriteLine("[1. 프로그래머]");
             Console.WriteLine("[2. 기획자]");
 
             SceneManager.instance.Menu(Game_Start, null,

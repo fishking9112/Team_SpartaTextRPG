@@ -211,7 +211,7 @@ namespace Team_SpartaTextRPG
                         }
                         else
                         {
-                            monsters[i] = new Monster("팀 프로젝트​​", 3, 15, 15, 8, 1);
+                            monsters[i] = new Monster("팀 프로젝트", 3, 15, 15, 8, 1);
                         }
 
                     }
