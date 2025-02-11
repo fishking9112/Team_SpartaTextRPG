@@ -435,19 +435,22 @@ namespace Team_SpartaTextRPG
             for (int i = 0; i < player.SkillList.Count; i++)
             {
                 int index = i;
-                string skillDescription = SkillManager.instance.GetSkillDescription(player, player.SkillList[i]);
+                    string skillDescription = SkillManager.instance.GetSkillDescription(player, player.SkillList[i]);
 
-                Console.WriteLine($"{i + 1}. {skillDescription}");
+                if(SkillManager.instance.GetSkillDamage(player, player.SkillList[i]) >= 0){
 
-                skillActions.Add(() =>
-                {
+                    Console.WriteLine($"{i + 1}. {skillDescription}");
 
-                    DungeonMenu_Monster_Select(index);
-                });
+                    skillActions.Add(() =>{ DungeonMenu_Monster_Select(index);});
+                } else {
+                    Utill.ColorWriteLine($"{i + 1}. {skillDescription}", ConsoleColor.DarkGray);
+
+                    skillActions.Add(null);
+                }
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
-            SceneManager.instance.Menu(DungeonMenu, skillActions.ToArray());
+            SceneManager.instance.Menu(DungeonMenu_Skill_Select, skillActions.ToArray());
         }
 
         public void DungeonMenu_Monster_Select(int skillIndex)

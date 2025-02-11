@@ -19,59 +19,62 @@ namespace Team_SpartaTextRPG
         // _cost시 스킬에 대한 비용 지불
         private Dictionary<Skill_Key, (string _description, Func<Player, float> _damage, Action<Player> _cost)> Skill_Map = new()
         {
-            { Skill_Key.ProgrammerSkill01, ("튜터님의 도움 (공용) : 체력 30을 사용하여 피해를 준다. 모르는 문제 발생! 튜터님에게 빠르게 질문하러 가자!" , player => { // 스킬 데미지
-                if (player.HP <= 10){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
-                return player.Defense * 5f;
+            { Skill_Key.ProgrammerSkill01, ("튜터님의 도움 (공용) : 체력 30을 사용하여 2배의 피해를 준다. 모르는 문제 발생! 튜터님에게 빠르게 질문하러 가자!" , player => { // 스킬 데미지
+                if (player.HP <= 30){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
+                return player.AttDamage * 2f;
             }, player => { // 스킬 코스트 비용 지불
                 player.HP -= 30;
             })},
-            { Skill_Key.ProgrammerSkill02, ("C# 체크리스트 (공용) : 정신력 30을 사용해서 데미지를 2배로 준다. 오늘 진행하는 체크리스트는..." , player => { // 스킬 데미지
-                if (player.MP < 10){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
-                return player.AttDamage * 2f;
+            { Skill_Key.ProgrammerSkill02, ("C# 체크리스트 (공용) : 정신력 30을 사용해서 데미지를 3배로 준다. 오늘 진행하는 체크리스트는..." , player => { // 스킬 데미지
+                if (player.MP < 30){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
+                return player.AttDamage * 3f;
             }, player => { // 스킬 코스트 비용 지불
                 player.MP -= 30;
             })},
-            { Skill_Key.ProgrammerSkill03, ("구글링 (공용) : 정신력 20을 사용하여 피해를 준다. 자료를 찾아볼까~" , player => { // 스킬 데미지
-                return 0f;
+            { Skill_Key.ProgrammerSkill03, ("구글링 (공용) : 정신력 20을 사용하여 2배의 피해를 준다. 자료를 찾아볼까~" , player => { // 스킬 데미지
+                if (player.MP < 20){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
+                return player.AttDamage * 2f;
             }, player => { // 스킬 코스트 비용 지불
                 player.MP -= 20;
             })},
             { Skill_Key.ProgrammerSkill04, ("Chat GPT 사용 (고유): 정신력 50을 회복하고 대상을 공격한다. 역시 AI야 내가 놓친 부분을 찾아주네." , player => { // 스킬 데미지
-                return 0f;
+                return player.AttDamage;
             }, player => { // 스킬 코스트 비용 지불
                 player.MP += 50;
             })},
             { Skill_Key.ProgrammerSkill05, ("인도 Youtube 보기 (고유) : 체력(+10), 마나(+20)를 회복하고 공격한다. ???" , player => { // 스킬 데미지
-                return 0f;
+                return player.AttDamage;
             }, player => { // 스킬 코스트 비용 지불
                 player.HP += 10;
                 player.MP += 20;
             })},
 
-            { Skill_Key.PlannerSkill01, ("튜터님의 도움 (공용) : 체력 30을 사용하여 피해를 준다. 모르는 문제 발생! 튜터님에게 빠르게 질문하러 가자!" , player => { // 스킬 데미지
-                if (player.MP < 5){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
+            { Skill_Key.PlannerSkill01, ("튜터님의 도움 (공용) : 체력 30을 사용하여 2배의 피해를 준다. 모르는 문제 발생! 튜터님에게 빠르게 질문하러 가자!" , player => { // 스킬 데미지
+                if (player.HP <= 30){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
+                return player.AttDamage * 2f;
+            }, player => { // 스킬 코스트 비용 지불
+                player.HP -= 30;
+            })},
+            { Skill_Key.PlannerSkill02, ("C# 체크리스트 (공용) : 정신력 30를 사용해서 데미지를 2배로 준다. 오늘 진행하는 체크리스트는..." , player => { // 스킬 데미지
+                if (player.MP < 30){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
                 return player.AttDamage * 2f;
             }, player => { // 스킬 코스트 비용 지불
                 player.MP -= 30;
             })},
-            { Skill_Key.PlannerSkill02, ("C# 체크리스트 (공용) : 정신력 30를 사용해서 데미지를 2배로 준다. 오늘 진행하는 체크리스트는..." , player => { // 스킬 데미지
+            { Skill_Key.PlannerSkill03, ("구글링 (공용) : 정신력 20을 사용하여 2배의 피해를 준다. 자료를 찾아볼까~" , player => { // 스킬 데미지
                 if (player.MP < 20){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
-                return player.MaxMP;
-            }, player => { // 스킬 코스트 비용 지불
-                player.MP -= 30;
-            })},
-            { Skill_Key.PlannerSkill03, ("구글링 (공용) : 정신력 20을 사용하여 피해를 준다. 자료를 찾아볼까~" , player => { // 스킬 데미지
-                return 0f;
+                return player.AttDamage * 2f;
             }, player => { // 스킬 코스트 비용 지불
                 player.MP -= 20;
             })},
-            { Skill_Key.PlannerSkill04, ("상급 프로그래머의 도움 (고유) : 체력 60을 소모하고 높은 데미지를 준다. 그러니깐 이게 왜 안되는 건데요." , player => { // 스킬 데미지
-                return 0f;
+            { Skill_Key.PlannerSkill04, ("상급 프로그래머의 도움 (고유) : 체력 60을 소모하고 5배의 데미지를 준다. 그러니깐 이게 왜 안되는 건데요." , player => { // 스킬 데미지
+                if (player.HP <= 60){ return -1f; } // 조건에 따라 사용 불가능하면 -1f 반환
+                return player.AttDamage * 5f;
             }, player => { // 스킬 코스트 비용 지불
-                player.MP -= 60;
+                player.HP -= 60;
             })},
             { Skill_Key.PlannerSkill05, ("엑셀 팡션 (고유) : 체력과 정신력을 30 회복하고 대상을 공격한다. 엑셀 함수 is Good~!" , player => { // 스킬 데미지
-                return 0f;
+                return player.AttDamage;
             }, player => { // 스킬 코스트 비용 지불
                 player.HP += 30;
                 player.MP += 30;
