@@ -17,6 +17,7 @@ namespace Team_SpartaTextRPG
     {
         Player player = GameManager.instance.player;
         Monster[] monsters = new Monster[4];
+        private int MonsterCount = 0;
 
         // 던전 화면
         public void Dungeon_Title()
@@ -154,13 +155,13 @@ namespace Team_SpartaTextRPG
         public void Random_Monster()
         {
             Random ran = new Random();
-            int monsterType = ran.Next(1, 5);
+            MonsterCount = ran.Next(1, 5);
 
             // 랜덤 몬스터 스폰 개수
             // 스테이지마다 다르게 몬스터 생성
             // 매니저 5% 오크 15% 고블린 30% 슬라임 50%
 
-            for (int i = 0; i < monsterType; i++)
+            for (int i = 0; i < MonsterCount; i++)
             {
                 int Rand = ran.Next(0, 100);
 
@@ -216,6 +217,8 @@ namespace Team_SpartaTextRPG
                     Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {Criticaldamage}의 데미지를 받았다.\n");
                 }
             }
+
+            player.CountBuff();
 
             Thread.Sleep(1000);
 
@@ -289,7 +292,7 @@ namespace Team_SpartaTextRPG
                 }
             }
 
-            if (monsters.Length == deadCount)
+            if (MonsterCount == deadCount)
             {
                 return true;
             }
@@ -390,6 +393,11 @@ namespace Team_SpartaTextRPG
             monsters[targetIndex].HP = (int)(monsters[targetIndex].HP - finalDamage);
             Utill.ColorWriteLine($"{player.Name} 스킬 사용", ConsoleColor.Blue);
 
+            if (monsters[targetIndex].HP <= 0)
+            {
+                QuestManager.instance.MonsterCount(monsters[targetIndex].Name);
+            }
+
             if (isCritical)
             {
                 Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) 강력한 {finalDamage}의 데미지를 받았다.\n", ConsoleColor.Magenta);
@@ -398,6 +406,8 @@ namespace Team_SpartaTextRPG
             {
                 Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) {finalDamage}의 데미지를 받았다.\n");
             }
+
+            player.CountBuff();
 
             Thread.Sleep(1000);
 

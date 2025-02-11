@@ -47,10 +47,13 @@ namespace Team_SpartaTextRPG
             };
             usable_ItemsList = new List<Usable_Item>
             {
+                //즉시발동 물약
                 new Usable_Item("체력 포션", "체력 50 증가", 100, 0f, 0f, 50f, 0f),
                 new Usable_Item("마나 포션", "마나 50 증가", 100, 0f, 0f, 0f, 50f),
                 new Usable_Item("반반 포션", "체력과 마나 50씩 증가", 200, 0f, 0f, 50f, 50f),
-                new Usable_Item("공격력 포션", "공격력 10 증가", 100, 10f, 0f, 0f, 0f),
+
+                //지속효과 물약
+                new Usable_Item("공격력 포션", "공격력 10 증가", 100, 10f, 0f, 0f, 0f , 5),
             };
         }
         public void ShowMenu()

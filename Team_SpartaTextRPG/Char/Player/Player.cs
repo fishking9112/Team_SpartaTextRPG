@@ -83,8 +83,10 @@ namespace Team_SpartaTextRPG
         public List<Equip_Item> Inven_Equip_Item = new List<Equip_Item>();
         //소비 아이템
         public List<Usable_Item> Inven_Usable_Item = new List<Usable_Item>();
-
+        //장비 슬롯
         public Equip_Item[] EquipSlot = new Equip_Item[(int)Item_Slot_Type.SLOT_MAX];
+        //버프 리스트
+        public List<Buff> BuffList = new List<Buff>();
 
         // TODO : 미구현
 
@@ -207,6 +209,28 @@ namespace Team_SpartaTextRPG
             }
 
             return finalDamage;
+        }
+
+        //버프 한턴씩
+        public void CountBuff()
+        {
+            for(int i = 0; i < BuffList.Count; i++)
+            {
+                BuffList[i].Bonus_Turn--;
+                if(BuffList[i].Check_BuffTurn() == false)
+                {
+                    //능력치 해제
+                    if(BuffList[i].Bonus_Att > 0)
+                        AttDamage -= BuffList[i].Bonus_Att;
+                    if (BuffList[i].Bonus_Def > 0)
+                        Defense -= (int)BuffList[i].Bonus_Def;
+
+                    //지속 회복
+
+
+                    BuffList.Remove(BuffList[i]);
+                }
+            }
         }
     }
 }
