@@ -35,7 +35,7 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("캐릭터 선택!");
 
             Console.WriteLine("[1. 서버 프로그래머]");
-            Console.WriteLine("[2. 기획자​​]");
+            Console.WriteLine("[2. 기획자]");
 
             SceneManager.instance.Menu(Game_Start, null,
             () => Select_Job(_name, PLAYER_JOB.Programmer),
@@ -58,7 +58,7 @@ namespace Team_SpartaTextRPG
                     skillList.Add(Skill_Key.ProgrammerSkill05);
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
-                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 200, _hp: 200, _maxMp: 50, _mp: 50, _attDamage: 15, _def: 10, _gold: 1500);
+                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 150, _hp: 150, _maxMp: 60, _mp: 60, _attDamage: 9, _def: 6, _gold: 1500);
                     break;
 
                 case PLAYER_JOB.Planner: // 기획자 스킬 5개 습득
@@ -69,7 +69,7 @@ namespace Team_SpartaTextRPG
                     skillList.Add(Skill_Key.PlannerSkill05);
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
-                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 150, _hp: 150, _maxMp: 150, _mp: 150, _attDamage: 18, _def: 5, _gold: 1500);
+                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 100, _hp: 100, _maxMp: 100, _mp: 100, _attDamage: 6, _def: 8, _gold: 1500);
                     break;
 
             }
