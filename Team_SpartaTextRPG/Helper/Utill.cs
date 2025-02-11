@@ -75,6 +75,15 @@ namespace Team_SpartaTextRPG
         public static readonly (string idle,string die, string end) SLIME_PATH = ("./resources/slime.gif", "./resources/slime_die.gif", "./resources/slime_die_end.gif");
         public static readonly (string idle,string die, string end) ORK_PATH = ("./resources/ork.gif", "./resources/ork_die.gif", "./resources/ork_die_end.gif");
         public static readonly (string idle,string die, string end) NineToNine_PATH = ("./resources/9to9.gif", "./resources/9to9_die.gif", "./resources/9to9_die_end.gif");
+        public static readonly (string idle,string die, string end) TIL_PATH = ("./resources/til_idle.gif", "./resources/til_die.gif", "./resources/til_die_end.gif");
+        public static readonly (string idle,string die, string end) CS_PATH = ("./resources/CsIcon_idle.gif", "./resources/CsIcon_die.gif", "./resources/CsIcon_die_end.gif");
+        public static readonly (string idle,string die, string end) Algorithm_PATH = ("./resources/algorithm_idle.gif", "./resources/algorithm_die.gif", "./resources/algorithm_die_end.gif");
+        public static readonly (string idle,string die, string end) AssetStore_PATH = ("./resources/asset_store_idle.gif", "./resources/asset_store_die.gif", "./resources/asset_store_die_end.gif");
+        public static readonly (string idle,string die, string end) Unity2D_PATH = ("./resources/unity2d_idle.gif", "./resources/unity2d_die.gif", "./resources/unity2d_die_end.gif");
+        public static readonly (string idle,string die, string end) TeamProject_PATH = ("./resources/team_project_idle.gif", "./resources/team_project_die.gif", "./resources/team_project_die_end.gif");
+        public static readonly (string idle,string die, string end) Unity3D_PATH = ("./resources/unity3d_idle.gif", "./resources/unity3d_die.gif", "./resources/unity3d_die_end.gif");
+        public static readonly (string idle,string die, string end) RealProject_PATH = ("./resources/real_project_idle.gif", "./resources/real_project_die.gif", "./resources/real_project_die_end.gif");
+        public static readonly (string idle,string die, string end) BOSS_PATH = ("./resources/boss_idle.gif", "./resources/boss_die.gif", "./resources/boss_die_end.gif");
         // ScreenManager.instance.AsyncUnitVideo("./resources/warrior.mp4", startX: 0, startY: 1, videoSizeX: 12, videoSizeY: 15, _isContinue: true, _isReversal:true);
         // ScreenManager.instance.AsyncText("Lv.1 플레이어(전사)", _startX: 1, _startY: 17);
         // ScreenManager.instance.AsyncText("HP 100/100", _startX: 1, _startY: 18,_color:ConsoleColor.Red);
