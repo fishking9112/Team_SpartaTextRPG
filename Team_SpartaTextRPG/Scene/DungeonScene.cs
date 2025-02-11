@@ -29,7 +29,10 @@ namespace Team_SpartaTextRPG
         public void Dungeon_Title()
         {
             Console.Write("현재 레벨 : ");
-            Utill.ColorWriteLine($"{(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}", ConsoleColor.DarkRed);
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
+                Utill.ColorWriteLine($"!! BOSS STAGE !!", ConsoleColor.DarkRed);
+            else
+                Utill.ColorWriteLine($"{(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}", ConsoleColor.DarkRed);
 
             Console.WriteLine("1. [ Stage 입장 ]");
             Console.WriteLine("0. [ 돌아가기 ]");
@@ -218,6 +221,7 @@ namespace Team_SpartaTextRPG
                     break;
                 case Dungeon_Level.Level_Boss:
                     monsters[0] = new Monster("면접", 12, 50, 50, 30, 25);
+                    MonsterCount = 1;
                     break;
             }
         }
