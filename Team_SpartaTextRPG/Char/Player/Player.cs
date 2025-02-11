@@ -188,7 +188,7 @@ namespace Team_SpartaTextRPG
             return EquipDefense;
         }
         //치명타 기능
-        public float CriticalAttack(float finalDamage, ref bool isCritical)
+        public int CriticalAttack(float finalDamage, ref bool isCritical)
         {
             int critical = new Random().Next(1, 100);
             if (critical <= 15)
@@ -202,7 +202,7 @@ namespace Team_SpartaTextRPG
                 isCritical = false;
             }
 
-            return finalDamage;
+            return (int)Math.Round(finalDamage);
         }
 
         //버프 한턴씩
