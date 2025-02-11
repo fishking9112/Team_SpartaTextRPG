@@ -241,8 +241,7 @@ namespace Team_SpartaTextRPG
                 // 이미 구매한 장비라면 구매 불가
                 if (equip_Item.IsPurchased)
                 {
-                    Console.WriteLine("이미 구매한 아이템입니다!");
-                    Thread.Sleep(1000);
+                    ScreenManager.instance.AsyncText($"{item.Name}는 이미 구매한 아이템입니다!", _color: ConsoleColor.Red);
                     SceneManager.instance.GoMenu(ShowShop);
                     return;
                 }
