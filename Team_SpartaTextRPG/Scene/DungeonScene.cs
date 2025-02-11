@@ -17,7 +17,7 @@ namespace Team_SpartaTextRPG
     {
         Player player = GameManager.instance.player;
         Monster[] monsters = new Monster[4];
-        
+
         // 던전 화면
         public void Dungeon_Title()
         {
@@ -50,7 +50,7 @@ namespace Team_SpartaTextRPG
             // 0. 후퇴
             for (int i = 0; i < monsters.Length; i++)
             {
-                if (monsters[i] != null) 
+                if (monsters[i] != null)
                 {
                     if (monsters[i].IsDead == false)
                     {
@@ -127,7 +127,7 @@ namespace Team_SpartaTextRPG
                     currentItem.Use(currentItem);
                     SceneManager.instance.GoMenu(DungeonMenu);
                 });
-                Console.WriteLine($"{i+1}.   {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}");
+                Console.WriteLine($"{i + 1}.   {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -172,7 +172,7 @@ namespace Team_SpartaTextRPG
         {
             //플레이어가 몬스터를 공격시 치명타 함수호출
             bool isCritical = false;
-            float Criticaldamage= player.CriticalAttack(player.FinalDamage(), ref isCritical);
+            float Criticaldamage = player.CriticalAttack(player.FinalDamage(), ref isCritical);
             monsters[input - 1].HP = (int)(monsters[input - 1].HP - Criticaldamage);
             //플레이어가 몬스터를 공격시 회피 함수호출
             bool isAvoid = false;
@@ -182,7 +182,7 @@ namespace Team_SpartaTextRPG
             Utill.ColorWriteLine($"{player.Name} 공격", ConsoleColor.Blue);
             if (isCritical)
             {
-                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) 강력한{Criticaldamage}의 데미지를 받았다.\n",ConsoleColor.Magenta);
+                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) 강력한{Criticaldamage}의 데미지를 받았다.\n", ConsoleColor.Magenta);
             }
             else if (isAvoid)
             {
@@ -195,7 +195,7 @@ namespace Team_SpartaTextRPG
 
             Thread.Sleep(1000);
 
-            if(DeadCount())
+            if (DeadCount())
             {
                 SceneManager.instance.GoMenu(Stage_Clear);
             }
@@ -210,7 +210,7 @@ namespace Team_SpartaTextRPG
         {
             for (int i = 0; i < monsters.Length; i++)
             {
-                if(monsters[i] != null)
+                if (monsters[i] != null)
                 {
                     if (monsters[i].IsDead == false)
                     {
@@ -218,7 +218,7 @@ namespace Team_SpartaTextRPG
                         float AttRangeDamage = monsters[i].Monster_AttDamage_Range();
 
                         float totalDamage = AttRangeDamage - player.FinalDefense();
-                        
+
                         if (totalDamage < 0)
                         {
                             totalDamage = 0;
@@ -294,7 +294,7 @@ namespace Team_SpartaTextRPG
             SceneManager.instance.Menu(Stage_Clear, Dungeon_Title);
         }
 
-        public void DungeonMenu_Skill_Select ()
+        public void DungeonMenu_Skill_Select()
         {
             List<Action> skillActions = new List<Action>();
             skillActions.Add(DungeonScene.instance.DungeonMenu);
@@ -309,7 +309,7 @@ namespace Team_SpartaTextRPG
 
                 skillActions.Add(() =>
                 {
-                    
+
                     DungeonMenu_Monster_Select(index);
                 });
             }
@@ -321,16 +321,16 @@ namespace Team_SpartaTextRPG
         public void DungeonMenu_Monster_Select(int skillIndex)
         {
             List<Action> tempActions = new List<Action>();
-            tempActions.Add(DungeonScene.instance.DungeonMenu); 
+            tempActions.Add(DungeonScene.instance.DungeonMenu);
 
             for (int i = 0; i < monsters.Length; i++)
             {
                 if (monsters[i] != null)
                 {
-                    if (!monsters[i].IsDead) 
+                    if (!monsters[i].IsDead)
                     {
                         int temp = i;
-                        tempActions.Add(() => DungeonMenu_Skill_Use(temp, skillIndex)); 
+                        tempActions.Add(() => DungeonMenu_Skill_Use(temp, skillIndex));
                         Console.WriteLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
                     }
                     else
@@ -347,25 +347,61 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
 
-            SceneManager.instance.Menu(()=>DungeonMenu_Monster_Select(skillIndex), tempActions.ToArray());
+            SceneManager.instance.Menu(() => DungeonMenu_Monster_Select(skillIndex), tempActions.ToArray());
 
         }
 
         public void DungeonMenu_Skill_Use(int targetIndex, int skillIndex)
         {
-            float damage = SkillManager.instance.GetSkillDamage(player, player.SkillList[skillIndex]);
+            float baseDamage = SkillManager.instance.GetSkillDamage(player, player.SkillList[skillIndex]);
 
-            if (damage >= 0)
+            bool isCritical = false;
+            float Criticaldamage = player.CriticalAttack(baseDamage, ref isCritical);
+
+            bool isAvoid = false;
+            float Avoiddamage = player.AvoidAttack(baseDamage, ref isAvoid);
+
+            float finalDamage = 0;
+
+            if (isCritical)
             {
-                SkillManager.instance.ExecuteSkillCost(player, player.SkillList[skillIndex]);
-
-                
-                monsters[targetIndex].HP -= (int)damage;
-
+                finalDamage = Criticaldamage;
+            }
+            else if (isAvoid)
+            {
+                finalDamage = Avoiddamage;
+            }
+            else
+            {
+                finalDamage = baseDamage;
             }
 
-            
-            SceneManager.instance.GoMenu(DungeonMenu);
+            monsters[targetIndex].HP = (int)(monsters[targetIndex].HP - finalDamage);
+            Utill.ColorWriteLine($"{player.Name} 스킬 사용", ConsoleColor.Blue);
+
+            if (isCritical)
+            {
+                Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) 강력한 {finalDamage}의 데미지를 받았다.\n", ConsoleColor.Magenta);
+            }
+            else if (isAvoid)
+            {
+                Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) {finalDamage}의 데미지를 받았다.\n", ConsoleColor.Cyan);
+            }
+            else
+            {
+                Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) {finalDamage}의 데미지를 받았다.\n");
+            }
+
+            Thread.Sleep(1000);
+
+            if (DeadCount())
+            {
+                SceneManager.instance.GoMenu(Stage_Clear);
+            }
+            else
+            {
+                Monster_Att();
+            }
         }
     }
 }
