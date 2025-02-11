@@ -20,6 +20,7 @@ namespace Team_SpartaTextRPG
         public Item_Job_Type item_Job_Type;
         // 장착 여부
         public bool IsEquip { get; set; }
+        public bool IsPurchased { get; set; }
         public float Bonus_Att { get; set; }
         public float Bonus_Def { get; set; }
 
@@ -31,6 +32,7 @@ namespace Team_SpartaTextRPG
             Bonus_Att = _Bonus_Att;
             Bonus_Def = _Bonus_Def;
             IsEquip = false;
+            IsPurchased = false;
         }
 
         public string AtkorDef()
@@ -77,5 +79,10 @@ namespace Team_SpartaTextRPG
             return IsEquip ? "장착" : "장착 가능";
         }
         
+        public string CheckPurchase()
+        {
+            
+            return IsPurchased ? "이미 구매" : "구매 가능";
+        }
     }
 }

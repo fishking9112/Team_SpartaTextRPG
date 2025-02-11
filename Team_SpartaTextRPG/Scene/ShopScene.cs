@@ -144,7 +144,7 @@ namespace Team_SpartaTextRPG
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(filteredItems[temp]));
-                Console.WriteLine($"{i + 1}.   {filteredItems[i].Name}   |   설명: {filteredItems[i].Description}   |   {filteredItems[i].AtkorDef()}   |   가격: {filteredItems[i].Price}");
+                Console.WriteLine($"{i + 1}.   {filteredItems[i].Name}   |   설명: {filteredItems[i].Description}   |   {filteredItems[i].AtkorDef()}   |   가격: {filteredItems[i].Price}    |   {filteredItems[i].CheckPurchase()}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -156,6 +156,10 @@ namespace Team_SpartaTextRPG
         {
             if (item is Equip_Item equip_Item)
             {
+                if (!equip_Item.IsPurchased)
+                {
+
+                }
                 Buy(equip_Item);
             }
             else if (item is Usable_Item usable_Item)
@@ -184,6 +188,7 @@ namespace Team_SpartaTextRPG
             {
                 player.Inven_Equip_Item.Remove(equip_Item);
                 player.Gold += sellPrice;
+                equip_Item.IsPurchased = true;
             }
             else if (item is Usable_Item usable_Item)
             {
@@ -196,22 +201,43 @@ namespace Team_SpartaTextRPG
 
         public void Buy(Item item)
         {
-            //만약 플레이어 골드가 아이템 가격보다 많은 경우
+            
+            if (item is Equip_Item equip_Item)
+            {
+                // 이미 구매한 장비라면 구매 불가
+                if (equip_Item.IsPurchased)
+                {
+                    Console.WriteLine("이미 구매한 아이템입니다!");
+                    Thread.Sleep(1000);
+                    SceneManager.instance.GoMenu(ShowShop);
+                    return;
+                }
+            }
+
+            // 플레이어 골드 확인
             if (player.Gold >= item.Price)
             {
                 player.Gold -= item.Price;
-                if (item is Equip_Item equip_Item)
+
+                if (item is Equip_Item equip)
                 {
-                    // 만약 아이템이 Equip Item이면 인벤에 넣기
-                    player.Inven_Equip_Item.Add(equip_Item);
+                    // 장비 아이템을 인벤토리에 추가하고 구매 상태 변경
+                    player.Inven_Equip_Item.Add(equip);
+                    equip.IsPurchased = true;
                     SceneManager.instance.GoMenu(ShowShop);
                 }
-                else if (item is Usable_Item usable_Item)
+                else if (item is Usable_Item usable)
                 {
-                    player.Inven_Usable_Item.Add(usable_Item);
+                    // 사용 아이템은 여러 개 구매 가능
+                    player.Inven_Usable_Item.Add(usable);
                     SceneManager.instance.GoMenu(ShowUsableItems);
                 }
-                
+            }
+            else
+            {
+                Console.WriteLine("골드가 부족합니다. 상점 메뉴로 돌아갑니다.");
+                Thread.Sleep(1500);
+                SceneManager.instance.GoMenu(ShowMenu);
             }
         }
     }
