@@ -16,6 +16,8 @@ namespace Team_SpartaTextRPG
         {
             TitleManager.instance.WriteTitle("인벤토리");
 
+            ScreenManager.instance.AsyncImage("./resources/bag.png",_startX:80, _startY:2, imageSizeX:20, imageSizeY:20);
+
             StringBuilder sb = new();
             sb.AppendLine("[장비 아이템 목록]");
             sb.AppendLine();
@@ -52,6 +54,8 @@ namespace Team_SpartaTextRPG
         public void ShowInventoryItem()
         {
             TitleManager.instance.WriteTitle("인벤토리 - 장착관리");
+
+            ScreenManager.instance.AsyncImage("./resources/bag_open.png",_startX:80, _startY:2, imageSizeX:20, imageSizeY:20);
 
             StringBuilder sb = new();
 

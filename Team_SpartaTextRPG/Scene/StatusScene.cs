@@ -26,6 +26,7 @@ namespace Team_SpartaTextRPG
             sb.AppendLine($"체력 : {player.HP}");
             sb.AppendLine($"마나 : {player.MaxMP}");
             sb.AppendLine($"Gold : {player.Gold} G");
+            sb.AppendLine();
 
            
             for (int i = 0; i < EquipSlot.Length; i++)
@@ -57,7 +58,9 @@ namespace Team_SpartaTextRPG
                 }
             }
 
-            ScreenManager.instance.AsyncText(sb);
+            ScreenManager.instance.AsyncUnitVideo(player.FilePath.idle, startX: 1, startY: 0, videoSizeX: 12, videoSizeY: 15, _isContinue: true, _isReversal:true, _frame:33);
+
+            ScreenManager.instance.AsyncText(sb, _startX: 29);
             
             InputKeyManager.instance.ArtMenu(($"나가기", "마을로 돌아갑니다.", () =>  {TownScene.instance.Game_Main();}));
         }
