@@ -118,6 +118,7 @@ namespace Team_SpartaTextRPG
             int index = 1;
             for (int i = 0; i < player.Inven_Equip_Item.Count; i++, index++)
             {
+                //장착 해제 후 판매
                 int temp = i;
                 tempActions.Add(() => SellItem(player.Inven_Equip_Item[temp]));
                 Console.WriteLine($"{index}. {player.Inven_Equip_Item[i].Name}   |   {player.Inven_Equip_Item[i].Description}   |   {player.Inven_Equip_Item[i].AtkorDef()}   |   판매가격: {player.Inven_Equip_Item[i].Price * 0.8}");
@@ -186,6 +187,14 @@ namespace Team_SpartaTextRPG
             int sellPrice = (int)(item.Price * 0.8f);
             if (item is Equip_Item equip_Item)
             {
+                //장착 해제 후 판매
+                int slotIndex = (int)equip_Item.item_Slot_Type;
+
+                if (player.EquipSlot[slotIndex] != null)
+                {
+                    equip_Item.IsEquip = false;
+                    player.EquipSlot[slotIndex] = null;
+                }
                 player.Inven_Equip_Item.Remove(equip_Item);
                 player.Gold += sellPrice;
                 equip_Item.IsPurchased = false;
