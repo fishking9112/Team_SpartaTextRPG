@@ -22,13 +22,14 @@ namespace Team_SpartaTextRPG
 
         Dungeon_Level DungeonLevel = Dungeon_Level.Level_1;
         private int Dungeon_ClearCount = 0;
+        private int Dungeon_MaxCount = 3;
         private int total_ClearCount = 0;
 
         // 던전 화면
         public void Dungeon_Title()
         {
             Console.Write("현재 레벨 : ");
-            Utill.ColorWriteLine($"{(int)DungeonLevel} - {Dungeon_ClearCount}", ConsoleColor.DarkRed);
+            Utill.ColorWriteLine($"{(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}", ConsoleColor.DarkRed);
 
             Console.WriteLine("1. [ Stage 입장 ]");
             Console.WriteLine("0. [ 돌아가기 ]");
@@ -415,8 +416,8 @@ namespace Team_SpartaTextRPG
         private void DungeonLevelUp()
         {
             Dungeon_ClearCount++;
-            
-            if(Dungeon_ClearCount > 3)
+
+            if (Dungeon_ClearCount >= Dungeon_MaxCount)
             {
                 Dungeon_ClearCount = 0;
                 
