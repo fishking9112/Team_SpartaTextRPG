@@ -16,8 +16,8 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("4. [  여  관  ]");
             Console.WriteLine("5. [ 던전입장 ]");
             Console.WriteLine("6. [ 퀘 스 트 ]");
-            Console.WriteLine("6. [  저  장  ]");
-            Console.WriteLine("7. [  종  료  ]");
+            Console.WriteLine("7. [  저  장  ]");
+            Console.WriteLine("8. [  종  료  ]");
 
 
 
