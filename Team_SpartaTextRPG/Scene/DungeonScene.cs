@@ -202,6 +202,8 @@ namespace Team_SpartaTextRPG
                 }
             }
 
+            player.CountBuff();
+
             Thread.Sleep(1000);
 
             if (DeadCount())
@@ -375,6 +377,11 @@ namespace Team_SpartaTextRPG
             monsters[targetIndex].HP = (int)(monsters[targetIndex].HP - finalDamage);
             Utill.ColorWriteLine($"{player.Name} 스킬 사용", ConsoleColor.Blue);
 
+            if (monsters[targetIndex].HP <= 0)
+            {
+                QuestManager.instance.MonsterCount(monsters[targetIndex].Name);
+            }
+
             if (isCritical)
             {
                 Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) 강력한 {finalDamage}의 데미지를 받았다.\n", ConsoleColor.Magenta);
@@ -383,6 +390,8 @@ namespace Team_SpartaTextRPG
             {
                 Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) {finalDamage}의 데미지를 받았다.\n");
             }
+
+            player.CountBuff();
 
             Thread.Sleep(1000);
 
