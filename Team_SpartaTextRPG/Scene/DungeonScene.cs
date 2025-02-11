@@ -150,34 +150,40 @@ namespace Team_SpartaTextRPG
 
                 if (Rand < 5)
                 {
-                    monsters[i] = new Monster("맼닠젘", 10, 50, 50, 10, 25);
+                    monsters[i] = new Monster("맼닠젘", 12, 50, 50, 30, 25);
                 }
                 else if (Rand < 20)
                 {
-                    monsters[i] = new Monster("오크", 5, 26, 26, 8, 4);
+                    monsters[i] = new Monster("오크", 7, 26, 26, 20, 4);
                 }
                 else if (Rand < 50)
                 {
-                    monsters[i] = new Monster("고블린", 3, 22, 22, 3, 5);
+                    monsters[i] = new Monster("고블린", 5, 22, 22, 10, 5);
                 }
                 else
                 {
-                    monsters[i] = new Monster("슬라임", 1, 15, 15, 1, 1);
+                    monsters[i] = new Monster("슬라임", 3, 15, 15, 8, 1);
                 }
             }
         }
 
-        //공격시 치명타 및 회피 설정
-
-
-
         // 플레이어가 몬스터를 공격
         public void Player_Att(int input)
         {
-            monsters[input - 1].HP = (int)(monsters[input - 1].HP - player.AttDamage);
+            //플레이어가 몬스터를 때릴때 치명타 함수호출
+            bool isCritical = false;
+            float Criticaldamage= player.CriticalAttack(player.FinalDamage(), ref isCritical);
+            monsters[input - 1].HP = (int)(monsters[input - 1].HP - Criticaldamage);
 
             Utill.ColorWriteLine($"{player.Name} 공격", ConsoleColor.Blue);
-            Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {player.AttDamage}의 데미지를 받았다.\n");
+            if (isCritical)
+            {
+                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) 강력한{Criticaldamage}의 데미지를 받았다.\n",ConsoleColor.Magenta);
+            }
+            else
+            {
+                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {Criticaldamage}의 데미지를 받았다.\n");
+            }
 
             Thread.Sleep(1000);
 
@@ -200,11 +206,21 @@ namespace Team_SpartaTextRPG
                 {
                     if (monsters[i].IsDead == false)
                     {
+                        // 여기에 몬스터 오차 범위 넣기
+                        float AttRangeDamage = monsters[i].Monster_AttDamage_Range();
+
+                        float totalDamage = AttRangeDamage - player.FinalDefense();
+                        
+                        if (totalDamage < 0)
+                        {
+                            totalDamage = 0;
+                        }
+
                         // 플레이어 체력 깎아주기
-                        player.HP = (int)(player.HP - monsters[i].AttDamage);
+                        player.HP = (int)(player.HP - (totalDamage));
 
                         Utill.ColorWriteLine($"{monsters[i].Name} 공격", ConsoleColor.Red);
-                        Utill.ColorWriteLine($"{player.Name}는(은) {monsters[i].AttDamage}의 데미지를 받았다.\n");
+                        Utill.ColorWriteLine($"{player.Name}는(은) {totalDamage}의 데미지를 받았다.\n");
 
                         Thread.Sleep(1000);
 
@@ -212,7 +228,6 @@ namespace Team_SpartaTextRPG
                         {
                             break;
                         }
-
                     }
                 }
             }
