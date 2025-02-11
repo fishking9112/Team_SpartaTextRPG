@@ -39,16 +39,25 @@ namespace Team_SpartaTextRPG
             }
             else
             {
-                player.Gold -= 500;                    //플레이어 골드가 -500
-                player.HP = player.MaxHP;              //플레이어 체력이 최대치가됨
-                sb.AppendLine("휴식을 완료했습니다.\n\n");
+                int fail = new Random().Next(1, 100);
+                if (fail <= 50)
+                {
+                    player.Gold -= 500;                    //플레이어 골드가 -500
+                    player.HP -= 50;              //플레이어 체력이 50깎임
+                    sb.AppendLine("휴식을 실패했습니다.\n체력이 50 줄어들었습니다.\n");
+                }
+                else
+                {
+                    player.Gold -= 500;                    //플레이어 골드가 -500
+                    player.HP = player.MaxHP;              //플레이어 체력이 최대치가됨
+                    sb.AppendLine("휴식을 완료했습니다.\n");
+                }
             }
 
             ScreenManager.instance.AsyncText(sb);
 
             InputKeyManager.instance.ArtMenu(
                 ($"확인", "휴식하기로 돌아갑니다.", () => Show_Rest()));
-
         }
     }
 }

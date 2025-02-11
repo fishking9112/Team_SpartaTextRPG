@@ -11,7 +11,6 @@ namespace Team_SpartaTextRPG
         public void Game_Main()
         {
             TitleManager.instance.WriteTitle("강렬한 인상 is 게임");
-
             // ScreenManager.instance.AsyncVideo("resources/village.gif", _isContinue: true, _isReversal: false);
             ScreenManager.instance.AsyncImage("resources/village.png");
 
@@ -44,10 +43,13 @@ namespace Team_SpartaTextRPG
                 case 5: // 던전 입장
                     InputKeyManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
                     break;
-                case 6: // 저장
+                case 6: // 퀘스트
+                    SceneManager.instance.GoMenu(QuestBoardScene.instance.Show_Quest_Board);
+                    break;
+                case 7: // 저장
                     GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
                     break;
-                case 7: // 종료
+                case 8: // 종료
                     GameManager.instance.isPlaying = false;
                     break;
 
