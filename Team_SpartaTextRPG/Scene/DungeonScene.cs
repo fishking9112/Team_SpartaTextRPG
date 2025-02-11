@@ -231,7 +231,7 @@ namespace Team_SpartaTextRPG
         {
             //플레이어가 몬스터를 공격시 치명타 함수호출
             bool isCritical = false;
-            float Criticaldamage = player.CriticalAttack(player.FinalDamage(), ref isCritical);
+            int Criticaldamage = player.CriticalAttack(player.FinalDamage(), ref isCritical);
 
             if (monsters[input - 1].IsAvoid(10.0f) == true) // 회피를 하면 ?
             {
@@ -241,7 +241,7 @@ namespace Team_SpartaTextRPG
             else
             {
                 // 맞음
-                monsters[input - 1].HP = (int)(monsters[input - 1].HP - Criticaldamage);
+                monsters[input - 1].HP = monsters[input - 1].HP - Criticaldamage;
 
                 MonsterDeadCheck(monsters[input - 1]);
 
@@ -495,9 +495,9 @@ namespace Team_SpartaTextRPG
             float baseDamage = SkillManager.instance.GetSkillDamage(player, player.SkillList[skillIndex]);
 
             bool isCritical = false;
-            float Criticaldamage = player.CriticalAttack(baseDamage, ref isCritical);
+            int Criticaldamage = player.CriticalAttack(baseDamage, ref isCritical);
 
-            float finalDamage = baseDamage;
+            int finalDamage = (int)Math.Round(baseDamage);
 
             SkillManager.instance.ExecuteSkillCost(player, player.SkillList[skillIndex]);
 
@@ -505,7 +505,7 @@ namespace Team_SpartaTextRPG
             {
                 finalDamage = Criticaldamage;
             }
-            monsters[targetIndex].HP = (int)(monsters[targetIndex].HP - finalDamage);
+            monsters[targetIndex].HP = monsters[targetIndex].HP - finalDamage;
             Utill.ColorWriteLine($"{player.Name} 스킬 사용", ConsoleColor.Blue);
 
             MonsterDeadCheck(monsters[targetIndex]);
