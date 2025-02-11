@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Team_SpartaTextRPG
 {
-    enum PLAYER_JOB { WARRIOR, THIEF, ARCHER, WIZARD }
+    enum PLAYER_JOB { Programmer, Planner}
 
     internal class Player : ICharacter
     {
