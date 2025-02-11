@@ -20,8 +20,9 @@ namespace Team_SpartaTextRPG
                 ($"상점", "무기와 방어구를 사거나 팔 수 있습니다.", () => Select_Menu(3)),
                 ($"여관", "쉴 수 있습니다.", () => Select_Menu(4)), 
                 ($"던전입장", "던전에 입장합니다.", () => Select_Menu(5)),
-                ($"저장", "현재 데이터를 저장합니다.", () => Select_Menu(6)),
-                ($"타이틀로", "게임을 종료합니다.", () => Select_Menu(7)));
+                ($"퀘스트", "퀘스트 수락, 취소, 완료를 할 수 있습니다.", () => Select_Menu(6)),
+                ($"저장", "현재 데이터를 저장합니다.", () => Select_Menu(7)),
+                ($"종료", "게임을 종료합니다.", () => Select_Menu(8)));
         }
         public void Select_Menu(int _index)
         {
@@ -44,7 +45,7 @@ namespace Team_SpartaTextRPG
                     InputKeyManager.instance.GoMenu(DungeonScene.instance.Dungeon_Title);
                     break;
                 case 6: // 퀘스트
-                    SceneManager.instance.GoMenu(QuestBoardScene.instance.Show_Quest_Board);
+                    InputKeyManager.instance.GoMenu(QuestBoardScene.instance.Show_Quest_Board);
                     break;
                 case 7: // 저장
                     GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
