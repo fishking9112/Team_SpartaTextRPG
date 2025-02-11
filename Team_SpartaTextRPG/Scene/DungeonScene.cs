@@ -79,7 +79,7 @@ namespace Team_SpartaTextRPG
         public void DungeonMenu_Fight()
         {
             List<Action> tempActions = new List<Action>();
-            tempActions.Add(DungeonScene.instance.Dungeon_Title);
+            tempActions.Add(DungeonScene.instance.DungeonMenu);
 
             for (int i = 0; i < monsters.Length; i++)
             {
