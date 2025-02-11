@@ -65,5 +65,16 @@ namespace Team_SpartaTextRPG
 
             return ChangeMonsterDamage;
         }
+
+        public bool IsAvoid(float _avoid)
+        {
+            int avoid = new Random().Next(1, 100);
+            if (avoid <= 10)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
