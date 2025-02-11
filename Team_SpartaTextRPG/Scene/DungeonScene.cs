@@ -369,7 +369,9 @@ namespace Team_SpartaTextRPG
             bool isCritical = false;
             float Criticaldamage = player.CriticalAttack(baseDamage, ref isCritical);
 
-            float finalDamage = 0;
+            float finalDamage = baseDamage;
+
+            SkillManager.instance.ExecuteSkillCost(player, player.SkillList[skillIndex]);
 
             if (isCritical)
             {
