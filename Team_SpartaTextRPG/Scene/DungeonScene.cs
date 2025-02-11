@@ -13,15 +13,23 @@ using System.Xml.Linq;
 
 namespace Team_SpartaTextRPG
 {
+    enum Dungeon_Level { Level_1 , Level_2, Level_3, Level_Boss }
     internal class DungeonScene : Helper.Singleton<DungeonScene>
     {
         Player player = GameManager.instance.player;
         Monster[] monsters = new Monster[4];
         private int MonsterCount = 0;
 
+        Dungeon_Level DungeonLevel = Dungeon_Level.Level_1;
+        private int Dungeon_ClearCount = 0;
+        private int total_ClearCount = 0;
+
         // 던전 화면
         public void Dungeon_Title()
         {
+            Console.Write("현재 레벨 : ");
+            Utill.ColorWriteLine($"{(int)DungeonLevel} - {Dungeon_ClearCount}", ConsoleColor.DarkRed);
+
             Console.WriteLine("1. [ Stage 입장 ]");
             Console.WriteLine("0. [ 돌아가기 ]");
 
@@ -33,16 +41,16 @@ namespace Team_SpartaTextRPG
             if (_index == 1)
             {
                 //몬스터 Init
-                InitStage();
+                InitStage(DungeonLevel);
                 DungeonMenu();
             }
         }
 
         // 층에 나오기 전에 나오는 몬스터 설정
-        public void InitStage()
+        public void InitStage(Dungeon_Level _DungeonLevel)
         {
             for(int i = 0; i < monsters.Length; i++) { monsters[i] = null; }
-            Random_Monster();
+            Random_Monster(_DungeonLevel);
         }
 
         private void DungeonMenu()
@@ -137,66 +145,85 @@ namespace Team_SpartaTextRPG
         }
 
         // 랜덤 사용해서 몬스터 랜덤 소환
-        public void Random_Monster()
+        public void Random_Monster(Dungeon_Level _DungeonLevel)
         {
             Random ran = new Random();
             MonsterCount = ran.Next(1, 5);
 
             // 랜덤 몬스터 스폰 개수
             // 스테이지마다 다르게 몬스터 생성
-            // 매니저 5% 오크 15% 고블린 30% 슬라임 50%
 
-            for (int i = 0; i < MonsterCount; i++)
+            switch(_DungeonLevel)
             {
-                int Rand = ran.Next(0, 100);
+                case Dungeon_Level.Level_1:
 
-                if (Rand < 5)
-                {
-                    monsters[i] = new Monster("면접", 12, 50, 50, 30, 25);
-                }
-                else if (Rand < 20)
-                {
-                    monsters[i] = new Monster("실전 프로젝트", 7, 26, 26, 20, 4);
-                }
-                else if (Rand < 50)
-                {
-                    monsters[i] = new Monster("Unity 3D", 5, 22, 22, 10, 5);
-                }
-                else if (Rand < 50)
-                {
-                    monsters[i] = new Monster("팀 프로젝트​​", 3, 15, 15, 8, 1);
-                }
-                else if (Rand < 50)
-                {
-                    monsters[i] = new Monster("Unity 2D", 3, 15, 15, 8, 1);
-                }
-                else if (Rand < 50)
-                {
-                    monsters[i] = new Monster("Unity 입문", 3, 15, 15, 8, 1);
-                }
-                else if (Rand < 50)
-                {
-                    monsters[i] = new Monster("C# 기초, 심화", 3, 15, 15, 8, 1);
-                }
-                else if (Rand < 50)
-                {
-                    monsters[i] = new Monster("자료구조", 3, 15, 15, 8, 1);
-                }
-                else if (Rand < 50)
-                {
-                    monsters[i] = new Monster("TIL", 3, 15, 15, 8, 1);
-                }
-                else
-                {
-                    monsters[i] = new Monster("9to9", 3, 15, 15, 8, 1);
-                }
+                    for (int i = 0; i < MonsterCount; i++)
+                    {
+                        int Rand = ran.Next(0, 100);
+
+                        if (Rand < 33)
+                        {
+                            monsters[i] = new Monster("C# 기초, 심화", 3, 15, 15, 8, 1);
+                        }
+                        else if (Rand < 66)
+                        {
+                            monsters[i] = new Monster("TIL", 3, 15, 15, 8, 1);
+                        }
+                        else
+                        {
+                            monsters[i] = new Monster("9to9", 3, 15, 15, 8, 1);
+                        }
+                    }
+                    break;
+                case Dungeon_Level.Level_2:
+                    for (int i = 0; i < MonsterCount; i++)
+                    {
+                        int Rand = ran.Next(0, 100);
+
+                        if (Rand < 33)
+                        {
+                            monsters[i] = new Monster("Unity 2D", 3, 15, 15, 8, 1);
+                        }
+                        else if (Rand < 66)
+                        {
+                            monsters[i] = new Monster("Unity 입문", 3, 15, 15, 8, 1);
+                        }
+                        else
+                        {
+                            monsters[i] = new Monster("자료구조", 3, 15, 15, 8, 1);
+                        }
+                    }
+                    break;
+                case Dungeon_Level.Level_3:
+                    for (int i = 0; i < MonsterCount; i++)
+                    {
+                        int Rand = ran.Next(0, 100);
+
+
+                        if (Rand < 33)
+                        {
+                            monsters[i] = new Monster("실전 프로젝트", 7, 26, 26, 20, 4);
+                        }
+                        else if (Rand < 66)
+                        {
+                            monsters[i] = new Monster("Unity 3D", 5, 22, 22, 10, 5);
+                        }
+                        else
+                        {
+                            monsters[i] = new Monster("팀 프로젝트​​", 3, 15, 15, 8, 1);
+                        }
+
+                    }
+                    break;
+                case Dungeon_Level.Level_Boss:
+                    monsters[0] = new Monster("면접", 12, 50, 50, 30, 25);
+                    break;
             }
         }
 
         // 플레이어가 몬스터를 공격
         public void Player_Att(int input)
         {
-
             //플레이어가 몬스터를 공격시 치명타 함수호출
             bool isCritical = false;
             float Criticaldamage = player.CriticalAttack(player.FinalDamage(), ref isCritical);
@@ -211,10 +238,7 @@ namespace Team_SpartaTextRPG
                 // 맞음
                 monsters[input - 1].HP = (int)(monsters[input - 1].HP - Criticaldamage);
 
-                if (monsters[input - 1].HP <= 0)
-                {
-                    QuestManager.instance.MonsterCount(monsters[input - 1].Name);
-                }
+                MonsterDeadCheck(monsters[input - 1]);
 
                 Utill.ColorWriteLine($"{player.Name} 공격", ConsoleColor.Blue);
                 if (isCritical)
@@ -238,6 +262,22 @@ namespace Team_SpartaTextRPG
             else
             {
                 Monster_Att();
+            }
+        }
+        private void MonsterDeadCheck(Monster _monster)
+        {
+            // 몬스터 잡았을 때
+            if (_monster.HP <= 0)
+            {
+                QuestManager.instance.MonsterCount(_monster.Name);
+                Random rand = new Random();
+                int rewardGold = rand.Next((total_ClearCount + 1) * 100, (total_ClearCount + 1) * 200);
+                int rewardExp = rand.Next((total_ClearCount + 1) * 30, (total_ClearCount + 1) * 60);
+
+                player.Gold += rewardGold;
+                player.Exp += rewardExp;
+
+                player.LevelUp();
             }
         }
 
@@ -322,11 +362,67 @@ namespace Team_SpartaTextRPG
         // 스테이지 클리어 시 띄움 ( 보상 추가 )
         public void Stage_Clear()
         {
-            Console.WriteLine("Stage Clear");
+            total_ClearCount++;
 
+            //보스 클리어
+            if (DungeonLevel == Dungeon_Level.Level_Boss)
+            {
+                SceneManager.instance.GoMenu(EndingScene.instance.End);
+            }
+
+            Console.WriteLine("Stage Clear");
+            Dungeon_Reward();
             Console.WriteLine("0. [ 나가기 ]");
 
+            //보상
+
+            DungeonLevelUp();
             SceneManager.instance.Menu(Stage_Clear, Dungeon_Title);
+        }
+        private void Dungeon_Reward()
+        {
+            player.Gold += total_ClearCount * 1000;
+            Console.Write("클리어로 획득한 금화 : ");
+            Utill.ColorWriteLine($"{total_ClearCount * 1000}");
+            Console.Write("현재 보유 금화 : ");
+            Utill.ColorWriteLine($"{player.Gold}");
+            Console.WriteLine();
+
+            /* 
+             * 1 - 1 : 1000
+             * 1 - 2 : 2000
+             * 1 - 3 : 3000
+             * 2 - 1 : 4000
+             * 2 - 2 : 5000
+             * 2 - 3 : 6000
+             * 3 - 1 : 7000
+             * ...
+             */
+            player.Exp += total_ClearCount * 100;
+            player.LevelUp();
+
+            Console.Write("클리어로 획득한 경험치 : ");
+            Utill.ColorWriteLine($"{total_ClearCount * 100}" , ConsoleColor.DarkCyan);
+
+            Console.Write("Lv : ");
+            Utill.ColorWriteLine($"{player.Level}", ConsoleColor.Blue);
+
+            Console.Write($"경험치 : ");
+            Utill.ColorWriteLine($"{player.Exp} / {player.MaxExp}", ConsoleColor.DarkCyan);
+            Console.WriteLine();
+            Console.WriteLine("==============================");
+        }
+        private void DungeonLevelUp()
+        {
+            Dungeon_ClearCount++;
+            
+            if(Dungeon_ClearCount > 3)
+            {
+                Dungeon_ClearCount = 0;
+                
+                if(DungeonLevel < Dungeon_Level.Level_Boss)
+                    DungeonLevel++;
+            }
         }
 
         public void DungeonMenu_Skill_Select()
@@ -404,10 +500,7 @@ namespace Team_SpartaTextRPG
             monsters[targetIndex].HP = (int)(monsters[targetIndex].HP - finalDamage);
             Utill.ColorWriteLine($"{player.Name} 스킬 사용", ConsoleColor.Blue);
 
-            if (monsters[targetIndex].HP <= 0)
-            {
-                QuestManager.instance.MonsterCount(monsters[targetIndex].Name);
-            }
+            MonsterDeadCheck(monsters[targetIndex]);
 
             if (isCritical)
             {

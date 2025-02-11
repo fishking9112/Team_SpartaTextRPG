@@ -66,7 +66,7 @@ namespace Team_SpartaTextRPG
 
         //Player 만 가지는 필드
         public int Gold { get; set; }
-        public int Exp { get; set; }
+        public int Exp {  get; set; }
         public int MaxExp { get; set; }
         public PLAYER_JOB Job { get; set; }
 
@@ -224,6 +224,22 @@ namespace Team_SpartaTextRPG
 
                     BuffList.Remove(BuffList[i]);
                 }
+            }
+        }
+        public void LevelUp()
+        {
+            if (Exp >= MaxExp)
+            {
+                do
+                {
+                    Exp -= MaxExp;
+                    Level += 1;
+                    MaxExp = Level * 100;
+                    MaxHP += 100;
+
+                } while (Exp > MaxExp);
+
+                HP = MaxHP;
             }
         }
     }
