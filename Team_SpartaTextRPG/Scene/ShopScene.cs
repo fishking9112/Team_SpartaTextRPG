@@ -133,6 +133,7 @@ namespace Team_SpartaTextRPG
             int index = 1;
             for (int i = 0; i < player.Inven_Equip_Item.Count; i++, index++)
             {
+                //장착 해제 후 판매
                 int temp = i;
                 tempActions.Add(() => SellItem(player.Inven_Equip_Item[temp]));
                 sb.AppendLine($"{index}. {player.Inven_Equip_Item[i].Name}   |   {player.Inven_Equip_Item[i].Description}   |   {player.Inven_Equip_Item[i].AtkorDef()}   |   판매가격: {player.Inven_Equip_Item[i].Price * 0.8}");
@@ -161,7 +162,7 @@ namespace Team_SpartaTextRPG
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(filteredItems[temp]));
-                Console.WriteLine($"{i + 1}.   {filteredItems[i].Name}   |   설명: {filteredItems[i].Description}   |   {filteredItems[i].AtkorDef()}   |   가격: {filteredItems[i].Price}");
+                Console.WriteLine($"{i + 1}.   {filteredItems[i].Name}   |   설명: {filteredItems[i].Description}   |   {filteredItems[i].AtkorDef()}   |   가격: {filteredItems[i].Price}    |   {filteredItems[i].CheckPurchase()}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -173,6 +174,10 @@ namespace Team_SpartaTextRPG
         {
             if (item is Equip_Item equip_Item)
             {
+                if (!equip_Item.IsPurchased)
+                {
+
+                }
                 Buy(equip_Item);
             }
             else if (item is Usable_Item usable_Item)
@@ -201,8 +206,17 @@ namespace Team_SpartaTextRPG
             int sellPrice = (int)(item.Price * 0.8f);
             if (item is Equip_Item equip_Item)
             {
+                //장착 해제 후 판매
+                int slotIndex = (int)equip_Item.item_Slot_Type;
+
+                if (player.EquipSlot[slotIndex] != null)
+                {
+                    equip_Item.IsEquip = false;
+                    player.EquipSlot[slotIndex] = null;
+                }
                 player.Inven_Equip_Item.Remove(equip_Item);
                 player.Gold += sellPrice;
+                equip_Item.IsPurchased = false;
             }
             else if (item is Usable_Item usable_Item)
             {
@@ -221,6 +235,18 @@ namespace Team_SpartaTextRPG
         public void Buy(Item item)
         {
             TitleManager.instance.WriteTitle("상점");
+            
+            if (item is Equip_Item equip_Item)
+            {
+                // 이미 구매한 장비라면 구매 불가
+                if (equip_Item.IsPurchased)
+                {
+                    Console.WriteLine("이미 구매한 아이템입니다!");
+                    Thread.Sleep(1000);
+                    SceneManager.instance.GoMenu(ShowShop);
+                    return;
+                }
+            }
 
             //만약 플레이어 골드가 아이템 가격보다 많은 경우
             if (player.Gold >= item.Price)
@@ -228,6 +254,20 @@ namespace Team_SpartaTextRPG
                 player.Gold -= item.Price;
                 // 사지면
                 ScreenManager.instance.AsyncText($"{item.Name}을 구매 했습니다.", _color: ConsoleColor.Green);
+
+                if (item is Equip_Item equip_Item)
+                {
+                    // 만약 아이템이 Equip Item이면 인벤에 넣기
+                    player.Inven_Equip_Item.Add(equip_Item);
+                    InputKeyManager.instance.ArtMenu(
+                        ($"뒤로", "상점으로 돌아갑니다.", () => ShowShop()));
+                }
+                else if (item is Usable_Item usable_Item)
+                {
+                    player.Inven_Usable_Item.Add(usable_Item);
+                    InputKeyManager.instance.ArtMenu(
+                        ($"뒤로", "상점으로 돌아갑니다.", () => ShowUsableItems()));
+                }
             }
             else
             {
@@ -235,19 +275,6 @@ namespace Team_SpartaTextRPG
                 ScreenManager.instance.AsyncText($"{item.Name}을 구입하기엔 Gold 가 부족합니다.", _color: ConsoleColor.Red);
             }
 
-            if (item is Equip_Item equip_Item)
-            {
-                // 만약 아이템이 Equip Item이면 인벤에 넣기
-                player.Inven_Equip_Item.Add(equip_Item);
-                InputKeyManager.instance.ArtMenu(
-                    ($"뒤로", "상점으로 돌아갑니다.", () => ShowShop()));
-            }
-            else if (item is Usable_Item usable_Item)
-            {
-                player.Inven_Usable_Item.Add(usable_Item);
-                InputKeyManager.instance.ArtMenu(
-                    ($"뒤로", "상점으로 돌아갑니다.", () => ShowUsableItems()));
-            }
             
         }
 
