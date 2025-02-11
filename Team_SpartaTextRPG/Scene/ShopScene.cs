@@ -20,12 +20,12 @@ namespace Team_SpartaTextRPG
         {
             equip_ItemsList = new List<Equip_Item>
             {
-                new Equip_Item("C# 코드 작성", " C# 기본 문법과 자료구조 , 알고리즘", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 10.0f, 5f),
-                new Equip_Item("2D 유니티 엔진", "유니티 엔진의 사용법과 2D 게임 구현", 200, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 15.0f, 0f),
-                new Equip_Item("3D 유니티 엔진", "유니티 엔진의 심화 , 3D 게임 구현 능력", 300, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 20.0f, 10f),
-                new Equip_Item("개노잼카피게임 기획", "양산형 게임을 기획", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 10.0f, 5f),
-                new Equip_Item("무난무난게임 기획", "할만한 게임을 기획", 200, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 15.0f, 0f),
-                new Equip_Item("개꿀잼게임 기획", "AAA 급 게임을 기획", 300, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 20.0f, 10f),
+                new Equip_Item("C# 코드 작성", " C# 기본 문법과 자료구조 , 알고리즘", 100, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 10.0f, 5f),
+                new Equip_Item("2D 유니티 엔진", "유니티 엔진의 사용법과 2D 게임 구현", 200, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 15.0f, 0f),
+                new Equip_Item("3D 유니티 엔진", "유니티 엔진의 심화 , 3D 게임 구현 능력", 300, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 20.0f, 10f),
+                new Equip_Item("개노잼카피게임 기획", "양산형 게임을 기획", 100, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 10.0f, 5f),
+                new Equip_Item("무난무난게임 기획", "할만한 게임을 기획", 200, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 15.0f, 0f),
+                new Equip_Item("개꿀잼게임 기획", "AAA 급 게임을 기획", 300, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 20.0f, 10f),
                 //머리
                 new Equip_Item("CRT 모니터", "화면은 나옵니다.", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
                 new Equip_Item("싱글 모니터", "작은 화면으로 고통받으며 코딩", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
@@ -37,13 +37,13 @@ namespace Team_SpartaTextRPG
                 new Equip_Item("무소음 키보드", "조용하게 코딩할 수 있습니다.", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
                 new Equip_Item("커스텀 키보드", "최고의 편안함을 제공합니다.", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
                 //장갑
-                new Equip_Item("볼 마우스", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("무선 마우스", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("버티컬 마우스", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("볼 마우스", "가끔 마우스 안에 볼을 빼고 싶은 생각이 듭니다.", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("무선 마우스", "화장실에서도 코딩이 가능합니다.", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("버티컬 마우스", "내 손목을 위한 응급처치용 마우스", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
                 ///신발
-                new Equip_Item("구형 컴퓨터", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("사무용 컴퓨터", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("최신식 컴퓨터", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f)
+                new Equip_Item("구형 컴퓨터", "플로피 디스크를 사용할 수 있다.", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("사무용 컴퓨터", "거북이와 속도 대결이 가능하다.", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("최신식 컴퓨터", "작업 속도는 동일하나, 파일은 빛의 속도로 열립니다.", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f)
             };
             usable_ItemsList = new List<Usable_Item>
             {
@@ -82,9 +82,8 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
             List<Equip_Item> filteredItems = equip_ItemsList.Where(item => item.item_Job_Type == Item_Job_Type.NONE ||
-            (player.Job == PLAYER_JOB.WARRIOR && item.item_Job_Type == Item_Job_Type.WARRIOR) ||
-            (player.Job == PLAYER_JOB.ARCHER && item.item_Job_Type == Item_Job_Type.ARCHER) ||
-            (player.Job == PLAYER_JOB.WIZARD && item.item_Job_Type == Item_Job_Type.WIZARD)).ToList();
+            (player.Job == PLAYER_JOB.Programmer && item.item_Job_Type == Item_Job_Type.Programmer) ||
+            (player.Job == PLAYER_JOB.Planner && item.item_Job_Type == Item_Job_Type.Planner)).ToList();
 
             ShowShopItems(filteredItems);
         }
