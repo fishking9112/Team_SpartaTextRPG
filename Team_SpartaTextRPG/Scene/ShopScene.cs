@@ -37,13 +37,13 @@ namespace Team_SpartaTextRPG
                 new Equip_Item("무소음 키보드", "조용하게 코딩할 수 있습니다.", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
                 new Equip_Item("커스텀 키보드", "최고의 편안함을 제공합니다.", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
                 //장갑
-                new Equip_Item("볼 마우스", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("무선 마우스", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("버티컬 마우스", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("볼 마우스", "가끔 마우스 안에 볼을 빼고 싶은 생각이 듭니다.", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("무선 마우스", "화장실에서도 코딩이 가능합니다.", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("버티컬 마우스", "내 손목을 위한 응급처치용 마우스", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
                 ///신발
-                new Equip_Item("구형 컴퓨터", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("사무용 컴퓨터", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("최신식 컴퓨터", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f)
+                new Equip_Item("구형 컴퓨터", "플로피 디스크를 사용할 수 있다.", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("사무용 컴퓨터", "거북이와 속도 대결이 가능하다.", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("최신식 컴퓨터", "작업 속도는 동일하나, 파일은 빛의 속도로 열립니다.", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f)
             };
             usable_ItemsList = new List<Usable_Item>
             {
