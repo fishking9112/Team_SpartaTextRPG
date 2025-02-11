@@ -49,7 +49,7 @@ namespace Team_SpartaTextRPG
                         for (int j = 1; j <= questList[i].Level; j++)
                             Utill.ColorWrite("★", ConsoleColor.Yellow);
                         Console.Write(" | ");
-                        Utill.ColorWriteLine("[진행 중]",ConsoleColor.Cyan);
+                        Utill.ColorWriteLine($"[진행 중 ( {questList[i].CurCount} / {questList[i].MaxCount} )]",ConsoleColor.Cyan);
                         break;
                     case QUEST_PROGRESS.Obtainable: // 보상 획득 가능
                         Utill.ColorWrite($"{i + 1}. {questList[i].Name} | {questList[i].Description} | 보상 : {questList[i].Reward} | ");
@@ -64,7 +64,7 @@ namespace Team_SpartaTextRPG
                         Utill.ColorWrite("난이도 : " , ConsoleColor.DarkGray);
                         for (int j = 1; j <= questList[i].Level; j++)
                             Utill.ColorWrite("★", ConsoleColor.DarkGray);
-                        Console.WriteLine();
+                        Utill.ColorWriteLine(" | [ 완료 ]", ConsoleColor.DarkGray);
                         break;
                 }
             }
