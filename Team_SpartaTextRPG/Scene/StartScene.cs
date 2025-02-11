@@ -34,16 +34,12 @@ namespace Team_SpartaTextRPG
         {
             Console.WriteLine("캐릭터 선택!");
 
-            Console.WriteLine("[1. 전사]");
-            Console.WriteLine("[2. 도적]");
-            Console.WriteLine("[3. 궁수]");
-            Console.WriteLine("[4. 법사]");
+            Console.WriteLine("[1. 서버 프로그래머]");
+            Console.WriteLine("[2. 기획자​​]");
 
             SceneManager.instance.Menu(Game_Start, null,
-            () => Select_Job(_name, PLAYER_JOB.WARRIOR),
-            () => Select_Job(_name, PLAYER_JOB.THIEF),
-            () => Select_Job(_name, PLAYER_JOB.ARCHER),
-            () => Select_Job(_name, PLAYER_JOB.WIZARD)
+            () => Select_Job(_name, PLAYER_JOB.Programmer),
+            () => Select_Job(_name, PLAYER_JOB.Planner)
             );
         }
 
@@ -54,37 +50,23 @@ namespace Team_SpartaTextRPG
             // 직업 별 스킬 분배
             switch (_job)
             {
-                case PLAYER_JOB.WARRIOR: // 전사 스킬 3개 습득
-                    skillList.Add(Skill_Key.WarriorSkill01);
-                    skillList.Add(Skill_Key.WarriorSkill02);
-                    skillList.Add(Skill_Key.WarriorSkill03);
+                case PLAYER_JOB.Programmer: // 프로그래머 스킬 5개 습득
+                    skillList.Add(Skill_Key.ProgrammerSkill01);
+                    skillList.Add(Skill_Key.ProgrammerSkill02);
+                    skillList.Add(Skill_Key.ProgrammerSkill03);
+                    skillList.Add(Skill_Key.ProgrammerSkill04);
+                    skillList.Add(Skill_Key.ProgrammerSkill05);
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
                     _level: 1, _maxExp: 100, _exp: 0, _maxHp: 200, _hp: 200, _maxMp: 50, _mp: 50, _attDamage: 15, _def: 10, _gold: 1500);
                     break;
 
-                case PLAYER_JOB.THIEF: // 도적 스킬 3개 습득
-                    skillList.Add(Skill_Key.ThiefSkill01);
-                    skillList.Add(Skill_Key.ThiefSkill02);
-                    skillList.Add(Skill_Key.ThiefSkill03);
-                    // 이름, 직업, 스킬목록 추가
-                    GameManager.instance.player = new Player(_name, _job, skillList,
-                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 100, _hp: 100, _maxMp: 70, _mp: 70, _attDamage: 13, _def: 7, _gold: 3000);
-                    break;
-
-                case PLAYER_JOB.ARCHER: // 궁수 스킬 3개 습득
-                    skillList.Add(Skill_Key.ArcherSkill01);
-                    skillList.Add(Skill_Key.ArcherSkill02);
-                    skillList.Add(Skill_Key.ArcherSkill03);
-                    // 이름, 직업, 스킬목록 추가
-                    GameManager.instance.player = new Player(_name, _job, skillList,
-                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 150, _hp: 150, _maxMp: 80, _mp: 80, _attDamage: 20, _def: 5, _gold: 1500);
-                    break;
-
-                case PLAYER_JOB.WIZARD: // 법사 스킬 3개 습득
-                    skillList.Add(Skill_Key.WizardSkill01);
-                    skillList.Add(Skill_Key.WizardSkill02);
-                    skillList.Add(Skill_Key.WizardSkill03);
+                case PLAYER_JOB.Planner: // 기획자 스킬 5개 습득
+                    skillList.Add(Skill_Key.PlannerSkill01);
+                    skillList.Add(Skill_Key.PlannerSkill02);
+                    skillList.Add(Skill_Key.PlannerSkill03);
+                    skillList.Add(Skill_Key.PlannerSkill04);
+                    skillList.Add(Skill_Key.PlannerSkill05);
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
                     _level: 1, _maxExp: 100, _exp: 0, _maxHp: 150, _hp: 150, _maxMp: 150, _mp: 150, _attDamage: 18, _def: 5, _gold: 1500);
