@@ -96,14 +96,14 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("[보유 골드]");
             Console.WriteLine($"{player.Gold} G");
             Console.WriteLine();
-            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine("[소비 아이템 목록]");
             List<Action> tempActions = new List<Action>();
             tempActions.Add(ShopScene.instance.ShowMenu);
             for (int i = 0; i < usable_ItemsList.Count; i++)
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(usable_ItemsList[temp]));
-                Console.WriteLine($"{i + 1}. {usable_ItemsList[i].Name}   |   {usable_ItemsList[i].Description}   |   {usable_ItemsList[i].HporMp()}   |   가격: {usable_ItemsList[i].Price}");
+                Console.WriteLine($"{i + 1}. {usable_ItemsList[i].Name}   |   {usable_ItemsList[i].Description}   |   가격: {usable_ItemsList[i].Price}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
@@ -135,7 +135,7 @@ namespace Team_SpartaTextRPG
             {
                 int temp = i;
                 tempActions.Add(() => SellItem(player.Inven_Usable_Item[temp]));
-                Console.WriteLine($"{index}. {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}   |   판매가격: {player.Inven_Usable_Item[i].Price * 0.8}");
+                Console.WriteLine($"{index}. {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   판매가격: {player.Inven_Usable_Item[i].Price * 0.8}");
             }
             Console.WriteLine();
             Console.WriteLine("0. 나가기");
