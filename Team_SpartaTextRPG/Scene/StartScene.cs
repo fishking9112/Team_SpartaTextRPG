@@ -6,6 +6,66 @@ namespace Team_SpartaTextRPG
 {
     internal class StartScene : Helper.Singleton<StartScene>
     {
+        
+        public void Game_FakeLoding()
+        {
+            TitleManager.instance.WriteTitle("강렬한 인상 is 게임 (로딩 중)");
+            InputKeyManager.instance.isInput = true;
+            ScreenManager.instance.AsyncVideo("resources/game_start.mp4", _isContinue: true, _isReversal: false);
+            PanelManager.instance.DrawInputKeyPanel();
+
+            int length = 58;
+            for(int i = 0; i < length; i++)
+            {
+                if(i == 0)
+                {
+                    PanelManager.instance.DrawInputKeyPanel();
+                    InputKeyManager.instance.MenuExplanation("9시 출석을 위해 패스 앱 인증중",true, ConsoleColor.Magenta);
+                }
+                else if(i == 10)
+                {
+                    PanelManager.instance.DrawInputKeyPanel();
+                    InputKeyManager.instance.MenuExplanation("21조 스크럼을 위해 팀원 소집 중",true, ConsoleColor.Blue);
+                }
+                else if(i == 20)
+                {
+                    PanelManager.instance.DrawInputKeyPanel();
+                    InputKeyManager.instance.MenuExplanation("그림 리소스 불러오는중",true, ConsoleColor.Yellow);
+                }
+                else if(i == 30)
+                {
+                    PanelManager.instance.DrawInputKeyPanel();
+                    InputKeyManager.instance.MenuExplanation("스파르타 정신 가다듬는 중",true, ConsoleColor.Cyan);
+                }
+                else if(i == 40)
+                {
+                    PanelManager.instance.DrawInputKeyPanel();
+                    InputKeyManager.instance.MenuExplanation("디스! 이즈! 스파르타!",true, ConsoleColor.Red);
+                }
+
+                StringBuilder sb = new StringBuilder();
+                for(int j = 0; j < i+1; j++)
+                {
+                    sb.Append("■");
+                }
+                for(int j = i; j < length-1; j++)
+                {
+                    sb.Append("□");
+                }
+                ScreenManager.instance.AsyncText(sb, _startY:PanelManager.instance.screenPanelY+PanelManager.instance.titlePanelY+1);
+
+
+                Thread.Sleep(200);
+            }
+
+            Thread.Sleep(2000);
+            InputKeyManager.instance.isInput = false;
+            // ScreenManager.instance.ClearScreen();
+            // ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
+
+            InputKeyManager.instance.GoMenu(Game_Title);
+        }
+
         public void Game_Title()
         {
             TitleManager.instance.WriteTitle("강렬한 인상 is 게임");

@@ -114,7 +114,7 @@ namespace Team_SpartaTextRPG
         }
 
         // 메뉴 설명
-        private void MenuExplanation(string? _explanation)
+        public void MenuExplanation(string? _explanation, bool _isCenter = false, ConsoleColor _color = ConsoleColor.Gray)
         {
             // 설명 시작 위치
             int x = 3;
@@ -122,14 +122,25 @@ namespace Team_SpartaTextRPG
 
             CursorManager.instance.CurserPointUse(() =>
             {
+                Console.ForegroundColor = _color; //그림 색상 변경
                 if (!GameManager.instance.isPlaying) return;
 
                 var sbSplit = _explanation?.ToString().Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
                 for (int i = 0; i < sbSplit?.Length; i++)
                 {
-                    Console.SetCursorPosition(x, y + i);
-                    Console.Write(sbSplit[i].ToString());
+                    if(_isCenter){
+                        var title = sbSplit[i].ToString();
+                        float textWidth = title.Sum(c => c == ' ' || c == '!' || c == '(' || c == ')' ||('0' <= c && c <= '9') ||('a' <= c && c <= 'z') ||('A' <= c && c <= 'Z') ? 0.5f : 1f);
+                        int middle = PanelManager.instance.gamePanelX - (int)(textWidth + 0.5f);
+                        Console.SetCursorPosition(middle, y + i);
+                        Console.Write(title);
+                    } else {
+                        Console.SetCursorPosition(x, y + i);
+                        Console.Write(sbSplit[i].ToString());
+                    }
                 }
+                Console.ResetColor();
+                
             });
         }
 
