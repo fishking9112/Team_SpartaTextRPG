@@ -188,7 +188,7 @@ namespace Team_SpartaTextRPG
             {
                 player.Inven_Equip_Item.Remove(equip_Item);
                 player.Gold += sellPrice;
-                equip_Item.IsPurchased = true;
+                equip_Item.IsPurchased = false;
             }
             else if (item is Usable_Item usable_Item)
             {
