@@ -20,12 +20,12 @@ namespace Team_SpartaTextRPG
         {
             equip_ItemsList = new List<Equip_Item>
             {
-                new Equip_Item("C# 코드 작성", " C# 기본 문법과 자료구조 , 알고리즘", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 10.0f, 5f),
-                new Equip_Item("2D 유니티 엔진", "유니티 엔진의 사용법과 2D 게임 구현", 200, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 15.0f, 0f),
-                new Equip_Item("3D 유니티 엔진", "유니티 엔진의 심화 , 3D 게임 구현 능력", 300, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 20.0f, 10f),
-                new Equip_Item("개노잼카피게임 기획", "양산형 게임을 기획", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 10.0f, 5f),
-                new Equip_Item("무난무난게임 기획", "할만한 게임을 기획", 200, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 15.0f, 0f),
-                new Equip_Item("개꿀잼게임 기획", "AAA 급 게임을 기획", 300, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 20.0f, 10f),
+                new Equip_Item("C# 코드 작성", " C# 기본 문법과 자료구조 , 알고리즘", 100, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 10.0f, 5f),
+                new Equip_Item("2D 유니티 엔진", "유니티 엔진의 사용법과 2D 게임 구현", 200, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 15.0f, 0f),
+                new Equip_Item("3D 유니티 엔진", "유니티 엔진의 심화 , 3D 게임 구현 능력", 300, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 20.0f, 10f),
+                new Equip_Item("개노잼카피게임 기획", "양산형 게임을 기획", 100, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 10.0f, 5f),
+                new Equip_Item("무난무난게임 기획", "할만한 게임을 기획", 200, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 15.0f, 0f),
+                new Equip_Item("개꿀잼게임 기획", "AAA 급 게임을 기획", 300, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 20.0f, 10f),
                 //머리
                 new Equip_Item("CRT 모니터", "화면은 나옵니다.", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
                 new Equip_Item("싱글 모니터", "작은 화면으로 고통받으며 코딩", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
@@ -75,9 +75,8 @@ namespace Team_SpartaTextRPG
             Console.WriteLine();
             Console.WriteLine("[아이템 목록]");
             List<Equip_Item> filteredItems = equip_ItemsList.Where(item => item.item_Job_Type == Item_Job_Type.NONE ||
-            (player.Job == PLAYER_JOB.WARRIOR && item.item_Job_Type == Item_Job_Type.WARRIOR) ||
-            (player.Job == PLAYER_JOB.ARCHER && item.item_Job_Type == Item_Job_Type.ARCHER) ||
-            (player.Job == PLAYER_JOB.WIZARD && item.item_Job_Type == Item_Job_Type.WIZARD)).ToList();
+            (player.Job == PLAYER_JOB.Programmer && item.item_Job_Type == Item_Job_Type.Programmer) ||
+            (player.Job == PLAYER_JOB.Planner && item.item_Job_Type == Item_Job_Type.Planner)).ToList();
 
             ShowShopItems(filteredItems);
         }
