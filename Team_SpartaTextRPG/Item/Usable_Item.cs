@@ -57,7 +57,6 @@ namespace Team_SpartaTextRPG
             //}
             player.BuffList.Add(new Buff(item.Bonus_Att , item.Bonus_Def , item.Bonus_HP , item.Bonus_MP , item.Bonus_Turn));
             player.Inven_Usable_Item.Remove(item);
-            return;
         }
 
         public string HporMp()

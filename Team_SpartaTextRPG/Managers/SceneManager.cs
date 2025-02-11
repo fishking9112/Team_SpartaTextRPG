@@ -15,7 +15,7 @@ namespace Team_SpartaTextRPG
             // 입력 범위 값이 이 안에 없으면 오류와 함께 다시 origin 시작
             if(input < 0 || _actions.Length <= input || _actions[input] == null){
                 Console.WriteLine($"\n잘못된 입력입니다. (입력된 값 : {input})\n");
-                Thread.Sleep(1000);
+                Utill.Sleep(1000);
                 nextScene = _origin;
             } else {
                 nextScene = _actions[input];

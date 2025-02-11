@@ -63,6 +63,19 @@ namespace Team_SpartaTextRPG
             Console.ResetColor();
         }
 
+        // Sleep시 버퍼에 값을 남기지 않기 위해서 사용
+        public static void Sleep(int _frame)
+        {
+
+            InputKeyManager.instance.isInput = true;
+            Thread.Sleep(_frame);
+            while (Console.KeyAvailable)
+            {
+                Console.ReadKey(true); // 버퍼에 남아 있는 키 제거
+            }
+            InputKeyManager.instance.isInput = false;
+        }
+
         // IDLE Player
         public static readonly (string idle,string die, string end) WARRIOR_PATH = ("./resources/warrior.mp4", "./resources/warrior.mp4", "./resources/warrior.mp4");
         public static readonly (string idle,string die, string end) THIEF_PATH = ("./resources/thief.mp4", "./resources/thief.mp4", "./resources/thief.mp4");

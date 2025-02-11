@@ -75,7 +75,7 @@ namespace Team_SpartaTextRPG
                 _ctsList.Clear();
             }
 
-            Thread.Sleep(bigFrame); // 동영상의 최대 프레임만큼 기다려서 아스키 안곂치게 하기
+            Utill.Sleep(bigFrame); // 동영상의 최대 프레임만큼 기다려서 아스키 안곂치게 하기
             bigFrame = 0;
             PanelManager.instance.DrawScreenPanel();
         }

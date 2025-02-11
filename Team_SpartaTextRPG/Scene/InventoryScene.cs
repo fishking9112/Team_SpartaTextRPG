@@ -94,7 +94,7 @@ namespace Team_SpartaTextRPG
 
             ScreenManager.instance.AsyncText(sb);
 
-            InputKeyManager.instance.InputMenu(ShowInventoryItem, "장착할 아이템을 선택해주세요 >> ", tempActions.ToArray());
+            InputKeyManager.instance.InputMenu(ShowInventoryItem, "아이템을 선택해주세요 >> ", tempActions.ToArray());
         }
 
 
@@ -107,52 +107,6 @@ namespace Team_SpartaTextRPG
             else if (item is Usable_Item usable_Item)
             {
                 usable_Item.Use(usable_Item);
-            }
-        }
-        
-        public void Use(Usable_Item item)
-        {
-            if (item.Bonus_HP > 0 && item.Bonus_MP <= 0)
-            {
-                player.HP += (int)item.Bonus_HP;
-            }
-            else if (item.Bonus_MP > 0 && player.HP <= 0)
-            {
-                player.MP += (int)item.Bonus_MP;
-            }
-            else if (item.Bonus_HP > 0 && item.Bonus_MP > 0)
-            {
-                player.HP += (int)item.Bonus_HP;
-                player.MP += (int)item.Bonus_MP;
-            }
-            else if (item.Bonus_Att > 0)
-            {
-                player.AttDamage += (int)item.Bonus_Att;
-            }
-            else
-            {
-                player.Defense += (int)item.Bonus_Def;
-            }
-            player.Inven_Usable_Item.Remove(item);
-            
-            InputKeyManager.instance.GoMenu(ShowInventoryItem);
-        }
-
-        public void Equip(Equip_Item item)
-        {
-            int slotIndex = (int)item.item_Slot_Type;
-
-            if (player.EquipSlot[slotIndex] != null)
-            {
-                Equip_Item currentItem = player.EquipSlot[slotIndex];
-                currentItem.IsEquip = false;
-                player.EquipSlot[slotIndex] = item;
-                item.IsEquip = true;
-            }
-            else
-            {
-                player.EquipSlot[slotIndex] = item;
-                item.IsEquip = true;
             }
             InputKeyManager.instance.GoMenu(ShowInventoryItem);
         }

@@ -162,7 +162,7 @@ namespace Team_SpartaTextRPG
                 tempActions.Add(() =>
                 {
                     currentItem.Use(currentItem);
-                    SceneManager.instance.GoMenu(DungeonMenu);
+                    InputKeyManager.instance.GoMenu(DungeonMenu);
                 });
                 sb.AppendLine($"{i + 1}.   {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}");
             }
@@ -273,7 +273,8 @@ namespace Team_SpartaTextRPG
             if (monsters[input - 1].IsAvoid(10.0f) == true) // 회피를 하면 ?
             {
                 // 회피
-                sb.AppendLine($"{monsters[input - 1].Name}는(은) {player.Name}의 공격을 회피했다 !.\n");
+                sb.AppendLine($"{monsters[input - 1].Name}는(은) {player.Name}의 공격을 회피했다...!\n");
+                InputKeyManager.instance.MenuExplanation(sb.ToString(), _color: ConsoleColor.Magenta);
             }
             else
             {
@@ -291,17 +292,17 @@ namespace Team_SpartaTextRPG
                 {
                     sb.AppendLine($"{monsters[input - 1].Name}는(은) {Criticaldamage}의 데미지를 받았다.\n");
                 }
+                InputKeyManager.instance.MenuExplanation(sb.ToString(), _color: ConsoleColor.Green);
             }
 
             player.CountBuff();
 
-            InputKeyManager.instance.MenuExplanation(sb.ToString());
             
             // 그래픽
-            ArtUnitShow(input);
+            ArtUnitShow(input - 1);
 
 
-            Thread.Sleep(1000);
+            Utill.Sleep(1000);
 
             if (DeadCount())
             {
@@ -365,7 +366,7 @@ namespace Team_SpartaTextRPG
                         sb.AppendLine($"{monsters[i].Name} 공격 => {totalDamage}의 데미지를 받았다.");
                         InputKeyManager.instance.MenuExplanation(sb.ToString(), _color:ConsoleColor.Red);
 
-                        Thread.Sleep(1000);
+                        Utill.Sleep(1000);
 
                         if (player.IsDead == true)
                         {
@@ -415,7 +416,7 @@ namespace Team_SpartaTextRPG
         {
             Console.WriteLine("Stage Failed...");
 
-            Thread.Sleep(1000);
+            Utill.Sleep(1000);
 
             SceneManager.instance.GoMenu(TownScene.instance.Game_Main);
         }
@@ -615,7 +616,7 @@ namespace Team_SpartaTextRPG
             // 그래픽
             ArtUnitShow(targetIndex);
 
-            Thread.Sleep(1000);
+            Utill.Sleep(1000);
 
             if (DeadCount())
             {
@@ -644,10 +645,10 @@ namespace Team_SpartaTextRPG
                     {
                         if (temp == _dieActionNum)
                         {
-                            ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.die, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: false, _isReversal:true, _frame:100);
+                            ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.die, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: false, _isReversal:true, _color:ConsoleColor.DarkGray, _frame:100);
                         } else 
                         {
-                            ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.end, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: false, _isReversal:true, _frame:100);
+                            ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.end, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: false, _isReversal:true, _color:ConsoleColor.DarkGray, _frame:100);
                         }
                         ScreenManager.instance.AsyncText($"Lv.{monsters[temp].Level} {monsters[temp].Name}", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+1, _color:ConsoleColor.DarkGray);
                         ScreenManager.instance.AsyncText("Dead", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+2, _color:ConsoleColor.Red);

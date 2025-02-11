@@ -50,11 +50,11 @@ namespace Team_SpartaTextRPG
                             break;
                     }
                 }
-                // 입력한 뒤 버퍼가 남아 있으면 모두 삭제
                 while (Console.KeyAvailable && !isEnter && !isInput)
                 {
                     Console.ReadKey(true); // 버퍼에 남아 있는 키 제거
                 }
+
                 await Task.Delay(50); // CPU 사용률 조절
             }
         }
@@ -170,7 +170,7 @@ namespace Team_SpartaTextRPG
                 if (input < 0 || _actions.Length <= input || _actions[input] == null)
                 {
                     Console.WriteLine($"잘못된 입력입니다. (입력된 값 : {input})");
-                    Thread.Sleep(1000);
+                    Utill.Sleep(1000);
                     nextActon = _origin;
                 }
                 else

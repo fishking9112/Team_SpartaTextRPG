@@ -55,10 +55,10 @@ namespace Team_SpartaTextRPG
                 ScreenManager.instance.AsyncText(sb, _startY:PanelManager.instance.screenPanelY+PanelManager.instance.titlePanelY+1);
 
 
-                Thread.Sleep(200);
+                Utill.Sleep(200);
             }
 
-            Thread.Sleep(2000);
+            Utill.Sleep(2000);
             InputKeyManager.instance.isInput = false;
             // ScreenManager.instance.ClearScreen();
             // ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
@@ -113,7 +113,7 @@ namespace Team_SpartaTextRPG
                 sb.Clear();
                 sb.Append($"이름이 양식에 맞지 않습니다.");
                 ScreenManager.instance.AsyncText(sb);
-                Thread.Sleep(1000);
+                Utill.Sleep(1000);
                 InputKeyManager.instance.GoMenu(() => { Game_Start(); });
             }
         }
