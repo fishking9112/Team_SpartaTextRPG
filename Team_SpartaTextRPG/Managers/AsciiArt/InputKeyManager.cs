@@ -25,9 +25,9 @@ namespace Team_SpartaTextRPG
         {
             while (true)
             {
-                if (Console.KeyAvailable) // 키 입력이 있는 경우만 처리
+                if (Console.KeyAvailable && !isEnter && !isInput) // 키 입력이 있는 경우만 처리
                 {
-                    if (isEnter || isInput) continue; // 엔터 입력 됬을 거나 Input 입력 중에는 잠시 기능 멈추기
+                    // if (isEnter || isInput) continue; // 엔터 입력 됬을 거나 Input 입력 중에는 잠시 기능 멈추기
                     ConsoleKeyInfo InputKey = Console.ReadKey(true);
 
                     switch (InputKey.Key)
@@ -51,7 +51,7 @@ namespace Team_SpartaTextRPG
                     }
                 }
                 // 입력한 뒤 버퍼가 남아 있으면 모두 삭제
-                while (Console.KeyAvailable)
+                while (Console.KeyAvailable && !isEnter && !isInput)
                 {
                     Console.ReadKey(true); // 버퍼에 남아 있는 키 제거
                 }
