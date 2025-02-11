@@ -20,7 +20,7 @@ namespace Team_SpartaTextRPG
         {
             equip_ItemsList = new List<Equip_Item>
             {
-                new Equip_Item("C# 코드 작성", " C# 기본 문법과 자료구조 , 알고리즘", 100, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 10.0f, 5f),
+                new Equip_Item("C# 코드 작성", "C# 기본 문법과 자료구조 , 알고리즘", 100, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 10.0f, 5f),
                 new Equip_Item("2D 유니티 엔진", "유니티 엔진의 사용법과 2D 게임 구현", 200, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 15.0f, 0f),
                 new Equip_Item("3D 유니티 엔진", "유니티 엔진의 심화 , 3D 게임 구현 능력", 300, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 20.0f, 10f),
                 new Equip_Item("개노잼카피게임 기획", "양산형 게임을 기획", 100, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 10.0f, 5f),
@@ -84,11 +84,12 @@ namespace Team_SpartaTextRPG
             // sb.AppendLine("상점");
             // sb.AppendLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             // sb.AppendLine();
-            sb.AppendLine("[보유 골드]");
-            sb.AppendLine($"{GameManager.instance.player.Gold} G");
+            sb.AppendLine($"[보유 골드 : {GameManager.instance.player.Gold} G]");
             sb.AppendLine();
             sb.AppendLine("[아이템 목록]");
             
+            ScreenManager.instance.AsyncText(sb);
+
             List<Equip_Item> filteredItems = equip_ItemsList.Where(item => item.item_Job_Type == Item_Job_Type.NONE ||
             (player.Job == PLAYER_JOB.Programmer && item.item_Job_Type == Item_Job_Type.Programmer) ||
             (player.Job == PLAYER_JOB.Planner && item.item_Job_Type == Item_Job_Type.Planner)).ToList();
@@ -101,23 +102,36 @@ namespace Team_SpartaTextRPG
             TitleManager.instance.WriteTitle("상점");
 
             StringBuilder sb = new();
-            sb.AppendLine("[보유 골드]");
-            sb.AppendLine($"{player.Gold} G");
+            sb.AppendLine($"[보유 골드 : {player.Gold} G]");
             sb.AppendLine();
             sb.AppendLine("[소비 아이템 목록]");
 
             List<Action> tempActions = new List<Action>();
             tempActions.Add(ShopScene.instance.ShowMenu);
+            
+            ScreenManager.instance.AsyncText(sb);
+            
+            StringBuilder sb_name = new();
+            StringBuilder sb_description = new();
+            StringBuilder sb_price = new();
+
+            sb_name.AppendLine($"[이름]");
+            sb_description.AppendLine($"[설명]");
+            sb_price.AppendLine($"[가격]");
             for (int i = 0; i < usable_ItemsList.Count; i++)
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(usable_ItemsList[temp]));
-                sb.AppendLine($"{i + 1}. {usable_ItemsList[i].Name}   |   {usable_ItemsList[i].Description}   |   가격: {usable_ItemsList[i].Price}");
+                sb_name.AppendLine($"{i + 1}. {usable_ItemsList[i].Name}");
+                sb_description.AppendLine($"{usable_ItemsList[i].Description}");
+                sb_price.AppendLine($"{usable_ItemsList[i].Price} G");
             }
-            sb.AppendLine();
-            sb.AppendLine("0. 나가기");
+            // 시간 없어서 수동으로 조절
+            ScreenManager.instance.AsyncText(sb_name, 1, 5);
+            ScreenManager.instance.AsyncText(sb_description, 21, 5);
+            ScreenManager.instance.AsyncText(sb_price, 60, 5);
 
-            ScreenManager.instance.AsyncText(sb);
+            ScreenManager.instance.AsyncText("0. 나가기" , 1, usable_ItemsList.Count+7);
 
             InputKeyManager.instance.InputMenu(ShowUsableItems,"살 소모품을 선택해주세요 >> ",tempActions.ToArray());
         }
@@ -127,53 +141,80 @@ namespace Team_SpartaTextRPG
             TitleManager.instance.WriteTitle("상점");
             
             StringBuilder sb = new();
-            sb.AppendLine("상점");
-            sb.AppendLine("필요없는 아이템을 판매할 수 있는 상점입니다.");
-            sb.AppendLine();
-            sb.AppendLine("[보유 골드]");
-            sb.AppendLine($"{player.Gold} G");
-            sb.AppendLine();
+            sb.AppendLine($"[보유 골드 : {player.Gold} G]");
+            sb.AppendLine("");
             sb.AppendLine("[보유 장비 아이템 목록]");
+            ScreenManager.instance.AsyncText(sb, 1, 1);
+            
             List<Action> tempActions = new List<Action>();
             tempActions.Add(ShopScene.instance.ShowMenu);
+            
+            StringBuilder sb_name = new();
+            StringBuilder sb_description = new();
+            StringBuilder sb_atkorDef = new();
+            StringBuilder sb_price = new();
+
+            sb_name.AppendLine($"[이름]");
+            sb_description.AppendLine($"[설명]");
+            sb_atkorDef.AppendLine($"[효과]");
+            sb_price.AppendLine($"[판매 가격]");
+            
             int index = 1;
-            for (int i = 0; i < player.Inven_Equip_Item.Count; i++, index++)
+            for (int i = 0; i < player.Inven_Equip_Item.Count; i++)
             {
-                //장착 해제 후 판매
                 int temp = i;
                 tempActions.Add(() => SellItem(player.Inven_Equip_Item[temp]));
-                sb.AppendLine($"{index}. {player.Inven_Equip_Item[i].Name}   |   {player.Inven_Equip_Item[i].Description}   |   {player.Inven_Equip_Item[i].AtkorDef()}   |   판매가격: {player.Inven_Equip_Item[i].Price * 0.8}");
+                sb_name.AppendLine($"{index++}. {player.Inven_Equip_Item[i].Name}");
+                sb_description.AppendLine($"{player.Inven_Equip_Item[i].Description}");
+                sb_atkorDef.AppendLine($"{player.Inven_Equip_Item[i].AtkorDef()}");
+                sb_price.AppendLine($"{player.Inven_Equip_Item[i].Price * 0.8} G");
             }
-            sb.AppendLine();
+            if(player.Inven_Equip_Item.Count == 0){
+                ScreenManager.instance.AsyncText("보유한 장비 아이템이 없습니다.", 2, 5);
+            } else {
+                // 시간 없어서 수동으로 조절
+                ScreenManager.instance.AsyncText(sb_name, 1, 5);
+                ScreenManager.instance.AsyncText(sb_description, 21, 5);
+                ScreenManager.instance.AsyncText(sb_atkorDef, 74, 5);
+                ScreenManager.instance.AsyncText(sb_price, 100, 5);
+            }
+
+            sb.Clear();
             sb.AppendLine("[보유 소비 아이템 목록]");
-            for (int i = 0; i < player.Inven_Usable_Item.Count; i++, index++)
+
+            ScreenManager.instance.AsyncText(sb, 1, player.Inven_Equip_Item.Count+7);
+
+            sb_name.Clear();
+            sb_description.Clear();
+            sb_price.Clear();
+
+            sb_name.AppendLine($"[이름]");
+            sb_description.AppendLine($"[설명]");
+            sb_price.AppendLine($"[판매 가격]");
+            for (int i = 0; i < player.Inven_Usable_Item.Count; i++)
             {
                 int temp = i;
                 tempActions.Add(() => SellItem(player.Inven_Usable_Item[temp]));
-                sb.AppendLine($"{index}. {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   판매가격: {player.Inven_Usable_Item[i].Price * 0.8}");
+                sb_name.AppendLine($"{index++}. {player.Inven_Usable_Item[i].Name}");
+                sb_description.AppendLine($"{player.Inven_Usable_Item[i].Description}");
+                sb_price.AppendLine($"{player.Inven_Usable_Item[i].Price} G");
             }
-            sb.AppendLine();
+            
+            if(player.Inven_Usable_Item.Count == 0){
+                ScreenManager.instance.AsyncText("보유한 소비 아이템이 없습니다.", 1, player.Inven_Equip_Item.Count+9);
+            } else {
+                // 시간 없어서 수동으로 조절
+                ScreenManager.instance.AsyncText(sb_name, 1, player.Inven_Equip_Item.Count+9);
+                ScreenManager.instance.AsyncText(sb_description, 21, player.Inven_Equip_Item.Count+9);
+                ScreenManager.instance.AsyncText(sb_price, 60, player.Inven_Equip_Item.Count+9);
+            }
+
+            sb.Clear();
             sb.AppendLine("0. 나가기");
 
-            ScreenManager.instance.AsyncText(sb);
+            ScreenManager.instance.AsyncText(sb, 1, player.Inven_Equip_Item.Count+player.Inven_Usable_Item.Count+11);
 
             InputKeyManager.instance.InputMenu(ShowPurchaseItem,"팔 아이템을 선택해주세요 >> ",tempActions.ToArray());
-        }
-
-        public void ShowShopItems(List<Equip_Item> filteredItems)
-        {
-            List<Action> tempActions = new List<Action>();
-            tempActions.Add(ShopScene.instance.ShowMenu);
-            for (int i = 0; i < filteredItems.Count; i++)
-            {
-                int temp = i;
-                tempActions.Add(() => BuyItem(filteredItems[temp]));
-                Console.WriteLine($"{i + 1}.   {filteredItems[i].Name}   |   설명: {filteredItems[i].Description}   |   {filteredItems[i].AtkorDef()}   |   가격: {filteredItems[i].Price}    |   {filteredItems[i].CheckPurchase()}");
-            }
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
-
-            SceneManager.instance.Menu(ShowShop, tempActions.ToArray());
         }
 
         public void BuyItem(Item item)
@@ -286,18 +327,34 @@ namespace Team_SpartaTextRPG
 
         public void ShowShopItems(List<Equip_Item> filteredItems, StringBuilder sb)
         {
+            StringBuilder sb_name = new();
+            StringBuilder sb_description = new();
+            StringBuilder sb_atkorDef = new();
+            StringBuilder sb_price = new();
+
             List<Action> tempActions = new List<Action>();
             tempActions.Add(ShopScene.instance.ShowMenu);
+
+            sb_name.AppendLine($"[이름]");
+            sb_description.AppendLine($"[설명]");
+            sb_atkorDef.AppendLine($"[효과]");
+            sb_price.AppendLine($"[가격]");
             for (int i = 0; i < filteredItems.Count; i++)
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(filteredItems[temp]));
-                sb.AppendLine($"{i + 1}.   {filteredItems[i].Name}   |   설명: {filteredItems[i].Description}   |   {filteredItems[i].AtkorDef()}   |   가격: {filteredItems[i].Price}");
+                sb_name.AppendLine($"{i + 1}. {filteredItems[i].Name}");
+                sb_description.AppendLine($"{filteredItems[i].Description}");
+                sb_atkorDef.AppendLine($"{filteredItems[i].AtkorDef()}");
+                sb_price.AppendLine($"{filteredItems[i].Price} G");
             }
-            sb.AppendLine();
-            sb.AppendLine("0. 나가기");
+            // 시간 없어서 수동으로 조절
+            ScreenManager.instance.AsyncText(sb_name, 1, 5);
+            ScreenManager.instance.AsyncText(sb_description, 21, 5);
+            ScreenManager.instance.AsyncText(sb_atkorDef, 74, 5);
+            ScreenManager.instance.AsyncText(sb_price, 100, 5);
 
-            ScreenManager.instance.AsyncText(sb);
+            ScreenManager.instance.AsyncText("0. 나가기" , 1, filteredItems.Count+7);
 
             InputKeyManager.instance.InputMenu(ShowShop,"살 아이템을 번호를 입력하세요 >> ", tempActions.ToArray());
                 

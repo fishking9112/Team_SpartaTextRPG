@@ -64,7 +64,7 @@ namespace Team_SpartaTextRPG
             string str = "";
             if (Bonus_HP > 0 && Bonus_MP > 0)
             {
-                str = $"HP +{Bonus_HP}   |   MP +{Bonus_MP}";
+                str = $"HP +{Bonus_HP}, MP +{Bonus_MP}";
             }
             else if (Bonus_MP > 0 && Bonus_HP <= 0)
             {

@@ -40,7 +40,7 @@ namespace Team_SpartaTextRPG
             string str = "";
             if (Bonus_Att > 0 && Bonus_Def > 0)
             {
-                str = $"공격력 +{Bonus_Att}   |   방어력 +{Bonus_Def}";
+                str = $"공격력 +{Bonus_Att}, 방어력 +{Bonus_Def}";
             }
             else if (Bonus_Def > 0 && Bonus_Att <= 0)
             {

@@ -286,11 +286,11 @@ namespace Team_SpartaTextRPG
                 sb.AppendLine($"{player.Name} 공격");
                 if (isCritical)
                 {
-                    sb.AppendLine($"{monsters[input - 1].Name}는(은) 강력한{Criticaldamage}의 데미지를 받았다.\n");
+                    sb.AppendLine($"{monsters[input - 1].Name}에게 {Criticaldamage}의 강력한 데미지를 입혔다.\n");
                 }
                 else
                 {
-                    sb.AppendLine($"{monsters[input - 1].Name}는(은) {Criticaldamage}의 데미지를 받았다.\n");
+                    sb.AppendLine($"{monsters[input - 1].Name}에게 {Criticaldamage}의 데미지를 입혔다.\n");
                 }
                 InputKeyManager.instance.MenuExplanation(sb.ToString(), _color: ConsoleColor.Green);
             }
@@ -363,7 +363,7 @@ namespace Team_SpartaTextRPG
                         ArtUnitShow();
                         // 플레이어 체력 깎아주기
                         player.HP = (int)(player.HP - (totalDamage));
-                        sb.AppendLine($"{monsters[i].Name} 공격 => {totalDamage}의 데미지를 받았다.");
+                        sb.AppendLine($"{monsters[i].Name}의 공격! => {totalDamage}의 데미지를 받았다!");
                         InputKeyManager.instance.MenuExplanation(sb.ToString(), _color:ConsoleColor.Red);
 
                         Utill.Sleep(1000);
