@@ -202,22 +202,5 @@ namespace Team_SpartaTextRPG
 
             return finalDamage;
         }
-        //회피 기능
-        public float AvoidAttack(float finalDamage, ref bool isAvoid)
-        {
-            int avoid = new Random().Next(1, 100);
-            if (avoid <= 10)
-            {
-                isAvoid = true;
-                float newAvoidat = finalDamage * 0f;
-                finalDamage = (int)Math.Round(newAvoidat);
-            }
-            else
-            {
-                isAvoid = false;
-            }
-
-            return finalDamage;
-        }
     }
 }
