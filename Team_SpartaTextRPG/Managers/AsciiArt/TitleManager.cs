@@ -9,6 +9,7 @@ namespace Team_SpartaTextRPG
         {
             // 이전에 썻던 타이틀 이름 지우기
             PanelManager.instance.DrawTitlePanel();
+            PanelManager.instance.DrawInputKeyPanel();
 
             //! Screen 일일이 지우기 힘들어서 여기 둠 (결합도 올라가서 안좋지만 일단 쓰자)
             ScreenManager.instance.ClearScreen();

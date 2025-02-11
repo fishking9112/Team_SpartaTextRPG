@@ -25,6 +25,12 @@ namespace Team_SpartaTextRPG
         private int Dungeon_MaxCount = 3;
         private int total_ClearCount = 0;
 
+        // Art용
+        int startMonsterX = 24;
+        int startMonsterY = 3;
+        int monsterSizeX = 12;
+        int monsterSizeY = 15;
+
         // 던전 화면
         public void Dungeon_Title()
         {
@@ -35,8 +41,8 @@ namespace Team_SpartaTextRPG
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1})", ConsoleColor.DarkRed);
-                ScreenManager.instance.AsyncVideo("./resources/dungeon.gif",_frame:100, _color: ConsoleColor.Magenta);
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1})", ConsoleColor.Cyan);
+                ScreenManager.instance.AsyncVideo("./resources/dungeon.gif",_frame:100, _color: ConsoleColor.Cyan);
             }
 
             InputKeyManager.instance.ArtMenu(
@@ -66,88 +72,89 @@ namespace Team_SpartaTextRPG
             // 1. 싸우기
             // 2. 아이템 사용
             // 0. 후퇴
-            for (int i = 0; i < monsters.Length; i++)
+            
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
             {
-                if (monsters[i] != null)
-                {
-                    if (monsters[i].IsDead == false)
-                    {
-                        Console.WriteLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
-                    }
-                    else
-                    {
-                        Utill.ColorWrite($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP} |", ConsoleColor.DarkGray);
-                        Utill.ColorWriteLine("\tDead", ConsoleColor.Red);
-                    }
-                }
+                TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투", ConsoleColor.DarkRed);
             }
-            Console.WriteLine("===========================================================\n");
-            Console.WriteLine($"이름 : {player.Name}  |  Lv. {player.Level}  |  플레이어의 체력 : {player.HP}  |  플레이어의 마나 : {player.MP}");
-            Console.WriteLine();
-            Console.WriteLine("1. [ 공격 ]");
-            Console.WriteLine("2. [ 아이템 사용 ]");
-            Console.WriteLine("3. [ 스킬 사용 ]");
-            Console.WriteLine("0. [ 도망가기 ]");
-            SceneManager.instance.Menu(DungeonMenu, Dungeon_Title, DungeonMenu_Fight, DungeonMenu_Use_Item, DungeonMenu_Skill_Select);
+            else
+            {
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투", ConsoleColor.Cyan);
+            }
+
+
+            ArtUnitShow();
+            
+
+            InputKeyManager.instance.ArtMenu(
+                ($"공격", "던전에 입장합니다.", DungeonMenu_Fight),
+                ($"스킬 사용", "현재 데이터를 저장합니다.", DungeonMenu_Skill_Select),
+                ($"아이템 사용", "현재 데이터를 저장합니다.", DungeonMenu_Use_Item),
+                ($"도망가기", "당신은 겁쟁이 입니다! 무서워서 도망칩니다!", Dungeon_Title));
         }
 
         // 현재 몬스터를 Select_Stage로 출력
         public void DungeonMenu_Fight()
         {
-            TitleManager.instance.WriteTitle("던전 - 전투");
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            {
+                TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 공격", ConsoleColor.DarkRed);
+            }
+            else
+            {
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 공격", ConsoleColor.Cyan);
+            }
 
-            StringBuilder sb = new();
+            ArtUnitShow();
 
-            List<(string _menuName, string? _explanation, Action? _action)> tempActions = new List<(string _menuName, string? _explanation, Action? _action)>();
-
-            int startMonsterX = 24;
-            int startMonsterY = 3;
-            int monsterSizeX = 12;
-            int monsterSizeY = 15;
+            var tempActions = new List<(string _menuName, string? _explanation, Action? _action)>();
             
-            ScreenManager.instance.AsyncUnitVideo(player.FilePath.idle, startX: 0, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:33);
             for (int i = 0; i < monsters.Length; i++)
             {
                 int temp = i;
-                if (monsters[i].IsDead == false)
+                if (monsters[i] != null)
                 {
-                    tempActions.Add(($"{monsters[temp].Name}", $"{monsters[temp].Name}를 공격합니다.", () => Player_Att(temp + 1)));
-                    sb.AppendLine($"{temp + 1}.   이름 : {monsters[temp].Name}   |   레벨: {monsters[temp].Level}   |  HP : {monsters[temp].HP} / {monsters[temp].MaxHP}");
-                    ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.idle, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:100);
-                    ScreenManager.instance.AsyncText($"Lv.{monsters[temp].Level} {monsters[temp].Name} ({monsters[temp].HP} / {monsters[temp].MaxHP})", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+1, _color:ConsoleColor.Cyan);
-                }
-                else
-                {
-                    tempActions.Add(($"{monsters[temp].Name}", $"{monsters[temp].Name}는 이미 사망 했습니다.", null));
-                    ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.die, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: false, _isReversal:true, _frame:100);
-                    ScreenManager.instance.AsyncText($"Lv.{monsters[temp].Level} {monsters[temp].Name} ({monsters[temp].HP} / {monsters[temp].MaxHP})", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+1, _color:ConsoleColor.DarkGray);
-                    ScreenManager.instance.AsyncText("\tDead", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+2, _color:ConsoleColor.Red);
+                    if (monsters[i].IsDead == false)
+                    {
+                        tempActions.Add(($"{monsters[temp].Name}", $"{monsters[temp].Name}를 공격합니다.", () => Player_Att(temp + 1)));
+                    }
+                    else
+                    {
+                        tempActions.Add(($"{monsters[temp].Name}", $"{monsters[temp].Name}는 이미 사망 했습니다.", null));
+                    }
                 }
             }
 
-            tempActions.Add(($"돌아가기", "마을로 나갑니다.", () => {DungeonScene.instance.Dungeon_Title(); }));
-
-            ScreenManager.instance.AsyncText($"{player.Name} ({player.Job})", _startX: 1, _startY: startMonsterY+monsterSizeY+1, _color:ConsoleColor.Green);
-            ScreenManager.instance.AsyncText($"Lv.{player.Level}", _startX: 1, _startY: startMonsterY+monsterSizeY+2);
-            ScreenManager.instance.AsyncText($"HP   {player.HP}/{player.MaxHP}", _startX: 1, _startY: startMonsterY+monsterSizeY+3,_color:ConsoleColor.Red);
-            ScreenManager.instance.AsyncText($"MP   {player.MP}/{player.MaxMP}", _startX: 1, _startY: startMonsterY+monsterSizeY+4,_color:ConsoleColor.Blue);
-            ScreenManager.instance.AsyncText($"Gold {player.Gold}G", _startX: 1, _startY: startMonsterY+monsterSizeY+5,_color:ConsoleColor.Yellow);
-
+            tempActions.Add(($"취소", "돌아갑니다", DungeonMenu));
 
             InputKeyManager.instance.ArtMenu(tempActions.ToArray());
         }
         //아이템 사용
         private void DungeonMenu_Use_Item()
         {
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            {
+                TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 아이템 사용", ConsoleColor.DarkRed);
+            }
+            else
+            {
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 아이템 사용", ConsoleColor.Cyan);
+            }
+
+
+            StringBuilder sb = new();
+
             Usable_Item usable_Item;
             List<Action> tempActions = new List<Action>();
             tempActions.Add(DungeonScene.instance.DungeonMenu);
-            Console.WriteLine();
-            Console.WriteLine("[소비 아이템 목록]");
-            Console.WriteLine();
+
+
+            sb.AppendLine();
+            sb.AppendLine("[소비 아이템 목록]");
+            sb.AppendLine();
             if (player.Inven_Usable_Item.Count <= 0)
             {
-                Console.WriteLine("보유 중인 소비 아이템이 없습니다.");
+                sb.AppendLine("보유 중인 소비 아이템이 없습니다.");
             }
             for (int i = 0; i < player.Inven_Usable_Item.Count; i++)
             {
@@ -157,11 +164,15 @@ namespace Team_SpartaTextRPG
                     currentItem.Use(currentItem);
                     SceneManager.instance.GoMenu(DungeonMenu);
                 });
-                Console.WriteLine($"{i + 1}.   {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}");
+                sb.AppendLine($"{i + 1}.   {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}");
             }
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
-            SceneManager.instance.Menu(DungeonMenu_Use_Item, tempActions.ToArray());
+            sb.AppendLine();
+            sb.AppendLine("0. 나가기");
+
+            ScreenManager.instance.AsyncText(sb);
+
+
+            InputKeyManager.instance.InputMenu(DungeonMenu_Use_Item, "사용할 아이템 번호를 입력하세요 >> ", tempActions.ToArray());
         }
 
         // 랜덤 사용해서 몬스터 랜덤 소환
@@ -244,14 +255,25 @@ namespace Team_SpartaTextRPG
         // 플레이어가 몬스터를 공격
         public void Player_Att(int input)
         {
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            {
+                TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 공격 (결과창)", ConsoleColor.DarkRed);
+            }
+            else
+            {
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 공격 (결과창)", ConsoleColor.Cyan);
+            }
+            
             //플레이어가 몬스터를 공격시 치명타 함수호출
             bool isCritical = false;
             int Criticaldamage = player.CriticalAttack(player.FinalDamage(), ref isCritical);
 
+            StringBuilder sb = new();
+
             if (monsters[input - 1].IsAvoid(10.0f) == true) // 회피를 하면 ?
             {
                 // 회피
-                Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {player.Name}의 공격을 회피했다 !.\n", ConsoleColor.Cyan);
+                sb.AppendLine($"{monsters[input - 1].Name}는(은) {player.Name}의 공격을 회피했다 !.\n");
             }
             else
             {
@@ -260,29 +282,36 @@ namespace Team_SpartaTextRPG
 
                 MonsterDeadCheck(monsters[input - 1]);
 
-                Utill.ColorWriteLine($"{player.Name} 공격", ConsoleColor.Blue);
+                sb.AppendLine($"{player.Name} 공격");
                 if (isCritical)
                 {
-                    Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) 강력한{Criticaldamage}의 데미지를 받았다.\n", ConsoleColor.Magenta);
+                    sb.AppendLine($"{monsters[input - 1].Name}는(은) 강력한{Criticaldamage}의 데미지를 받았다.\n");
                 }
                 else
                 {
-                    Utill.ColorWriteLine($"{monsters[input - 1].Name}는(은) {Criticaldamage}의 데미지를 받았다.\n");
+                    sb.AppendLine($"{monsters[input - 1].Name}는(은) {Criticaldamage}의 데미지를 받았다.\n");
                 }
             }
 
             player.CountBuff();
 
+            InputKeyManager.instance.MenuExplanation(sb.ToString());
+            
+            // 그래픽
+            ArtUnitShow(input);
+
+
             Thread.Sleep(1000);
 
             if (DeadCount())
             {
-                SceneManager.instance.GoMenu(Stage_Clear);
+                InputKeyManager.instance.ArtMenu(("적을 모두 죽였습니다.",sb.ToString(),Stage_Clear));
             }
             else
             {
-                Monster_Att();
+                InputKeyManager.instance.ArtMenu(("몬스터 턴으로...",sb.ToString(),Monster_Att));
             }
+
         }
         private void MonsterDeadCheck(Monster _monster)
         {
@@ -304,6 +333,17 @@ namespace Team_SpartaTextRPG
         // 몬스터 공격
         public void Monster_Att()
         {
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            {
+                TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 몬스터 턴", ConsoleColor.DarkRed);
+            }
+            else
+            {
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 몬스터 턴", ConsoleColor.Cyan);
+            }
+
+            StringBuilder sb = new();
+            
             for (int i = 0; i < monsters.Length; i++)
             {
                 if (monsters[i] != null)
@@ -318,12 +358,12 @@ namespace Team_SpartaTextRPG
                         {
                             totalDamage = 0;
                         }
-
+                        ScreenManager.instance.ClearScreen();
+                        ArtUnitShow();
                         // 플레이어 체력 깎아주기
                         player.HP = (int)(player.HP - (totalDamage));
-
-                        Utill.ColorWriteLine($"{monsters[i].Name} 공격", ConsoleColor.Red);
-                        Utill.ColorWriteLine($"{player.Name}는(은) {totalDamage}의 데미지를 받았다.\n");
+                        sb.AppendLine($"{monsters[i].Name} 공격 => {totalDamage}의 데미지를 받았다.");
+                        InputKeyManager.instance.MenuExplanation(sb.ToString(), _color:ConsoleColor.Red);
 
                         Thread.Sleep(1000);
 
@@ -335,13 +375,14 @@ namespace Team_SpartaTextRPG
                 }
             }
 
+
             if (player.IsDead == true)
             {
-                SceneManager.instance.GoMenu(Stage_failed);
+                InputKeyManager.instance.ArtMenu(("사망하셨습니다.",sb.ToString(),Stage_failed));
             }
             else
             {
-                SceneManager.instance.GoMenu(DungeonMenu);
+                InputKeyManager.instance.ArtMenu(("다시 나의 턴으로...",sb.ToString(),DungeonMenu));
             }
         }
 
@@ -382,31 +423,43 @@ namespace Team_SpartaTextRPG
         // 스테이지 클리어 시 띄움 ( 보상 추가 )
         public void Stage_Clear()
         {
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            {
+                TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 클리어!", ConsoleColor.DarkRed);
+            }
+            else
+            {
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 클리어!", ConsoleColor.Cyan);
+            }
+
             total_ClearCount++;
 
             //보스 클리어
             if (DungeonLevel == Dungeon_Level.Level_Boss)
             {
-                SceneManager.instance.GoMenu(EndingScene.instance.End);
+                InputKeyManager.instance.GoMenu(EndingScene.instance.End);
+                return;
             }
 
-            Console.WriteLine("Stage Clear");
-            Dungeon_Reward();
-            Console.WriteLine("0. [ 나가기 ]");
+            //던전 레벨업
+            Dungeon_ClearCount++;
 
+            if (Dungeon_ClearCount >= Dungeon_MaxCount)
+            {
+                Dungeon_ClearCount = 0;
+                
+                if(DungeonLevel < Dungeon_Level.Level_Boss)
+                    DungeonLevel++;
+            }
+
+            StringBuilder sb = new();
             //보상
-
-            DungeonLevelUp();
-            SceneManager.instance.Menu(Stage_Clear, Dungeon_Title);
-        }
-        private void Dungeon_Reward()
-        {
             player.Gold += total_ClearCount * 1000;
-            Console.Write("클리어로 획득한 금화 : ");
-            Utill.ColorWriteLine($"{total_ClearCount * 1000}");
-            Console.Write("현재 보유 금화 : ");
-            Utill.ColorWriteLine($"{player.Gold}");
-            Console.WriteLine();
+            sb.Append("클리어로 획득한 금화 : ");
+            sb.AppendLine($"{total_ClearCount * 1000}");
+            sb.Append("현재 보유 금화 : ");
+            sb.AppendLine($"{player.Gold}");
+            sb.AppendLine();
 
             /* 
              * 1 - 1 : 1000
@@ -421,92 +474,108 @@ namespace Team_SpartaTextRPG
             player.Exp += total_ClearCount * 100;
             player.LevelUp();
 
-            Console.Write("클리어로 획득한 경험치 : ");
-            Utill.ColorWriteLine($"{total_ClearCount * 100}" , ConsoleColor.DarkCyan);
 
-            Console.Write("Lv : ");
-            Utill.ColorWriteLine($"{player.Level}", ConsoleColor.Blue);
+            sb.Append("클리어로 획득한 경험치 : ");
+            sb.AppendLine($"{total_ClearCount * 100}");
 
-            Console.Write($"경험치 : ");
-            Utill.ColorWriteLine($"{player.Exp} / {player.MaxExp}", ConsoleColor.DarkCyan);
-            Console.WriteLine();
-            Console.WriteLine("==============================");
-        }
-        private void DungeonLevelUp()
-        {
-            Dungeon_ClearCount++;
+            sb.Append("Lv : ");
+            sb.AppendLine($"{player.Level}");
 
-            if (Dungeon_ClearCount >= Dungeon_MaxCount)
-            {
-                Dungeon_ClearCount = 0;
-                
-                if(DungeonLevel < Dungeon_Level.Level_Boss)
-                    DungeonLevel++;
-            }
+            sb.Append($"경험치 : ");
+            sb.AppendLine($"{player.Exp} / {player.MaxExp}");
+
+            // 가방 이미지 보여주기
+            ScreenManager.instance.AsyncImage("./resources/bag_open.png",_startX:80, _startY:2, imageSizeX:20, imageSizeY:20);
+
+            // 클리어 보상 보여주기
+            ScreenManager.instance.AsyncText(sb, _color:ConsoleColor.Green);
+
+
+            InputKeyManager.instance.ArtMenu(("완료","스테이지 클리어 완료하였습니다.\n던전을 나갑니다.",Dungeon_Title));
         }
 
         public void DungeonMenu_Skill_Select()
         {
-            List<Action> skillActions = new List<Action>();
-            skillActions.Add(DungeonScene.instance.DungeonMenu);
-            Console.WriteLine("[사용 가능한 스킬 목록]");
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            {
+                TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 스킬 사용!", ConsoleColor.DarkRed);
+            }
+            else
+            {
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 스킬 사용!", ConsoleColor.Cyan);
+            }
 
+            List<(string _menuName, string? _explanation, Action? _action)> skillActions = new List<(string _menuName, string? _explanation, Action? _action)>();
+            
             for (int i = 0; i < player.SkillList.Count; i++)
             {
                 int index = i;
-                    string skillDescription = SkillManager.instance.GetSkillDescription(player, player.SkillList[i]);
+                string skillDescription = SkillManager.instance.GetSkillDescription(player, player.SkillList[i]);
+                var sbSplit = skillDescription.Split(new[] { " : "}, StringSplitOptions.None);
 
                 if(SkillManager.instance.GetSkillDamage(player, player.SkillList[i]) >= 0){
-
-                    Console.WriteLine($"{i + 1}. {skillDescription}");
-
-                    skillActions.Add(() =>{ DungeonMenu_Monster_Select(index);});
+                    skillActions.Add((sbSplit[0],sbSplit[1],() =>{ DungeonMenu_Monster_Select(index);}));
                 } else {
-                    Utill.ColorWriteLine($"{i + 1}. {skillDescription}", ConsoleColor.DarkGray);
-
-                    skillActions.Add(null);
+                    skillActions.Add((sbSplit[0],sbSplit[1], null));
                 }
             }
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
-            SceneManager.instance.Menu(DungeonMenu_Skill_Select, skillActions.ToArray());
+
+            ArtUnitShow();
+
+            skillActions.Add(("뒤로","뒤로 돌아갑니다.", DungeonMenu));
+
+            InputKeyManager.instance.ArtMenu(skillActions.ToArray());
         }
 
         public void DungeonMenu_Monster_Select(int skillIndex)
         {
-            List<Action> tempActions = new List<Action>();
-            tempActions.Add(DungeonScene.instance.DungeonMenu);
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            {
+                TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 적 선택", ConsoleColor.DarkRed);
+            }
+            else
+            {
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 적 선택", ConsoleColor.Cyan);
+            }
 
+            // 그래픽
+            ArtUnitShow();
+
+            var tempActions = new List<(string _menuName, string? _explanation, Action? _action)>();
+            
             for (int i = 0; i < monsters.Length; i++)
             {
+                int temp = i;
                 if (monsters[i] != null)
                 {
-                    if (!monsters[i].IsDead)
+                    if (monsters[i].IsDead == false)
                     {
-                        int temp = i;
-                        tempActions.Add(() => DungeonMenu_Skill_Use(temp, skillIndex));
-                        Console.WriteLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
+                        tempActions.Add(($"{monsters[temp].Name}", $"{monsters[temp].Name}를 공격합니다.",() => DungeonMenu_Skill_Use(temp, skillIndex)));
                     }
                     else
                     {
-                        tempActions.Add(null);
-                        Utill.ColorWrite($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP} |", ConsoleColor.DarkGray);
-                        Utill.ColorWriteLine("\tDead", ConsoleColor.Red);
+                        tempActions.Add(($"{monsters[temp].Name}", $"{monsters[temp].Name}는 이미 사망 했습니다.", null));
                     }
                 }
             }
 
-            Console.WriteLine("===========================================================\n");
-            Console.WriteLine($"이름 : {player.Name}  |  Lv. {player.Level}  |  플레이어의 체력 : {player.HP}  |  플레이어의 마나 : {player.MP}");
-            Console.WriteLine();
-            Console.WriteLine("0. 나가기");
 
-            SceneManager.instance.Menu(() => DungeonMenu_Monster_Select(skillIndex), tempActions.ToArray());
+            tempActions.Add(("취소","선택을 취소합니다.", DungeonMenu));
 
+            InputKeyManager.instance.ArtMenu(tempActions.ToArray());
         }
 
         public void DungeonMenu_Skill_Use(int targetIndex, int skillIndex)
         {
+            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            {
+                TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 스킬 사용 (결과창)", ConsoleColor.DarkRed);
+            }
+            else
+            {
+                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 스킬 사용 (결과창)", ConsoleColor.Cyan);
+            }
+
             float baseDamage = SkillManager.instance.GetSkillDamage(player, player.SkillList[skillIndex]);
 
             bool isCritical = false;
@@ -521,31 +590,79 @@ namespace Team_SpartaTextRPG
                 finalDamage = Criticaldamage;
             }
             monsters[targetIndex].HP = monsters[targetIndex].HP - finalDamage;
-            Utill.ColorWriteLine($"{player.Name} 스킬 사용", ConsoleColor.Blue);
+
+
+            StringBuilder sb = new();
+
+            string description = SkillManager.instance.GetSkillDescription(player, player.SkillList[skillIndex]).Split(" : ")[0];
+            sb.AppendLine($"{description} << 스킬 사용!");
 
             MonsterDeadCheck(monsters[targetIndex]);
 
             if (isCritical)
             {
-                Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) 강력한 {finalDamage}의 데미지를 받았다.\n", ConsoleColor.Magenta);
+                sb.AppendLine($"{monsters[targetIndex].Name}에게 {finalDamage}의 강력한 데미지를 입혔다!!!\n");
             }
             else
             {
-                Utill.ColorWriteLine($"{monsters[targetIndex].Name}는(은) {finalDamage}의 데미지를 받았다.\n");
+                sb.AppendLine($"{monsters[targetIndex].Name}에게 {finalDamage}의 데미지를 입혔다!\n");
             }
 
             player.CountBuff();
+
+            InputKeyManager.instance.MenuExplanation(sb.ToString(), _color:ConsoleColor.Green);
+            
+            // 그래픽
+            ArtUnitShow(targetIndex);
 
             Thread.Sleep(1000);
 
             if (DeadCount())
             {
-                SceneManager.instance.GoMenu(Stage_Clear);
+                InputKeyManager.instance.ArtMenu(("적을 모두 죽였습니다.",sb.ToString(),Stage_Clear));
             }
             else
             {
-                Monster_Att();
+                InputKeyManager.instance.ArtMenu(("몬스터 턴으로...",sb.ToString(),Monster_Att));
             }
+        }
+
+        public void ArtUnitShow(int _dieActionNum = -1){
+            
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                int temp = i;
+                if (monsters[i] != null)
+                {
+                    if (monsters[i].IsDead == false)
+                    {
+                        ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.idle, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:100);
+                        ScreenManager.instance.AsyncText($"Lv.{monsters[temp].Level} {monsters[temp].Name}", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+1);
+                        ScreenManager.instance.AsyncText($"({monsters[temp].HP} / {monsters[temp].MaxHP})", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+2, _color:ConsoleColor.Green);
+                    }
+                    else
+                    {
+                        if (temp == _dieActionNum)
+                        {
+                            ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.die, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: false, _isReversal:true, _frame:100);
+                        } else 
+                        {
+                            ScreenManager.instance.AsyncUnitVideo(monsters[temp].FilePath.end, startX: startMonsterX+temp*24, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: false, _isReversal:true, _frame:100);
+                        }
+                        ScreenManager.instance.AsyncText($"Lv.{monsters[temp].Level} {monsters[temp].Name}", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+1, _color:ConsoleColor.DarkGray);
+                        ScreenManager.instance.AsyncText("Dead", _startX: startMonsterX+temp*24, _startY: startMonsterY+monsterSizeY+2, _color:ConsoleColor.Red);
+
+                    }
+                }
+            }
+
+            ScreenManager.instance.AsyncUnitVideo(player.FilePath.idle, startX: 0, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:33);
+
+            ScreenManager.instance.AsyncText($"{player.Name} ({player.Job})", _startX: 1, _startY: startMonsterY+monsterSizeY+1, _color:ConsoleColor.Green);
+            ScreenManager.instance.AsyncText($"Lv.{player.Level}", _startX: 1, _startY: startMonsterY+monsterSizeY+2);
+            ScreenManager.instance.AsyncText($"HP   {player.HP}/{player.MaxHP}", _startX: 1, _startY: startMonsterY+monsterSizeY+3,_color:ConsoleColor.Red);
+            ScreenManager.instance.AsyncText($"MP   {player.MP}/{player.MaxMP}", _startX: 1, _startY: startMonsterY+monsterSizeY+4,_color:ConsoleColor.Blue);
+            ScreenManager.instance.AsyncText($"Gold {player.Gold}G", _startX: 1, _startY: startMonsterY+monsterSizeY+5,_color:ConsoleColor.Yellow);
         }
     }
 }
