@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Team_SpartaTextRPG
 {
-    enum PLAYER_JOB { WARRIOR, THIEF, ARCHER, WIZARD }
+    enum PLAYER_JOB { Programmer, Planner}
 
     internal class Player : ICharacter
     {
@@ -70,7 +70,7 @@ namespace Team_SpartaTextRPG
 
         //Player 만 가지는 필드
         public int Gold { get; set; }
-        public int Exp { get; set; }
+        public int Exp {  get; set; }
         public int MaxExp { get; set; }
         public PLAYER_JOB Job { get; set; }
 
@@ -194,7 +194,7 @@ namespace Team_SpartaTextRPG
             return EquipDefense;
         }
         //치명타 기능
-        public float CriticalAttack(float finalDamage, ref bool isCritical)
+        public int CriticalAttack(float finalDamage, ref bool isCritical)
         {
             int critical = new Random().Next(1, 100);
             if (critical <= 15)
@@ -208,7 +208,7 @@ namespace Team_SpartaTextRPG
                 isCritical = false;
             }
 
-            return finalDamage;
+            return (int)Math.Round(finalDamage);
         }
 
         //버프 한턴씩
@@ -230,6 +230,24 @@ namespace Team_SpartaTextRPG
 
                     BuffList.Remove(BuffList[i]);
                 }
+            }
+        }
+        public void LevelUp()
+        {
+            if (Exp >= MaxExp)
+            {
+                do
+                {
+                    Exp -= MaxExp;
+                    Level += 1;
+                    MaxExp = Level * 100;
+                    MaxHP += 100;
+                    AttDamage += 0.5f;
+                    Defense += 1;
+
+                } while (Exp > MaxExp);
+
+                HP = MaxHP;
             }
         }
     }

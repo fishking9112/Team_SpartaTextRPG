@@ -16,10 +16,16 @@ namespace Team_SpartaTextRPG
 
         void Init_QuestList()
         {
-            questList.Add(new Quest("슬라임 처치", "슬라임 5마리 처치", "슬라임", 5, 1000, 1));
-            questList.Add(new Quest("고블린 처치", "고블린 5마리 처치", "고블린", 5, 2000, 2));
-            questList.Add(new Quest("오크 처치", "오크 3마리 처치", "오크", 3, 3000, 3));
-            questList.Add(new Quest("맼닠젘 처치", "맼닠젘 1마리 처치", "맼닠젘", 1, 5000, 4));
+            questList.Add(new Quest("9to9", "9to9 5마리 처치", "9to9", 5, 1000, 1));
+            questList.Add(new Quest("TIL", "TIL 5마리 처치", "TIL", 5, 1000, 1));
+            questList.Add(new Quest("C# 기초, 심화", "C# 기초, 심화 5마리 처치", "C# 기초, 심화", 5, 1000, 1));
+            questList.Add(new Quest("Unity 2D 처치", "Unity 2D 5마리 처치", "Unity 2D", 3, 2000, 2));
+            questList.Add(new Quest("Unity 입문 처치", "Unity 입문 5마리 처치", "Unity 입문", 3, 2000, 2));
+            questList.Add(new Quest("자료구조 처치", "자료구조 5마리 처치", "자료구조", 3, 2000, 2));
+            questList.Add(new Quest("실전 프로젝트 처치", "실전 프로젝트 5마리 처치", "실전 프로젝트", 2, 3000, 3));
+            questList.Add(new Quest("Unity 3D 처치", "Unity 3D 5마리 처치", "Unity 3D", 2, 3000, 3));
+            questList.Add(new Quest("팀 프로젝트 처치", "팀 프로젝트 3마리 처치", "팀 프로젝트", 2, 3000, 3));
+            questList.Add(new Quest("면접 처치", "면접 1마리 처치", "면접", 1, 5000, 4));
         }
         public void Show_Quest_Board()
         {

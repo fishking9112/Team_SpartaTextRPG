@@ -20,40 +20,47 @@ namespace Team_SpartaTextRPG
         {
             equip_ItemsList = new List<Equip_Item>
             {
-                new Equip_Item("숏 소드", "일반 짧은 검", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 10.0f, 5f),
-                new Equip_Item("롱 소드", "일반 긴 검", 200, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 15.0f, 0f),
-                new Equip_Item("자이언트 소드", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 20.0f, 10f),
-                new Equip_Item("세이버 소드", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.WARRIOR, 25.0f, 0f),
-                new Equip_Item("숏 활", "......", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 10.0f, 5f),
-                new Equip_Item("롱 활", "......", 200, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 15.0f, 0f),
-                new Equip_Item("엘프 활", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 20.0f, 10f),
-                new Equip_Item("세이버 활", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.ARCHER, 25.0f, 0f),
-                new Equip_Item("단검", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.ROGUE, 10.0f, 0f),
-                new Equip_Item("플레임 단검", "....", 200, Item_Slot_Type.WEAPON, Item_Job_Type.ROGUE, 15.0f, 0f),
-                new Equip_Item("독 단검", "....", 300, Item_Slot_Type.WEAPON, Item_Job_Type.ROGUE, 20.0f, 0f),
-                new Equip_Item("세이버 단검", "....", 500, Item_Slot_Type.WEAPON, Item_Job_Type.ROGUE, 25.0f, 0f),
-                new Equip_Item("일반 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 10.0f, 0f),
-                new Equip_Item("룬 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 15.0f, 0f),
-                new Equip_Item("프리스트 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 20.0f, 0f),
-                new Equip_Item("세이버 완드", "....", 100, Item_Slot_Type.WEAPON, Item_Job_Type.WIZARD, 25.0f, 0f),
-                new Equip_Item("가죽 머리", "....", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("가죽 옷", "....", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("가죽 장갑", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("가죽 신발", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("블랙 머리", "....", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("블랙 옷", "....", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("블랙 장갑", "....", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
-                new Equip_Item("블랙 신발", "....", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f)
+                new Equip_Item("C# 코드 작성", " C# 기본 문법과 자료구조 , 알고리즘", 100, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 10.0f, 5f),
+                new Equip_Item("2D 유니티 엔진", "유니티 엔진의 사용법과 2D 게임 구현", 200, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 15.0f, 0f),
+                new Equip_Item("3D 유니티 엔진", "유니티 엔진의 심화 , 3D 게임 구현 능력", 300, Item_Slot_Type.WEAPON, Item_Job_Type.Programmer, 20.0f, 10f),
+                new Equip_Item("개노잼카피게임 기획", "양산형 게임을 기획", 100, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 10.0f, 5f),
+                new Equip_Item("무난무난게임 기획", "할만한 게임을 기획", 200, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 15.0f, 0f),
+                new Equip_Item("개꿀잼게임 기획", "AAA 급 게임을 기획", 300, Item_Slot_Type.WEAPON, Item_Job_Type.Planner, 20.0f, 10f),
+                //머리
+                new Equip_Item("CRT 모니터", "화면은 나옵니다.", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("싱글 모니터", "작은 화면으로 고통받으며 코딩", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("더블 모니터", "두개의 화면으로 코딩", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("트리플 모니터", "쾌적한 화면으로 행복코딩", 100, Item_Slot_Type.ARMOR_H, Item_Job_Type.NONE, 0f, 10.0f),
+                //옷
+                new Equip_Item("싸구려 키보드", "가끔 키가 안먹습니다.", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("피시방 키보드", "타닥타닥 시끄러워 주변의 눈치를 봐야합니다.", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("무소음 키보드", "조용하게 코딩할 수 있습니다.", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("커스텀 키보드", "최고의 편안함을 제공합니다.", 100, Item_Slot_Type.ARMOR_C, Item_Job_Type.NONE, 0f, 10.0f),
+                //장갑
+                new Equip_Item("볼 마우스", "가끔 마우스 안에 볼을 빼고 싶은 생각이 듭니다.", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("무선 마우스", "화장실에서도 코딩이 가능합니다.", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("버티컬 마우스", "내 손목을 위한 응급처치용 마우스", 100, Item_Slot_Type.ARMOR_G, Item_Job_Type.NONE, 0f, 10.0f),
+                ///신발
+                new Equip_Item("구형 컴퓨터", "플로피 디스크를 사용할 수 있다.", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("사무용 컴퓨터", "거북이와 속도 대결이 가능하다.", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f),
+                new Equip_Item("최신식 컴퓨터", "작업 속도는 동일하나, 파일은 빛의 속도로 열립니다.", 100, Item_Slot_Type.ARMOR_S, Item_Job_Type.NONE, 0f, 10.0f)
             };
             usable_ItemsList = new List<Usable_Item>
             {
                 //즉시발동 물약
-                new Usable_Item("체력 포션", "체력 50 증가", 100, 0f, 0f, 50f, 0f),
-                new Usable_Item("마나 포션", "마나 50 증가", 100, 0f, 0f, 0f, 50f),
-                new Usable_Item("반반 포션", "체력과 마나 50씩 증가", 200, 0f, 0f, 50f, 50f),
+                new Usable_Item("스누피커피우유", "카페인이 느껴집니다.", 100, 0f, 0f, 0f, 10f),
+                new Usable_Item("커피", "잠이 안 오기 시작합니다.", 100, 0f, 0f, 0f, 30f),
+                new Usable_Item("레드불", "뭐든 할 수 있을 것 같습니다.", 200, 0f, 0f, 0f, 50f),
+                new Usable_Item("삼각김밥", "뭔가 허전합니다.", 100, 0f, 0f, 20f, 0f),
+                new Usable_Item("라면", "세상에서 젤 기쁜 건", 100, 0f, 0f, 30f, 0f),
+                new Usable_Item("햄버거", "살이 찔 것 같습니다.", 100, 0f, 0f, 40f, 0f),
+                new Usable_Item("편의점 도시락", "배가 든든합니다.", 100, 0f, 0f, 50f, 0f),
 
                 //지속효과 물약
-                new Usable_Item("공격력 포션", "공격력 10 증가", 100, 10f, 0f, 0f, 0f , 5),
+                new Usable_Item("전자 담배", "머리가 안 아픕니다.", 100, 0f, 5f, 0f, 0f , 5),
+                new Usable_Item("담배", "안 아프기 시작합니다.", 100, 0f, 10f, 0f, 0f , 5),
+                new Usable_Item("맥주", "기분이 좋아집니다.", 100, 5f, 0f, 0f, 0f , 5),
+                new Usable_Item("소주", "날뛸 수 있습니다.", 100, 10f, 0f, 0f, 0f , 5),
             };
         }
         public void ShowMenu()
@@ -83,9 +90,8 @@ namespace Team_SpartaTextRPG
             sb.AppendLine("[아이템 목록]");
             
             List<Equip_Item> filteredItems = equip_ItemsList.Where(item => item.item_Job_Type == Item_Job_Type.NONE ||
-            (player.Job == PLAYER_JOB.WARRIOR && item.item_Job_Type == Item_Job_Type.WARRIOR) ||
-            (player.Job == PLAYER_JOB.ARCHER && item.item_Job_Type == Item_Job_Type.ARCHER) ||
-            (player.Job == PLAYER_JOB.WIZARD && item.item_Job_Type == Item_Job_Type.WIZARD)).ToList();
+            (player.Job == PLAYER_JOB.Programmer && item.item_Job_Type == Item_Job_Type.Programmer) ||
+            (player.Job == PLAYER_JOB.Planner && item.item_Job_Type == Item_Job_Type.Planner)).ToList();
 
             ShowShopItems(filteredItems, sb);
         }
@@ -98,7 +104,7 @@ namespace Team_SpartaTextRPG
             sb.AppendLine("[보유 골드]");
             sb.AppendLine($"{player.Gold} G");
             sb.AppendLine();
-            sb.AppendLine("[아이템 목록]");
+            sb.AppendLine("[소비 아이템 목록]");
 
             List<Action> tempActions = new List<Action>();
             tempActions.Add(ShopScene.instance.ShowMenu);
@@ -106,7 +112,7 @@ namespace Team_SpartaTextRPG
             {
                 int temp = i;
                 tempActions.Add(() => BuyItem(usable_ItemsList[temp]));
-                sb.AppendLine($"{i + 1}. {usable_ItemsList[i].Name}   |   {usable_ItemsList[i].Description}   |   {usable_ItemsList[i].HporMp()}   |   가격: {usable_ItemsList[i].Price}");
+                sb.AppendLine($"{i + 1}. {usable_ItemsList[i].Name}   |   {usable_ItemsList[i].Description}   |   가격: {usable_ItemsList[i].Price}");
             }
             sb.AppendLine();
             sb.AppendLine("0. 나가기");
@@ -144,7 +150,7 @@ namespace Team_SpartaTextRPG
             {
                 int temp = i;
                 tempActions.Add(() => SellItem(player.Inven_Usable_Item[temp]));
-                sb.AppendLine($"{index}. {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   {player.Inven_Usable_Item[i].HporMp()}   |   판매가격: {player.Inven_Usable_Item[i].Price * 0.8}");
+                sb.AppendLine($"{index}. {player.Inven_Usable_Item[i].Name}   |   {player.Inven_Usable_Item[i].Description}   |   판매가격: {player.Inven_Usable_Item[i].Price * 0.8}");
             }
             sb.AppendLine();
             sb.AppendLine("0. 나가기");

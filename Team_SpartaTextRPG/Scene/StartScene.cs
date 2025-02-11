@@ -87,7 +87,7 @@ namespace Team_SpartaTextRPG
             ScreenManager.instance.AsyncUnitVideo(Utill.CS_PATH.end, startX: startMonsterX+72, startY: startMonsterY, videoSizeX: monsterSizeX, videoSizeY: monsterSizeY, _isContinue: true, _isReversal:true, _frame:100);
 
             InputKeyManager.instance.ArtMenu(
-            ("계속 하기", "저장된 게임을 불러옵니다.", () => { Select_Job("test",PLAYER_JOB.WARRIOR); }),
+            ("계속 하기", "저장된 게임을 불러옵니다.", () => { Select_Job("test",PLAYER_JOB.Programmer); }),
             ("게임 시작", "게임을 시작합니다.", () => { Game_Start(); }),
             ("게임 종료", "게임을 종료합니다.", () => { Game_Quit(); }));
         }
@@ -133,14 +133,12 @@ namespace Team_SpartaTextRPG
 
             ScreenManager.instance.AsyncUnitVideo("./resources/warrior.mp4", startX: 0, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
             ScreenManager.instance.AsyncUnitVideo("./resources/thief.mp4", startX: 30, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
-            ScreenManager.instance.AsyncUnitVideo("./resources/archer.mp4", startX: 60, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
-            ScreenManager.instance.AsyncUnitVideo("./resources/wizard.mp4", startX: 90, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
+            // ScreenManager.instance.AsyncUnitVideo("./resources/archer.mp4", startX: 60, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
+            // ScreenManager.instance.AsyncUnitVideo("./resources/wizard.mp4", startX: 90, startY: 2, videoSizeX: 15, videoSizeY: 20, _isContinue: true, _isReversal:true);
             
             InputKeyManager.instance.ArtMenu(
-                ($"전사", "단단한 녀석입니다.", () => Select_Job(_name, PLAYER_JOB.WARRIOR)), 
-                ($"도적", "얍삽한 녀석입니다.", () => Select_Job(_name, PLAYER_JOB.THIEF)),
-                ($"궁수", "강력한 녀석입니다.", () => Select_Job(_name, PLAYER_JOB.ARCHER)),
-                ($"법사", "초강력 녀석입니다.", () => Select_Job(_name, PLAYER_JOB.WIZARD)));
+                ($"프로그래머", "프로그래머를 희망합니다.", () => Select_Job(_name, PLAYER_JOB.Programmer)),
+                ($"기획자", "기획자를 희망합니다.", () => Select_Job(_name, PLAYER_JOB.Planner)));
         }
 
         public void Select_Job(string _name, PLAYER_JOB _job)
@@ -150,43 +148,27 @@ namespace Team_SpartaTextRPG
             // 직업 별 스킬 분배
             switch (_job)
             {
-                case PLAYER_JOB.WARRIOR: // 전사 스킬 3개 습득
-                    skillList.Add(Skill_Key.WarriorSkill01);
-                    skillList.Add(Skill_Key.WarriorSkill02);
-                    skillList.Add(Skill_Key.WarriorSkill03);
+                case PLAYER_JOB.Programmer: // 프로그래머 스킬 5개 습득
+                    skillList.Add(Skill_Key.ProgrammerSkill01);
+                    skillList.Add(Skill_Key.ProgrammerSkill02);
+                    skillList.Add(Skill_Key.ProgrammerSkill03);
+                    skillList.Add(Skill_Key.ProgrammerSkill04);
+                    skillList.Add(Skill_Key.ProgrammerSkill05);
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
-                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 200, _hp: 200, _maxMp: 50, _mp: 50, _attDamage: 15, _def: 10, _gold: 1500);
+                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 150, _hp: 150, _maxMp: 60, _mp: 60, _attDamage: 9, _def: 6, _gold: 1500);
                     GameManager.instance.player.FilePath = Utill.WARRIOR_PATH;
                     break;
 
-                case PLAYER_JOB.THIEF: // 도적 스킬 3개 습득
-                    skillList.Add(Skill_Key.ThiefSkill01);
-                    skillList.Add(Skill_Key.ThiefSkill02);
-                    skillList.Add(Skill_Key.ThiefSkill03);
+                case PLAYER_JOB.Planner: // 기획자 스킬 5개 습득
+                    skillList.Add(Skill_Key.PlannerSkill01);
+                    skillList.Add(Skill_Key.PlannerSkill02);
+                    skillList.Add(Skill_Key.PlannerSkill03);
+                    skillList.Add(Skill_Key.PlannerSkill04);
+                    skillList.Add(Skill_Key.PlannerSkill05);
                     // 이름, 직업, 스킬목록 추가
                     GameManager.instance.player = new Player(_name, _job, skillList,
-                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 100, _hp: 100, _maxMp: 70, _mp: 70, _attDamage: 13, _def: 7, _gold: 3000);
-                    GameManager.instance.player.FilePath = Utill.THIEF_PATH;
-                    break;
-
-                case PLAYER_JOB.ARCHER: // 궁수 스킬 3개 습득
-                    skillList.Add(Skill_Key.ArcherSkill01);
-                    skillList.Add(Skill_Key.ArcherSkill02);
-                    skillList.Add(Skill_Key.ArcherSkill03);
-                    // 이름, 직업, 스킬목록 추가
-                    GameManager.instance.player = new Player(_name, _job, skillList,
-                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 150, _hp: 150, _maxMp: 80, _mp: 80, _attDamage: 20, _def: 5, _gold: 1500);
-                    GameManager.instance.player.FilePath = Utill.ARCHER_PATH;
-                    break;
-
-                case PLAYER_JOB.WIZARD: // 법사 스킬 3개 습득
-                    skillList.Add(Skill_Key.WizardSkill01);
-                    skillList.Add(Skill_Key.WizardSkill02);
-                    skillList.Add(Skill_Key.WizardSkill03);
-                    // 이름, 직업, 스킬목록 추가
-                    GameManager.instance.player = new Player(_name, _job, skillList,
-                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 150, _hp: 150, _maxMp: 150, _mp: 150, _attDamage: 18, _def: 5, _gold: 1500);
+                    _level: 1, _maxExp: 100, _exp: 0, _maxHp: 100, _hp: 100, _maxMp: 100, _mp: 100, _attDamage: 6, _def: 8, _gold: 1500);
                     GameManager.instance.player.FilePath = Utill.WIZARD_PATH;
                     break;
 
