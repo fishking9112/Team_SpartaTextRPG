@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Net.Security;
 using System.Reflection;
@@ -62,15 +63,14 @@ namespace Team_SpartaTextRPG
                     }
                 }
             }
-
             Console.WriteLine("===========================================================\n");
             Console.WriteLine($"이름 : {player.Name}  |  Lv. {player.Level}  |  플레이어의 체력 : {player.HP}  |  플레이어의 마나 : {player.MP}");
             Console.WriteLine();
             Console.WriteLine("1. [ 공격 ]");
             Console.WriteLine("2. [ 아이템 사용 ]");
+            Console.WriteLine("3. [ 스킬 사용 ]");
             Console.WriteLine("0. [ 도망가기 ]");
-
-            SceneManager.instance.Menu(DungeonMenu, Dungeon_Title, DungeonMenu_Fight, DungeonMenu_Use_Item);
+            SceneManager.instance.Menu(DungeonMenu, Dungeon_Title, DungeonMenu_Fight, DungeonMenu_Use_Item, DungeonMenu_Skill_Select);
         }
 
         // 현재 몬스터를 Select_Stage로 출력
@@ -269,6 +269,81 @@ namespace Team_SpartaTextRPG
             Console.WriteLine("0. [ 나가기 ]");
 
             SceneManager.instance.Menu(Stage_Clear, Dungeon_Title);
+        }
+
+        public void DungeonMenu_Skill_Select ()
+        {
+            List<Action> skillActions = new List<Action>();
+            skillActions.Add(DungeonScene.instance.DungeonMenu);
+            Console.WriteLine("[사용 가능한 스킬 목록]");
+
+            for (int i = 0; i < player.SkillList.Count; i++)
+            {
+                int index = i;
+                string skillDescription = SkillManager.instance.GetSkillDescription(player, player.SkillList[i]);
+
+                Console.WriteLine($"{i + 1}. {skillDescription}");
+
+                skillActions.Add(() =>
+                {
+                    
+                    DungeonMenu_Monster_Select(index);
+                });
+            }
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            SceneManager.instance.Menu(DungeonMenu, skillActions.ToArray());
+        }
+
+        public void DungeonMenu_Monster_Select(int skillIndex)
+        {
+            List<Action> tempActions = new List<Action>();
+            tempActions.Add(DungeonScene.instance.DungeonMenu); 
+
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                if (monsters[i] != null)
+                {
+                    if (!monsters[i].IsDead) 
+                    {
+                        int temp = i;
+                        tempActions.Add(() => DungeonMenu_Skill_Use(temp, skillIndex)); 
+                        Console.WriteLine($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP}");
+                    }
+                    else
+                    {
+                        tempActions.Add(null);
+                        Utill.ColorWrite($"{i + 1}.   이름 : {monsters[i].Name}   |   레벨: {monsters[i].Level}   |  HP : {monsters[i].HP} / {monsters[i].MaxHP} |", ConsoleColor.DarkGray);
+                        Utill.ColorWriteLine("\tDead", ConsoleColor.Red);
+                    }
+                }
+            }
+
+            Console.WriteLine("===========================================================\n");
+            Console.WriteLine($"이름 : {player.Name}  |  Lv. {player.Level}  |  플레이어의 체력 : {player.HP}  |  플레이어의 마나 : {player.MP}");
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+
+            SceneManager.instance.Menu(()=>DungeonMenu_Monster_Select(skillIndex), tempActions.ToArray());
+
+        }
+
+        public void DungeonMenu_Skill_Use(int targetIndex, int skillIndex)
+        {
+            float damage = SkillManager.instance.GetSkillDamage(player, player.SkillList[skillIndex]);
+
+            if (damage >= 0)
+            {
+                SkillManager.instance.ExecuteSkillCost(player, player.SkillList[skillIndex]);
+
+                
+                monsters[targetIndex].HP -= (int)damage;
+
+                Console.WriteLine($"{monsters[targetIndex].Name}에게 {damage} 데미지를 입혔습니다!");
+            }
+
+            
+            SceneManager.instance.GoMenu(DungeonMenu);
         }
     }
 }
