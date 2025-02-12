@@ -32,6 +32,18 @@ namespace Team_SpartaTextRPG
 
                     switch (InputKey.Key)
                     {
+                        case ConsoleKey.N: // 치트키 N
+                            if(GameManager.instance.player != null)
+                            {
+                                GameManager.instance.player.LevelUp();
+                            }
+                            break;
+                        case ConsoleKey.M: // 치트키 M
+                            if(GameManager.instance.player != null)
+                            {
+                                GameManager.instance.player.Gold += 100000;
+                            }
+                            break;
                         case ConsoleKey.LeftArrow: // 왼쪽 방향키 입력 시
                             selectInput--; // 왼쪽으로 한칸 이동
                             if (selectInput < 0) // 입력 범위 값이 왼쪽이 없으면 맨 오른쪽 메뉴로 이동
