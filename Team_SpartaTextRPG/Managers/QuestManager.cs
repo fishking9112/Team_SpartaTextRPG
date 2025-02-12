@@ -8,18 +8,18 @@ namespace Team_SpartaTextRPG
 {
     internal class QuestManager : Helper.Singleton<QuestManager>
     {
-        public List<Quest> Questlist = new List<Quest>(); 
         Player player = GameManager.instance.player;
+        //public List<Quest> Questlist = new List<Quest> ();
 
         public void AddQuest(Quest _quest)
         {
             _quest.QuestProgress = QUEST_PROGRESS.Inprogress;
-            Questlist.Add(_quest);
+            player.QuestList.Add(_quest);
         }
 
         public void MonsterCount(string _name)
         {
-            foreach (var item in Questlist)
+            foreach (var item in player.QuestList)
             {
                 if(item.TargetName == _name)
                 {
