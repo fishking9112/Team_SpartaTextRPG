@@ -256,7 +256,7 @@ namespace Team_SpartaTextRPG
                 //장착 해제 후 판매
                 int slotIndex = (int)equip_Item.item_Slot_Type;
 
-                if (player.EquipSlot[slotIndex] != null)
+                if (player.EquipSlot[slotIndex] == equip_Item)
                 {
                     equip_Item.IsEquip = false;
                     player.EquipSlot[slotIndex] = null;
