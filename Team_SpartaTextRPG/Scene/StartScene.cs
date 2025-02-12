@@ -14,30 +14,30 @@ namespace Team_SpartaTextRPG
             ScreenManager.instance.AsyncVideo("resources/game_start.mp4", _isContinue: true, _isReversal: false);
             PanelManager.instance.DrawInputKeyPanel();
 
-            int length = 58;
-            for(int i = 0; i < length; i++)
+            int length = 117;
+            for(int i = 0; i < length; i+=2)
             {
-                if(i == 0)
+                if(i <= 20)
                 {
                     PanelManager.instance.DrawInputKeyPanel();
                     InputKeyManager.instance.MenuExplanation("9시 출석을 위해 패스 앱 인증중",true, ConsoleColor.Magenta);
                 }
-                else if(i == 10)
+                else if(i <= 40)
                 {
                     PanelManager.instance.DrawInputKeyPanel();
                     InputKeyManager.instance.MenuExplanation("21조 스크럼을 위해 팀원 소집 중",true, ConsoleColor.Blue);
                 }
-                else if(i == 20)
+                else if(i <= 60)
                 {
                     PanelManager.instance.DrawInputKeyPanel();
                     InputKeyManager.instance.MenuExplanation("그림 리소스 불러오는중",true, ConsoleColor.Yellow);
                 }
-                else if(i == 30)
+                else if(i <= 80)
                 {
                     PanelManager.instance.DrawInputKeyPanel();
                     InputKeyManager.instance.MenuExplanation("스파르타 정신 가다듬는 중",true, ConsoleColor.Cyan);
                 }
-                else if(i == 40)
+                else if(i <= 100)
                 {
                     PanelManager.instance.DrawInputKeyPanel();
                     InputKeyManager.instance.MenuExplanation("디스! 이즈! 스파르타!",true, ConsoleColor.Red);
@@ -46,11 +46,11 @@ namespace Team_SpartaTextRPG
                 StringBuilder sb = new StringBuilder();
                 for(int j = 0; j < i+1; j++)
                 {
-                    sb.Append("■");
+                    sb.Append("=");
                 }
                 for(int j = i; j < length-1; j++)
                 {
-                    sb.Append("□");
+                    sb.Append("-");
                 }
                 ScreenManager.instance.AsyncText(sb, _startY:PanelManager.instance.screenPanelY+PanelManager.instance.titlePanelY+1);
 
@@ -59,6 +59,7 @@ namespace Team_SpartaTextRPG
             }
 
             Utill.Sleep(2000);
+            Console.Clear(); // Win11 오류
             InputKeyManager.instance.isInput = false;
             // ScreenManager.instance.ClearScreen();
             // ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
