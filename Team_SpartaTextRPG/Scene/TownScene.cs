@@ -10,7 +10,7 @@ namespace Team_SpartaTextRPG
     {
         public void Game_Main()
         {
-            TitleManager.instance.WriteTitle("강렬한 인상 is 게임");
+            TitleManager.instance.WriteTitle("디스 이즈 스파르타");
             // ScreenManager.instance.AsyncVideo("resources/village.gif", _isContinue: true, _isReversal: false);
             ScreenManager.instance.AsyncImage("resources/village.png");
 

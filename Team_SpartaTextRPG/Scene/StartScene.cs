@@ -9,7 +9,7 @@ namespace Team_SpartaTextRPG
         
         public void Game_FakeLoding()
         {
-            TitleManager.instance.WriteTitle("강렬한 인상 is 게임 (로딩 중)");
+            TitleManager.instance.WriteTitle("디스 이즈 스파르타 (로딩 중)");
             InputKeyManager.instance.isInput = true;
             ScreenManager.instance.AsyncVideo("resources/game_start.mp4", _isContinue: true, _isReversal: false);
             PanelManager.instance.DrawInputKeyPanel();
@@ -69,7 +69,7 @@ namespace Team_SpartaTextRPG
 
         public void Game_Title()
         {
-            TitleManager.instance.WriteTitle("강렬한 인상 is 게임");
+            TitleManager.instance.WriteTitle("디스 이즈 스파르타");
             ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
 
             var player = SaveLoadManager.instance.LoadFromJson<Player>();
