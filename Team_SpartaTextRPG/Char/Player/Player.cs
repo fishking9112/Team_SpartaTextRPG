@@ -87,6 +87,8 @@ namespace Team_SpartaTextRPG
         public Equip_Item[] EquipSlot = new Equip_Item[(int)Item_Slot_Type.SLOT_MAX];
         //버프 리스트
         public List<Buff> BuffList = new List<Buff>();
+        //수락한 퀘스트 목록
+        public List<Quest> QuestList = new List<Quest>();
 
         // TODO : 미구현
 
