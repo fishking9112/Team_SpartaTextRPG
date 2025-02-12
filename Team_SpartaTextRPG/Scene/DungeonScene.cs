@@ -44,9 +44,10 @@ namespace Team_SpartaTextRPG
                 TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1})", ConsoleColor.Cyan);
                 ScreenManager.instance.AsyncVideo("./resources/dungeon.gif",_frame:100, _color: ConsoleColor.Cyan);
             }
-
+            Action? dungeonAction = player.HP != 0 ? () => Select_Stage(1) : null;
+            string dungeonDescription = player.HP != 0 ? $"던전으로 입장합니다." : $"체력이 0인 상태에서는 던전 입장이 불가능합니다.";
             InputKeyManager.instance.ArtMenu(
-                ($"Stage 입장", $"던전으로 입장합니다.", () => Select_Stage(1)), 
+                ($"Stage 입장", $"던전으로 입장합니다.", dungeonAction), 
                 ($"돌아가기", "마을로 나갑니다.", () => {TownScene.instance.Game_Main(); }));
         }
 
@@ -360,11 +361,13 @@ namespace Team_SpartaTextRPG
                             totalDamage = 0;
                         }
                         ScreenManager.instance.ClearScreen();
-                        ArtUnitShow();
+
                         // 플레이어 체력 깎아주기
                         player.HP = (int)(player.HP - (totalDamage));
                         sb.AppendLine($"{monsters[i].Name}의 공격! => {totalDamage}의 데미지를 받았다!");
                         InputKeyManager.instance.MenuExplanation(sb.ToString(), _color:ConsoleColor.Red);
+
+                        ArtUnitShow();
 
                         Utill.Sleep(1000);
 
@@ -414,11 +417,12 @@ namespace Team_SpartaTextRPG
         //패배 씬
         public void Stage_failed()
         {
-            Console.WriteLine("Stage Failed...");
+            // Console.WriteLine("Stage Failed...");
 
-            Utill.Sleep(1000);
+            // Utill.Sleep(1000);
 
-            SceneManager.instance.GoMenu(TownScene.instance.Game_Main);
+            InputKeyManager.instance.GoMenu(TownScene.instance.Game_Main);
+            // SceneManager.instance.GoMenu(TownScene.instance.Game_Main);
         }
 
         // 스테이지 클리어 시 띄움 ( 보상 추가 )
