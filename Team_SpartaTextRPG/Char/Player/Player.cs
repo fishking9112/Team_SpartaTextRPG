@@ -12,16 +12,16 @@ namespace Team_SpartaTextRPG
 
     internal class Player : ICharacter
     {
-        public Player(string _name, PLAYER_JOB _job, List<Skill_Key> _skillList)
+        public Player()
         {
             // 이름, 직업 설정
-            Name = _name;
-            Job = _job;
+            Name = "test";
+            Job = PLAYER_JOB.Programmer;
 
             FilePath = Utill.WARRIOR_PATH;
 
             // 스킬 목록 추가
-            SkillList = _skillList;
+            SkillList = new List<Skill_Key>();
 
             // 레벨과 경험치 설정
             Level = 1;

@@ -1,4 +1,5 @@
 
+using Newtonsoft.Json;
 using System.IO;
 using System.Text.Json;
 
@@ -10,15 +11,20 @@ namespace Team_SpartaTextRPG
 
         public void SaveToJson<T>(T? data) where T : class
         {
-            string path = Path.Combine(filePath,typeof(T).Name);
+            string path = Path.Combine(filePath, typeof(T).Name + ".json");
 
-            string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true });
+            //string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true, IncludeFields = true });
+
+            string json = JsonConvert.SerializeObject(data, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
             File.WriteAllText(path, json);
         }
 
         public T? LoadFromJson<T>() where T : class
         {
-            string path = Path.Combine(filePath,typeof(T).Name);
+            string path = Path.Combine(filePath, typeof(T).Name + ".json");
 
             if (!File.Exists(path))
             {
@@ -27,7 +33,11 @@ namespace Team_SpartaTextRPG
             }
 
             string json = File.ReadAllText(path);
-            return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions { IncludeFields = true });
+            //return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions { IncludeFields = true });
+            return JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
         }
     }
 }

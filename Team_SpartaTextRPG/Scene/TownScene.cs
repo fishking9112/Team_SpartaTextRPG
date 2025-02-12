@@ -48,13 +48,22 @@ namespace Team_SpartaTextRPG
                     InputKeyManager.instance.GoMenu(QuestBoardScene.instance.Show_Quest_Board);
                     break;
                 case 7: // 저장
-                    GameManager.instance.isPlaying = false; // 임시로 채워놓은 게임 종료 입니다.
+                    InputKeyManager.instance.GoMenu(GameSave);
                     break;
                 case 8: // 종료
                     GameManager.instance.isPlaying = false;
                     break;
 
             }
+        }
+
+        public void GameSave(){
+            TitleManager.instance.WriteTitle("게임 저장");
+            ScreenManager.instance.AsyncImage("./resources/save.png",_startX:40, _startY:2, imageSizeX:20, imageSizeY:20);
+
+            SaveLoadManager.instance.SaveToJson(GameManager.instance.player);
+
+            InputKeyManager.instance.ArtMenu(($"저장완료!", "저장되었습니다.", () => Game_Main()));
         }
     }
 }

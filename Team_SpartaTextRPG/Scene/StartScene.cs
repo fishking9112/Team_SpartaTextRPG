@@ -72,11 +72,20 @@ namespace Team_SpartaTextRPG
             TitleManager.instance.WriteTitle("강렬한 인상 is 게임");
             ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
 
-            // 계속 하기는 저장된 데이터만 있을 때 실행할 수 있도록 비활성화
-            InputKeyManager.instance.ArtMenu(
-            // ("계속 하기", "저장된 게임을 불러옵니다.", () => { Select_Job("test",PLAYER_JOB.Programmer); }),
-            ("게임 시작", "게임을 시작합니다.", () => { Game_Start(); }),
-            ("게임 종료", "게임을 종료합니다.", () => { Game_Quit(); }));
+            var player = SaveLoadManager.instance.LoadFromJson<Player>();
+
+            if(player != null){
+                // 계속 하기는 저장된 데이터만 있을 때 실행할 수 있도록 비활성화
+                InputKeyManager.instance.ArtMenu(
+                ("계속 하기", "저장된 게임을 불러옵니다.", () => { Game_Continue(player); }),
+                ("새 게임 시작", "새로운 게임을 시작합니다.", () => { Game_Start(); }),
+                ("게임 종료", "게임을 종료합니다.", () => { Game_Quit(); }));
+            } else {
+                // 계속 하기는 저장된 데이터만 있을 때 실행할 수 있도록 비활성화
+                InputKeyManager.instance.ArtMenu(
+                ("새 게임 시작", "새로운 게임을 시작합니다.", () => { Game_Start(); }),
+                ("게임 종료", "게임을 종료합니다.", () => { Game_Quit(); }));
+            }
         }
 
         public void Game_Start()
@@ -166,6 +175,13 @@ namespace Team_SpartaTextRPG
 
             InputKeyManager.instance.GoMenu(TownScene.instance.Game_Main);
         }
+        
+        public void Game_Continue(Player player)
+        {
+            GameManager.instance.player = player;
+            InputKeyManager.instance.GoMenu(TownScene.instance.Game_Main);
+        }
+
         public void Game_Quit()
         {
             GameManager.instance.isPlaying = false;
