@@ -10,10 +10,13 @@ namespace Team_SpartaTextRPG
     {
         public void End()
         {
-            Console.WriteLine("-완-");
-            Console.WriteLine("0. [ 나가기 ]");
+            TitleManager.instance.WriteTitle("엔딩 씬");
+            
+            ScreenManager.instance.AsyncVideo("./resources/ending.gif", _isContinue: false, _isReversal: true, _frame: 33);
 
-            SceneManager.instance.Menu(End , StartScene.instance.Game_Quit);
+            Utill.Sleep(33*320);
+
+            InputKeyManager.instance.ArtMenu(("게임 종료", "플레이 해주셔서 감사합니다!", StartScene.instance.Game_Quit));
         }
     }
 }
