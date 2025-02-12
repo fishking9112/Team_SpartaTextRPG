@@ -73,11 +73,12 @@ namespace Team_SpartaTextRPG
             ScreenManager.instance.AsyncVideo("resources/title.mp4", _isContinue: false, _isReversal: true);
 
             var player = SaveLoadManager.instance.LoadFromJson<Player>();
+            var dungeonData = SaveLoadManager.instance.LoadFromJson<DungeonData>();
 
-            if(player != null){
+            if(player != null && dungeonData != null){
                 // 계속 하기는 저장된 데이터만 있을 때 실행할 수 있도록 비활성화
                 InputKeyManager.instance.ArtMenu(
-                ("계속 하기", "저장된 게임을 불러옵니다.", () => { Game_Continue(player); }),
+                ("계속 하기", "저장된 게임을 불러옵니다.", () => { Game_Continue(player, dungeonData); }),
                 ("새 게임 시작", "새로운 게임을 시작합니다.", () => { Game_Start(); }),
                 ("게임 종료", "게임을 종료합니다.", () => { Game_Quit(); }));
             } else {
@@ -176,9 +177,11 @@ namespace Team_SpartaTextRPG
             InputKeyManager.instance.GoMenu(TownScene.instance.Game_Main);
         }
         
-        public void Game_Continue(Player player)
+        public void Game_Continue(Player player, DungeonData dungeonData)
         {
             GameManager.instance.player = player;
+            DungeonScene.instance.dungeonData = dungeonData;
+
             InputKeyManager.instance.GoMenu(TownScene.instance.Game_Main);
         }
 

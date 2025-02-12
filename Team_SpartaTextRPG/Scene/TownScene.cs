@@ -62,6 +62,7 @@ namespace Team_SpartaTextRPG
             ScreenManager.instance.AsyncImage("./resources/save.png",_startX:40, _startY:2, imageSizeX:20, imageSizeY:20);
 
             SaveLoadManager.instance.SaveToJson(GameManager.instance.player);
+            SaveLoadManager.instance.SaveToJson(DungeonScene.instance.dungeonData);
 
             InputKeyManager.instance.ArtMenu(($"저장완료!", "저장되었습니다.", () => Game_Main()));
         }

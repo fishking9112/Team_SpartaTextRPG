@@ -13,15 +13,22 @@ using System.Xml.Linq;
 
 namespace Team_SpartaTextRPG
 {
-    enum Dungeon_Level { Level_1 , Level_2, Level_3, Level_Boss }
+    public enum Dungeon_Level { Level_1 , Level_2, Level_3, Level_Boss }
+    
+    public class DungeonData{
+        public Dungeon_Level DungeonLevel = Dungeon_Level.Level_1;
+        public int Dungeon_ClearCount = 0;
+
+        public DungeonData(){}
+    }
+
     internal class DungeonScene : Helper.Singleton<DungeonScene>
     {
         Player player = GameManager.instance.player;
         Monster[] monsters = new Monster[4];
         private int MonsterCount = 0;
 
-        Dungeon_Level DungeonLevel = Dungeon_Level.Level_1;
-        private int Dungeon_ClearCount = 0;
+        public DungeonData dungeonData = new DungeonData();
         private int Dungeon_MaxCount = 3;
         private int total_ClearCount = 0;
 
@@ -38,14 +45,14 @@ namespace Team_SpartaTextRPG
         // 던전 화면
         public void Dungeon_Title()
         {
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!)", ConsoleColor.DarkRed);
                 ScreenManager.instance.AsyncVideo("./resources/dungeon.gif",_frame:100, _color: ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1})", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1})", ConsoleColor.Cyan);
                 ScreenManager.instance.AsyncVideo("./resources/dungeon.gif",_frame:100, _color: ConsoleColor.Cyan);
             }
 
@@ -54,19 +61,19 @@ namespace Team_SpartaTextRPG
             if(player.HP == 0){
                 InputKeyManager.instance.ArtMenu(($"돌아가기", $"체력이 0인 상태로는 던전에 입장할 수 없습니다...", TownScene.instance.Game_Main));
             } else {
-                if(DungeonLevel >= Dungeon_Level.Level_Boss){
+                if(dungeonData.DungeonLevel >= Dungeon_Level.Level_Boss){
                     tempActions.Add(("보스 스테이지","", () => { Select_Stage(Dungeon_Level.Level_Boss); }));
                 }
                 
-                if(DungeonLevel >= Dungeon_Level.Level_3){
+                if(dungeonData.DungeonLevel >= Dungeon_Level.Level_3){
                     tempActions.Add(("3Stage 입장","", () => { Select_Stage(Dungeon_Level.Level_3); }));
                 }
                 
-                if(DungeonLevel >= Dungeon_Level.Level_2){
+                if(dungeonData.DungeonLevel >= Dungeon_Level.Level_2){
                     tempActions.Add(("2Stage 입장","", () => { Select_Stage(Dungeon_Level.Level_2); }));
                 }
                 
-                if(DungeonLevel >= Dungeon_Level.Level_1){
+                if(dungeonData.DungeonLevel >= Dungeon_Level.Level_1){
                     tempActions.Add(("1Stage 입장","", () => { Select_Stage(Dungeon_Level.Level_1); }));
                 }
                 
@@ -96,13 +103,13 @@ namespace Team_SpartaTextRPG
             // 2. 아이템 사용
             // 0. 후퇴
             
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투", ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1}) - 전투", ConsoleColor.Cyan);
             }
 
 
@@ -119,13 +126,13 @@ namespace Team_SpartaTextRPG
         // 현재 몬스터를 Select_Stage로 출력
         public void DungeonMenu_Fight()
         {
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 공격", ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 공격", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1}) - 전투 - 공격", ConsoleColor.Cyan);
             }
 
             ArtUnitShow();
@@ -155,13 +162,13 @@ namespace Team_SpartaTextRPG
         //아이템 사용
         private void DungeonMenu_Use_Item()
         {
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 아이템 사용", ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 아이템 사용", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1}) - 전투 - 아이템 사용", ConsoleColor.Cyan);
             }
 
 
@@ -278,13 +285,13 @@ namespace Team_SpartaTextRPG
         // 플레이어가 몬스터를 공격
         public void Player_Att(int input)
         {
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 공격 (결과창)", ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 공격 (결과창)", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1}) - 전투 - 공격 (결과창)", ConsoleColor.Cyan);
             }
             
             //플레이어가 몬스터를 공격시 치명타 함수호출
@@ -357,13 +364,13 @@ namespace Team_SpartaTextRPG
         // 몬스터 공격
         public void Monster_Att()
         {
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 몬스터 턴", ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 몬스터 턴", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1}) - 전투 - 몬스터 턴", ConsoleColor.Cyan);
             }
 
             StringBuilder sb = new();
@@ -450,35 +457,35 @@ namespace Team_SpartaTextRPG
         // 스테이지 클리어 시 띄움 ( 보상 추가 )
         public void Stage_Clear()
         {
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 클리어!", ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 클리어!", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1}) - 클리어!", ConsoleColor.Cyan);
             }
 
             total_ClearCount++;
 
             //보스 클리어
-            if (DungeonLevel == Dungeon_Level.Level_Boss)
+            if (dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 InputKeyManager.instance.GoMenu(EndingScene.instance.End);
                 return;
             }
 
             //던전 레벨업 (현재 입장한 던전이 현재 레벨과 맞다면 라운드 업)
-            if(currentDungeonLevel == DungeonLevel){
-                Dungeon_ClearCount++;
+            if(currentDungeonLevel == dungeonData.DungeonLevel){
+                dungeonData.Dungeon_ClearCount++;
             }
 
-            if (Dungeon_ClearCount >= Dungeon_MaxCount)
+            if (dungeonData.Dungeon_ClearCount >= Dungeon_MaxCount)
             {
-                Dungeon_ClearCount = 0;
+                dungeonData.Dungeon_ClearCount = 0;
                 
-                if(DungeonLevel < Dungeon_Level.Level_Boss)
-                    DungeonLevel++;
+                if(dungeonData.DungeonLevel < Dungeon_Level.Level_Boss)
+                    dungeonData.DungeonLevel++;
             }
 
             StringBuilder sb = new();
@@ -525,13 +532,13 @@ namespace Team_SpartaTextRPG
 
         public void DungeonMenu_Skill_Select()
         {
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 스킬 사용!", ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 스킬 사용!", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1}) - 전투 - 스킬 사용!", ConsoleColor.Cyan);
             }
 
             List<(string _menuName, string? _explanation, Action? _action)> skillActions = new List<(string _menuName, string? _explanation, Action? _action)>();
@@ -558,13 +565,13 @@ namespace Team_SpartaTextRPG
 
         public void DungeonMenu_Monster_Select(int skillIndex)
         {
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 적 선택", ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 적 선택", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1}) - 전투 - 적 선택", ConsoleColor.Cyan);
             }
 
             // 그래픽
@@ -596,13 +603,13 @@ namespace Team_SpartaTextRPG
 
         public void DungeonMenu_Skill_Use(int targetIndex, int skillIndex)
         {
-            if(DungeonLevel == Dungeon_Level.Level_Boss)
+            if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!) - 전투 - 스킬 사용 (결과창)", ConsoleColor.DarkRed);
             }
             else
             {
-                TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1}) - 전투 - 스킬 사용 (결과창)", ConsoleColor.Cyan);
+                TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1}) - 전투 - 스킬 사용 (결과창)", ConsoleColor.Cyan);
             }
 
             float baseDamage = SkillManager.instance.GetSkillDamage(player, player.SkillList[skillIndex]);
