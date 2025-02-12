@@ -63,6 +63,7 @@ namespace Team_SpartaTextRPG
 
             SaveLoadManager.instance.SaveToJson(GameManager.instance.player);
             SaveLoadManager.instance.SaveToJson(DungeonScene.instance.dungeonData);
+            SaveLoadManager.instance.SaveToJson(QuestBoardScene.instance.questList);
 
             InputKeyManager.instance.ArtMenu(($"저장완료!", "저장되었습니다.", () => Game_Main()));
         }

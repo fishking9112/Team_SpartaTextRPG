@@ -10,6 +10,8 @@ namespace Team_SpartaTextRPG
     enum QUEST_PROGRESS { Before, Inprogress, Obtainable, Complete }
     internal class Quest
     {
+        public Quest(){}
+
         public Quest(string _name , string _Des , string _Target , int _Count , int _Reward, int _Level) 
         {
             Name = _name;

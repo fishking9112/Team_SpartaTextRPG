@@ -12,7 +12,7 @@ namespace Team_SpartaTextRPG
         {
             Init_QuestList();
         }
-        List<Quest> questList = new List<Quest>();
+        public List<Quest> questList = new List<Quest>();
 
         void Init_QuestList()
         {

@@ -74,11 +74,12 @@ namespace Team_SpartaTextRPG
 
             var player = SaveLoadManager.instance.LoadFromJson<Player>();
             var dungeonData = SaveLoadManager.instance.LoadFromJson<DungeonData>();
+            var questList = SaveLoadManager.instance.LoadFromJson<List<Quest>>();
 
-            if(player != null && dungeonData != null){
+            if(player != null && dungeonData != null && questList != null){
                 // 계속 하기는 저장된 데이터만 있을 때 실행할 수 있도록 비활성화
                 InputKeyManager.instance.ArtMenu(
-                ("계속 하기", "저장된 게임을 불러옵니다.", () => { Game_Continue(player, dungeonData); }),
+                ("계속 하기", "저장된 게임을 불러옵니다.", () => { Game_Continue(player, dungeonData, questList); }),
                 ("새 게임 시작", "새로운 게임을 시작합니다.", () => { Game_Start(); }),
                 ("게임 종료", "게임을 종료합니다.", () => { Game_Quit(); }));
             } else {
@@ -177,10 +178,11 @@ namespace Team_SpartaTextRPG
             InputKeyManager.instance.GoMenu(TownScene.instance.Game_Main);
         }
         
-        public void Game_Continue(Player player, DungeonData dungeonData)
+        public void Game_Continue(Player player, DungeonData dungeonData, List<Quest> questList)
         {
             GameManager.instance.player = player;
             DungeonScene.instance.dungeonData = dungeonData;
+            QuestBoardScene.instance.questList = questList;
 
             InputKeyManager.instance.GoMenu(TownScene.instance.Game_Main);
         }
