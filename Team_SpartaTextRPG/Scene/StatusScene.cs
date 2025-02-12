@@ -28,6 +28,9 @@ namespace Team_SpartaTextRPG
             sb.AppendLine($"Gold : {player.Gold} G");
             sb.AppendLine();
 
+            ScreenManager.instance.AsyncUnitVideo(player.FilePath.idle, startX: 1, startY: 0, videoSizeX: 12, videoSizeY: 15, _isContinue: true, _isReversal:true, _frame:33);
+
+            ScreenManager.instance.AsyncText(sb, _startX: 29);
            
             for (int i = 0; i < EquipSlot.Length; i++)
             {
@@ -36,31 +39,44 @@ namespace Team_SpartaTextRPG
                     switch (i)
                     { 
                       case 0:
-                      sb.AppendLine($"무기아이템 : {EquipSlot[i].Name}");
+                        ScreenManager.instance.AsyncText($"무기아이템 : {EquipSlot[i].Name}", 29, _startY:11 + i, ConsoleColor.Cyan);
                       break;
                       case 1:
-                      sb.AppendLine($"장착모니터 : {EquipSlot[i].Name}");
+                        ScreenManager.instance.AsyncText($"장착모니터 : {EquipSlot[i].Name}", 29, _startY:11 + i, ConsoleColor.DarkRed);
                       break;
                       case 2:
-                      sb.AppendLine($"장착키보드 : {EquipSlot[i].Name}");
+                        ScreenManager.instance.AsyncText($"장착키보드 : {EquipSlot[i].Name}", 29, _startY:11 + i, ConsoleColor.DarkBlue);
                       break;
                       case 3:
-                      sb.AppendLine($"장착마우스 : {EquipSlot[i].Name}");
+                        ScreenManager.instance.AsyncText($"장착마우스 : {EquipSlot[i].Name}", 29, _startY:11 + i, ConsoleColor.DarkYellow);
                       break;
                       case 4:
-                      sb.AppendLine($"장착컴퓨터 : {EquipSlot[i].Name}");
+                        ScreenManager.instance.AsyncText($"장착컴퓨터 : {EquipSlot[i].Name}", 29, _startY:11 + i, ConsoleColor.DarkCyan);
                       break;
                     }
                 }
                 else
                 {
-                    sb.AppendLine("장착아이템: 장착중인 아이템이 없습니다.");
+                    switch (i)
+                    { 
+                      case 0:
+                        ScreenManager.instance.AsyncText($"무기아이템 : 장착중인 아이템이 없습니다.", 29, _startY:11 + i, ConsoleColor.Cyan);
+                      break;
+                      case 1:
+                        ScreenManager.instance.AsyncText($"장착모니터 : 장착중인 아이템이 없습니다.", 29, _startY:11 + i, ConsoleColor.DarkRed);
+                      break;
+                      case 2:
+                        ScreenManager.instance.AsyncText($"장착키보드 : 장착중인 아이템이 없습니다.", 29, _startY:11 + i, ConsoleColor.DarkBlue);
+                      break;
+                      case 3:
+                        ScreenManager.instance.AsyncText($"장착마우스 : 장착중인 아이템이 없습니다.", 29, _startY:11 + i, ConsoleColor.DarkYellow);
+                      break;
+                      case 4:
+                        ScreenManager.instance.AsyncText($"장착컴퓨터 : 장착중인 아이템이 없습니다.", 29, _startY:11 + i, ConsoleColor.DarkCyan);
+                      break;
+                    }
                 }
             }
-
-            ScreenManager.instance.AsyncUnitVideo(player.FilePath.idle, startX: 1, startY: 0, videoSizeX: 12, videoSizeY: 15, _isContinue: true, _isReversal:true, _frame:33);
-
-            ScreenManager.instance.AsyncText(sb, _startX: 29);
             
             InputKeyManager.instance.ArtMenu(($"나가기", "마을로 돌아갑니다.", () =>  {TownScene.instance.Game_Main();}));
         }

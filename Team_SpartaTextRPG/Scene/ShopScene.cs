@@ -159,24 +159,37 @@ namespace Team_SpartaTextRPG
             sb_atkorDef.AppendLine($"[효과]");
             sb_price.AppendLine($"[판매 가격]");
             
+            // 시간 없어서 수동으로 조절
+            ScreenManager.instance.AsyncText(sb_name, 1, 5);
+            ScreenManager.instance.AsyncText(sb_description, 24, 5);
+            ScreenManager.instance.AsyncText(sb_atkorDef, 77, 5);
+            ScreenManager.instance.AsyncText(sb_price, 103, 5);
+            
             int index = 1;
             for (int i = 0; i < player.Inven_Equip_Item.Count; i++)
             {
                 int temp = i;
+                ConsoleColor color = ConsoleColor.Cyan;
+                if(player.Inven_Equip_Item[i].item_Slot_Type == Item_Slot_Type.WEAPON){
+                    color = ConsoleColor.Cyan;
+                } else if(player.Inven_Equip_Item[i].item_Slot_Type == Item_Slot_Type.ARMOR_H){
+                    color = ConsoleColor.DarkRed;
+                } else if(player.Inven_Equip_Item[i].item_Slot_Type == Item_Slot_Type.ARMOR_C){
+                    color = ConsoleColor.DarkBlue;
+                } else if(player.Inven_Equip_Item[i].item_Slot_Type == Item_Slot_Type.ARMOR_G){
+                    color = ConsoleColor.DarkYellow;
+                } else if(player.Inven_Equip_Item[i].item_Slot_Type == Item_Slot_Type.ARMOR_S){
+                    color = ConsoleColor.DarkCyan;
+                }
                 tempActions.Add(() => SellItem(player.Inven_Equip_Item[temp]));
-                sb_name.AppendLine($"{index++}. {player.Inven_Equip_Item[i].Name}");
-                sb_description.AppendLine($"{player.Inven_Equip_Item[i].Description}");
-                sb_atkorDef.AppendLine($"{player.Inven_Equip_Item[i].AtkorDef()}");
-                sb_price.AppendLine($"{player.Inven_Equip_Item[i].Price * 0.8} G");
+                ScreenManager.instance.AsyncText($"{i + 1}. {player.Inven_Equip_Item[i].Name}", 1, 6 + i, color);
+                ScreenManager.instance.AsyncText($"{player.Inven_Equip_Item[i].Description}", 24, 6 + i, color);
+                ScreenManager.instance.AsyncText($"{player.Inven_Equip_Item[i].AtkorDef()}", 77, 6 + i, color);
+                ScreenManager.instance.AsyncText($"{player.Inven_Equip_Item[i].Price} G", 103, 6 + i, color);
             }
+
             if(player.Inven_Equip_Item.Count == 0){
                 ScreenManager.instance.AsyncText("보유한 장비 아이템이 없습니다.", 2, 5);
-            } else {
-                // 시간 없어서 수동으로 조절
-                ScreenManager.instance.AsyncText(sb_name, 1, 5);
-                ScreenManager.instance.AsyncText(sb_description, 24, 5);
-                ScreenManager.instance.AsyncText(sb_atkorDef, 77, 5);
-                ScreenManager.instance.AsyncText(sb_price, 103, 5);
             }
 
             sb.Clear();
@@ -347,20 +360,33 @@ namespace Team_SpartaTextRPG
             sb_description.AppendLine($"[설명]");
             sb_atkorDef.AppendLine($"[효과]");
             sb_price.AppendLine($"[가격]");
-            for (int i = 0; i < filteredItems.Count; i++)
-            {
-                int temp = i;
-                tempActions.Add(() => BuyItem(filteredItems[temp]));
-                sb_name.AppendLine($"{i + 1}. {filteredItems[i].Name}");
-                sb_description.AppendLine($"{filteredItems[i].Description}");
-                sb_atkorDef.AppendLine($"{filteredItems[i].AtkorDef()}");
-                sb_price.AppendLine($"{filteredItems[i].Price} G");
-            }
-            // 시간 없어서 수동으로 조절
+
             ScreenManager.instance.AsyncText(sb_name, 1, 5);
             ScreenManager.instance.AsyncText(sb_description, 24, 5);
             ScreenManager.instance.AsyncText(sb_atkorDef, 77, 5);
             ScreenManager.instance.AsyncText(sb_price, 103, 5);
+
+            for (int i = 0; i < filteredItems.Count; i++)
+            {
+                ConsoleColor color = ConsoleColor.Cyan;
+                if(filteredItems[i].item_Slot_Type == Item_Slot_Type.WEAPON){
+                    color = ConsoleColor.Cyan;
+                } else if(filteredItems[i].item_Slot_Type == Item_Slot_Type.ARMOR_H){
+                    color = ConsoleColor.DarkRed;
+                } else if(filteredItems[i].item_Slot_Type == Item_Slot_Type.ARMOR_C){
+                    color = ConsoleColor.DarkBlue;
+                } else if(filteredItems[i].item_Slot_Type == Item_Slot_Type.ARMOR_G){
+                    color = ConsoleColor.DarkYellow;
+                } else if(filteredItems[i].item_Slot_Type == Item_Slot_Type.ARMOR_S){
+                    color = ConsoleColor.DarkCyan;
+                }
+                int temp = i;
+                tempActions.Add(() => BuyItem(filteredItems[temp]));
+                ScreenManager.instance.AsyncText($"{i + 1}. {filteredItems[i].Name}", 1, 6 + i, color);
+                ScreenManager.instance.AsyncText($"{filteredItems[i].Description}", 24, 6 + i, color);
+                ScreenManager.instance.AsyncText($"{filteredItems[i].AtkorDef()}", 77, 6 + i, color);
+                ScreenManager.instance.AsyncText($"{filteredItems[i].Price} G", 103, 6 + i, color);
+            }
 
             ScreenManager.instance.AsyncText("0. 나가기" , 1, filteredItems.Count+7);
 
