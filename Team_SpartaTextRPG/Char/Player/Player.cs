@@ -242,7 +242,7 @@ namespace Team_SpartaTextRPG
                     Level += 1;
                     MaxExp = Level * 100;
                     MaxHP += 100;
-                    MaxMP += 100;
+                    MaxMP += 10;
                     AttDamage += 0.5f;
                     Defense += 1;
 
