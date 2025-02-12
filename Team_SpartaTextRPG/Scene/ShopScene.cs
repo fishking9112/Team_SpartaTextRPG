@@ -174,9 +174,9 @@ namespace Team_SpartaTextRPG
             } else {
                 // 시간 없어서 수동으로 조절
                 ScreenManager.instance.AsyncText(sb_name, 1, 5);
-                ScreenManager.instance.AsyncText(sb_description, 21, 5);
-                ScreenManager.instance.AsyncText(sb_atkorDef, 74, 5);
-                ScreenManager.instance.AsyncText(sb_price, 100, 5);
+                ScreenManager.instance.AsyncText(sb_description, 24, 5);
+                ScreenManager.instance.AsyncText(sb_atkorDef, 77, 5);
+                ScreenManager.instance.AsyncText(sb_price, 103, 5);
             }
 
             sb.Clear();
@@ -350,9 +350,9 @@ namespace Team_SpartaTextRPG
             }
             // 시간 없어서 수동으로 조절
             ScreenManager.instance.AsyncText(sb_name, 1, 5);
-            ScreenManager.instance.AsyncText(sb_description, 21, 5);
-            ScreenManager.instance.AsyncText(sb_atkorDef, 74, 5);
-            ScreenManager.instance.AsyncText(sb_price, 100, 5);
+            ScreenManager.instance.AsyncText(sb_description, 24, 5);
+            ScreenManager.instance.AsyncText(sb_atkorDef, 77, 5);
+            ScreenManager.instance.AsyncText(sb_price, 103, 5);
 
             ScreenManager.instance.AsyncText("0. 나가기" , 1, filteredItems.Count+7);
 
