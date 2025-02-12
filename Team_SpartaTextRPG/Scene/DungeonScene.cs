@@ -469,7 +469,7 @@ namespace Team_SpartaTextRPG
             total_ClearCount++;
 
             //보스 클리어
-            if (dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
+            if (dungeonData.DungeonLevel == Dungeon_Level.Level_Boss && currentDungeonLevel == Dungeon_Level.Level_Boss)
             {
                 InputKeyManager.instance.GoMenu(EndingScene.instance.End);
                 return;
