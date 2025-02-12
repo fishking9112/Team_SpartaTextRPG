@@ -25,6 +25,10 @@ namespace Team_SpartaTextRPG
         private int Dungeon_MaxCount = 3;
         private int total_ClearCount = 0;
 
+
+        // 입장 던전 확인용 (클리어 시 Dungeon_ClearCount 이 ++ 되는지 확인)
+        Dungeon_Level currentDungeonLevel = Dungeon_Level.Level_1;
+
         // Art용
         int startMonsterX = 24;
         int startMonsterY = 3;
@@ -44,21 +48,39 @@ namespace Team_SpartaTextRPG
                 TitleManager.instance.WriteTitle($"던전 ({(int)DungeonLevel + 1} - {Dungeon_ClearCount + 1})", ConsoleColor.Cyan);
                 ScreenManager.instance.AsyncVideo("./resources/dungeon.gif",_frame:100, _color: ConsoleColor.Cyan);
             }
-            Action? dungeonAction = player.HP != 0 ? () => Select_Stage(1) : null;
-            string dungeonDescription = player.HP != 0 ? $"던전으로 입장합니다." : $"체력이 0인 상태에서는 던전 입장이 불가능합니다.";
-            InputKeyManager.instance.ArtMenu(
-                ($"Stage 입장", $"던전으로 입장합니다.", dungeonAction), 
-                ($"돌아가기", "마을로 나갑니다.", () => {TownScene.instance.Game_Main(); }));
+
+            var tempActions = new List<(string _menuName, string? _explanation, Action? _action)>();
+
+            if(player.HP == 0){
+                InputKeyManager.instance.ArtMenu(($"돌아가기", $"체력이 0인 상태로는 던전에 입장할 수 없습니다...", TownScene.instance.Game_Main));
+            } else {
+                if(DungeonLevel >= Dungeon_Level.Level_Boss){
+                    tempActions.Add(("보스 스테이지","", () => { Select_Stage(Dungeon_Level.Level_Boss); }));
+                }
+                
+                if(DungeonLevel >= Dungeon_Level.Level_3){
+                    tempActions.Add(("3Stage 입장","", () => { Select_Stage(Dungeon_Level.Level_3); }));
+                }
+                
+                if(DungeonLevel >= Dungeon_Level.Level_2){
+                    tempActions.Add(("2Stage 입장","", () => { Select_Stage(Dungeon_Level.Level_2); }));
+                }
+                
+                if(DungeonLevel >= Dungeon_Level.Level_1){
+                    tempActions.Add(("1Stage 입장","", () => { Select_Stage(Dungeon_Level.Level_1); }));
+                }
+                
+                tempActions.Add(($"돌아가기", "마을로 나갑니다.", () => { TownScene.instance.Game_Main(); }));
+                
+                InputKeyManager.instance.ArtMenu(tempActions.ToArray());
+            }
         }
 
-        public void Select_Stage(int _index)
+        public void Select_Stage(Dungeon_Level _DungeonLevel)
         {
-            if (_index == 1)
-            {
-                //몬스터 Init
-                InitStage(DungeonLevel);
-                DungeonMenu();
-            }
+            currentDungeonLevel = _DungeonLevel;
+            InitStage(_DungeonLevel);
+            DungeonMenu();
         }
 
         // 층에 나오기 전에 나오는 몬스터 설정
@@ -446,8 +468,10 @@ namespace Team_SpartaTextRPG
                 return;
             }
 
-            //던전 레벨업
-            Dungeon_ClearCount++;
+            //던전 레벨업 (현재 입장한 던전이 현재 레벨과 맞다면 라운드 업)
+            if(currentDungeonLevel == DungeonLevel){
+                Dungeon_ClearCount++;
+            }
 
             if (Dungeon_ClearCount >= Dungeon_MaxCount)
             {
