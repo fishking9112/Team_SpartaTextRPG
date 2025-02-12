@@ -48,12 +48,12 @@ namespace Team_SpartaTextRPG
             if(dungeonData.DungeonLevel == Dungeon_Level.Level_Boss)
             {
                 TitleManager.instance.WriteTitle($"던전 (!! BOSS STAGE !!)", ConsoleColor.DarkRed);
-                ScreenManager.instance.AsyncVideo("./resources/dungeon.gif",_frame:100, _color: ConsoleColor.DarkRed);
+                ScreenManager.instance.AsyncImage("./resources/dungeon_in.png", _color: ConsoleColor.DarkRed);
             }
             else
             {
                 TitleManager.instance.WriteTitle($"던전 ({(int)dungeonData.DungeonLevel + 1} - {dungeonData.Dungeon_ClearCount + 1})", ConsoleColor.Cyan);
-                ScreenManager.instance.AsyncVideo("./resources/dungeon.gif",_frame:100, _color: ConsoleColor.Cyan);
+                ScreenManager.instance.AsyncImage("./resources/dungeon_in.png", _color: ConsoleColor.Cyan);
             }
 
             var tempActions = new List<(string _menuName, string? _explanation, Action? _action)>();
