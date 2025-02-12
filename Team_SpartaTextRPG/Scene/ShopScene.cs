@@ -320,9 +320,17 @@ namespace Team_SpartaTextRPG
             {
                 // 골드 부족하면 
                 ScreenManager.instance.AsyncText($"{item.Name}을 구입하기엔 Gold 가 부족합니다.", _color: ConsoleColor.Red);
+                if (item is Equip_Item equip)
+                {
+                    InputKeyManager.instance.ArtMenu(
+                        ($"뒤로", "상점으로 돌아갑니다.", () => ShowShop()));
+                }
+                else if (item is Usable_Item usable_Item)
+                {
+                    InputKeyManager.instance.ArtMenu(
+                        ($"뒤로", "상점으로 돌아갑니다.", () => ShowUsableItems()));
+                }
             }
-
-            
         }
 
         public void ShowShopItems(List<Equip_Item> filteredItems, StringBuilder sb)
