@@ -57,10 +57,10 @@ namespace Team_SpartaTextRPG
                 new Usable_Item("편의점 도시락", "배가 든든합니다.(HP 50+)", 300, 0f, 0f, 50f, 0f),
 
                 //지속효과 물약
-                new Usable_Item("전자 담배", "머리가 안 아픕니다.(DEF 5+)", 150, 0f, 5f, 0f, 0f , 5),
-                new Usable_Item("담배", "안 아프기 시작합니다.(DEF 10+)", 300, 0f, 10f, 0f, 0f , 5),
-                new Usable_Item("맥주", "기분이 좋아집니다.(ATT 5+)", 150, 5f, 0f, 0f, 0f , 5),
-                new Usable_Item("소주", "날뛸 수 있습니다.(ATT 10+)", 300, 10f, 0f, 0f, 0f , 5),
+                new Usable_Item("전자 담배", "머리가 안 아픕니다.(5턴간 DEF 5+)", 150, 0f, 5f, 0f, 0f , 5),
+                new Usable_Item("담배", "안 아프기 시작합니다.(5턴간 DEF 10+)", 300, 0f, 10f, 0f, 0f , 5),
+                new Usable_Item("맥주", "기분이 좋아집니다.(5턴간 ATT 5+)", 150, 5f, 0f, 0f, 0f , 5),
+                new Usable_Item("소주", "날뛸 수 있습니다.(5턴간 ATT 10+)", 300, 10f, 0f, 0f, 0f , 5),
             };
         }
         public void ShowMenu()
