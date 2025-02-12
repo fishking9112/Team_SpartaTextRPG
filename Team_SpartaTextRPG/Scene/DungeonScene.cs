@@ -110,9 +110,9 @@ namespace Team_SpartaTextRPG
             
 
             InputKeyManager.instance.ArtMenu(
-                ($"공격", "던전에 입장합니다.", DungeonMenu_Fight),
-                ($"스킬 사용", "현재 데이터를 저장합니다.", DungeonMenu_Skill_Select),
-                ($"아이템 사용", "현재 데이터를 저장합니다.", DungeonMenu_Use_Item),
+                ($"공격", "지정된 대상을 공격합니다.", DungeonMenu_Fight),
+                ($"스킬 사용", "지정된 대상에게 스킬을 사용합니다.", DungeonMenu_Skill_Select),
+                ($"아이템 사용", "인벤토리에서 아이템을 사용합니다.", DungeonMenu_Use_Item),
                 ($"도망가기", "당신은 겁쟁이 입니다! 무서워서 도망칩니다!", Dungeon_Title));
         }
 
