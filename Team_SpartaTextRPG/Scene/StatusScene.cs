@@ -39,16 +39,16 @@ namespace Team_SpartaTextRPG
                       sb.AppendLine($"무기아이템 : {EquipSlot[i].Name}");
                       break;
                       case 1:
-                      sb.AppendLine($"머리아이템 : {EquipSlot[i].Name}");
+                      sb.AppendLine($"장착모니터 : {EquipSlot[i].Name}");
                       break;
                       case 2:
-                      sb.AppendLine($"갑옷아이템 : {EquipSlot[i].Name}");
+                      sb.AppendLine($"장착키보드 : {EquipSlot[i].Name}");
                       break;
                       case 3:
-                      sb.AppendLine($"장갑아이템 : {EquipSlot[i].Name}");
+                      sb.AppendLine($"장착마우스 : {EquipSlot[i].Name}");
                       break;
                       case 4:
-                      sb.AppendLine($"신발아이템 : {EquipSlot[i].Name}");
+                      sb.AppendLine($"장착컴퓨터 : {EquipSlot[i].Name}");
                       break;
                     }
                 }

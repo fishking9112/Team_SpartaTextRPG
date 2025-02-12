@@ -193,15 +193,15 @@ namespace Team_SpartaTextRPG
 
                         if (Rand < 33)
                         {
-                            monsters[i] = new Monster("C# 기초, 심화", 3, 15, 15, 8, 1, Utill.CS_PATH);
+                            monsters[i] = new Monster("C# 기초, 심화", 3, 15, 15, 10, 1, Utill.CS_PATH);
                         }
                         else if (Rand < 66)
                         {
-                            monsters[i] = new Monster("TIL", 3, 15, 15, 8, 1, Utill.TIL_PATH);
+                            monsters[i] = new Monster("TIL", 4, 20, 20, 15, 1, Utill.TIL_PATH);
                         }
                         else
                         {
-                            monsters[i] = new Monster("9to9", 3, 15, 15, 8, 1, Utill.NineToNine_PATH);
+                            monsters[i] = new Monster("9to9", 5, 25, 25, 20, 1, Utill.NineToNine_PATH);
                         }
                     }
                     break;
@@ -212,15 +212,15 @@ namespace Team_SpartaTextRPG
 
                         if (Rand < 33)
                         {
-                            monsters[i] = new Monster("Unity 2D", 3, 15, 15, 8, 1, Utill.Unity2D_PATH);
+                            monsters[i] = new Monster("Unity 2D", 6, 30, 30, 40, 5, Utill.Unity2D_PATH);
                         }
                         else if (Rand < 66)
                         {
-                            monsters[i] = new Monster("Unity 입문", 3, 15, 15, 8, 1, Utill.AssetStore_PATH);
+                            monsters[i] = new Monster("Unity 입문", 8, 40, 40, 50, 5, Utill.AssetStore_PATH);
                         }
                         else
                         {
-                            monsters[i] = new Monster("자료구조", 3, 15, 15, 8, 1, Utill.Algorithm_PATH);
+                            monsters[i] = new Monster("자료구조", 10, 50, 50, 80, 5, Utill.Algorithm_PATH);
                         }
                     }
                     break;
@@ -232,21 +232,21 @@ namespace Team_SpartaTextRPG
 
                         if (Rand < 33)
                         {
-                            monsters[i] = new Monster("실전 프로젝트", 7, 26, 26, 20, 4, Utill.RealProject_PATH);
+                            monsters[i] = new Monster("실전 프로젝트", 15, 100, 100, 100, 30, Utill.RealProject_PATH);
                         }
                         else if (Rand < 66)
                         {
-                            monsters[i] = new Monster("Unity 3D", 5, 22, 22, 10, 5, Utill.Unity3D_PATH);
+                            monsters[i] = new Monster("Unity 3D", 18, 150, 150, 120, 30, Utill.Unity3D_PATH);
                         }
                         else
                         {
-                            monsters[i] = new Monster("팀 프로젝트", 3, 15, 15, 8, 1, Utill.TeamProject_PATH);
+                            monsters[i] = new Monster("팀 프로젝트", 20, 200, 200, 150, 30, Utill.TeamProject_PATH);
                         }
 
                     }
                     break;
                 case Dungeon_Level.Level_Boss:
-                    monsters[0] = new Monster("면접", 12, 50, 50, 30, 25, Utill.BOSS_PATH);
+                    monsters[0] = new Monster("면접", 50, 5000, 5000, 300, 100, Utill.BOSS_PATH);
                     MonsterCount = 1;
                     break;
             }
